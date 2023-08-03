@@ -1,0 +1,125 @@
+{
+  "7_tube":[
+      {
+        "pos": [
+          -260,
+          -200
+        ],
+        "dirention": "r"
+      },
+      {
+        "pos": [
+          -87,
+          -200
+        ],
+        "dirention": "r"
+      },
+      {
+        "pos": [
+          87,
+          -200
+        ],
+        "dirention": "l"
+      },
+      {
+        "pos": [
+          260,
+          -200
+        ],
+        "dirention": "l"
+      },
+      {
+        "pos": [
+          -173,
+          200
+        ],
+        "dirention": "r"
+      },
+      {
+        "pos": [
+          0,
+          200
+        ],
+        "dirention": "b"
+      },
+      {
+        "pos": [
+          173,
+          200
+        ],
+        "dirention": "l"
+      }
+    ],
+    "10_tube": [
+      {
+        "pos": [
+          -270,
+          -220
+        ],
+        "dirention": "r"
+      },
+      {
+        "pos": [
+          -135,
+          -220
+        ],
+        "dirention": "r"
+      },
+      {
+        "pos": [
+          0,
+          -220
+        ],
+        "dirention": "b"
+      },
+      {
+        "pos": [
+          135,
+          -220
+        ],
+        "dirention": "l"
+      },
+      {
+        "pos": [
+          270,
+          -220
+        ],
+        "dirention": "l"
+      },
+      {
+        "pos": [
+          -270,
+          220
+        ],
+        "dirention": "r"
+      },
+      {
+        "pos": [
+          -135,
+          220
+        ],
+        "dirention": "r"
+      },
+      {
+        "pos": [
+          0,
+          220
+        ],
+        "dirention": "b"
+      },
+      {
+        "pos": [
+          135,
+          220
+        ],
+        "dirention": "l"
+      },
+      {
+        "pos": [
+          270,
+          220
+        ],
+        "dirention": "l"
+      }
+    ]
+}

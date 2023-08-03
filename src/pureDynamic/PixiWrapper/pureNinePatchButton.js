@@ -1,0 +1,22 @@
+import { PureNinePatch } from "./pureNinePatch";
+
+export class PureNinePatchButton extends PureNinePatch {
+  /**
+   * @class PureNinePatchButton
+   * @param {PIXI.Container} parent
+   * @param {PIXI.Texture} texture
+   * @param {number} left
+   * @param {number} top
+   * @param {number} right
+   * @param {number} bottom
+   * @param {Function} onClick
+   * @param {PureTransform} transformPortrait
+   * @param {PureTransform} transformLandscape
+   */
+  constructor(parent, texture, left, top, right, bottom, onClick, transformPortrait = null, transformLandscape = null) {
+    super(parent, texture, left, top, right, bottom, transformPortrait, transformLandscape);
+    this.displayObject.interactive = true;
+    this.displayObject.buttonMode = true;
+    this.displayObject.on("pointertap", onClick);
+  }
+}

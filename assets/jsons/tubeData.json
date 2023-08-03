@@ -1,0 +1,32 @@
+{
+  "easy": {
+    "tubeSprite": "spr_tube_easy",
+    "tubeMaskSprite": "spr_tube_mask_easy",
+    "pourData": [44,63,75,83,90],
+    "vertexOffsetX": 0, 
+    "vertexOffsetY": 0,
+    "waterLineX": 13,
+    "liquidHeight": 70,
+    "waterLine2y": -164
+  },
+  "medium": {
+    "tubeSprite": "spr_tube_medium",
+    "tubeMaskSprite": "spr_tube_mask_medium",
+    "pourData": [50,67,78.5,86.5,110],
+    "vertexOffsetX": -20, 
+    "vertexOffsetY": 0,
+    "waterLineX": 12,
+    "liquidHeight": 70,
+    "waterLine2y": -164
+  },
+  "hard": {
+    "tubeSprite": "spr_tube_hard",
+    "tubeMaskSprite": "spr_tube_mask_hard",
+    "pourData": [50,67,78.5,86.5,110],
+    "vertexOffsetX": -28, 
+    "vertexOffsetY": 3,
+    "waterLineX": 10,
+    "liquidHeight": 70,
+    "waterLine2y": -164
+  }
+}
