@@ -19,9 +19,6 @@ export class Game {
   static init() {
     this.life = GameConstant.GAME_LIFE;
     this.started = true;
-
-    this.ads = new Ads();
-    this.ads.registerEvents(this);
   }
 
   static load() {
@@ -48,7 +45,6 @@ export class Game {
 
   static _create() {
     this.gameCreated = true;
-    let screenSize = this.ads.getScreenSize();
     Debug.log("Creative", "Create", screenSize);
 
     this.resize(screenSize);
@@ -64,7 +60,6 @@ export class Game {
   static _update() {
     this.dt = this.app.ticker.deltaMS / 1000;
     SceneManager.update(this.dt);
-    this.ads.adapter.update();
   }
 
   static resize(screenSize) {
@@ -77,7 +72,6 @@ export class Game {
   }
 
   static _onAssetLoaded() {
-    this.ads.adapter.onAssetLoaded();
     if (this.started) {
       this._create();
     }
@@ -95,20 +89,20 @@ export class Game {
   }
 
   static onStart() {
-    this.ads.adapter.onStart();
+    
   }
 
   static onWin() {
-    this.ads.adapter.onWin();
+    
   }
 
   static onLose() {
-    this.ads.adapter.onLose();
+    
   }
 
   static onRevive() {
     this.life--;
-    this.ads.adapter.onReplay();
+    
   }
 
   static setPause(isPause) {
@@ -127,20 +121,19 @@ export class Game {
   }
 
   static onOneLevelPassed() {
-    this.ads.adapter.onOneLevelPassed();
+    
   }
 
   static onMidwayProgress() {
-    this.ads.adapter.onMidwayProgress();
+    
   }
 
   static sendEvent(type, name) {
-    this.ads.adapter.onSendEvent(type, name);
+    
   }
 
   static onCTAClick(elementName) {
     this.sendEvent("end_choice", elementName);
-    this.ads.onCTAClick();
   }
 
   static get revivable() {
@@ -151,5 +144,4 @@ window.addEventListener("contextmenu", (e) => e.preventDefault());
 // eslint-disable-next-line no-undef
 window.addEventListener(ADEVENT_LOAD, () => {
   Game.init();
-  Game.ads.load();
 });
