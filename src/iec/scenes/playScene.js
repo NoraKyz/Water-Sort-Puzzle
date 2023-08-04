@@ -2,8 +2,6 @@ import { Container } from "pixi.js";
 import { GameConstant } from "../../gameConstant";
 import { Scene } from "../../pureDynamic/PixiWrapper/scene/scene";
 import { GameResizer } from "../../pureDynamic/systems/gameResizer";
-import { LevelEvent } from "../level/levelEvent";
-import { LevelManager } from "../level/levelManager";
 import { Level } from "../level/level";
 import { BackgroundManager } from "../../iec/object/background/backgroundManager";
 
@@ -39,12 +37,6 @@ export class PlayScene extends Scene {
   _initGameplay() {
     this.gameplay = new Container();
     this.addChild(this.gameplay);
+    this._initLevelEasy();
   }
-
-  // _initLevels() {
-  //   this.levelManager = new LevelManager();
-  //   this.levelManager.on(LevelEvent.Start, this._onLevelStart, this);
-  //   this.levelManager.start();
-  //   this.gameplay.addChild(this.levelManager);
-  // }
 }
