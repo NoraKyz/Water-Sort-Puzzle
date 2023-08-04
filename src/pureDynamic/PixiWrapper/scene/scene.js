@@ -1,62 +1,83 @@
 import { PureRect } from "../pureRect";
 import { PureTransform } from "../../core/pureTransform";
 import { Alignment } from "../../core/pureTransformConfig";
-import { Debug } from "../../../helpers/debug";
+import { GameResizer } from "../../systems/gameResizer";
 import { GameConstant } from "../../../gameConstant";
-import { PureSprite } from "../pureSprite";
-import { Container, Texture } from "pixi.js";
+import { Container } from "pixi.js";
+import { UIManager } from "../screen/uiManager";
 
 export class Scene extends Container {
   /**
    * @class Scene
-   * @param {number} key Scene key, should be unique
+   * @param {string} key Scene key, should be unique
    */
   constructor(key) {
     super();
     this.key = key;
+    this.sortableChildren = true;
+    this.isCreated = false;
+    this.ui = new UIManager();
+    this.addChild(this.ui);
+    this.ui.zIndex = 100;
     this._addRoot();
   }
 
   create() {
-    Debug.log(this.key, "Create");
+    this.isCreated = true;
+    GameResizer.registerOnResizedCallback(this.resize, this);
   }
 
   /**
    * @param {number} dt delta time
    */
-  update() { }
-
-  onPause() {
-    Debug.log(this.key, "OnPause");
+  update() {
+    if (!this.visible) {
+      return;
+    }
+    this.ui.update();
   }
-
-  onResume() {
-    Debug.log(this.key, "OnResume");
-  }
-
-  resize() { }
 
   destroy() {
-    this.removeChildren();
+    GameResizer.unregisterOnResizedCallback(this.resize, this);
   }
+
+  hide() {
+    this.visible = false;
+  }
+
+  show() {
+    this.visible = true;
+  }
+
+  pause() {
+    if (!this.visible) {
+      return;
+    }
+    this.ui.pause();
+  }
+
+  resume() {
+    if (!this.visible) {
+      return;
+    }
+    this.ui.resume();
+  }
+
+  setPause() {}
 
   _addRoot() {
     let transform = new PureTransform({ alignment: Alignment.FULL });
     this.root = new PureRect(transform, transform);
   }
 
-  initGameTag() {
-    if (!GameConstant.SHOW_GAME_TAG) {
+  resize() {
+    if (!this.visible) {
       return;
     }
+    this.ui.resize();
+  }
 
-    this.gameTag = new PureSprite(Texture.from("spr_game_tag"), new PureTransform({
-      container       : this.root,
-      alignment       : Alignment.BOTTOM_RIGHT,
-      x               : -10,
-      y               : -10,
-      useOriginalSize : true,
-    }));
-    this.addChild(this.gameTag.displayObject);
+  fillRect(rect, color, alpha) {
+    GameConstant.DEBUG_FILL_RECTS && rect.fill(this, color, alpha);
   }
 }

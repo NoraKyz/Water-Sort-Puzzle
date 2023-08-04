@@ -1,10 +1,11 @@
 import { GameConstant } from "../../gameConstant";
-import { EventEmitter } from "@pixi/utils";
+import { PureObject } from "../core/pureObject";
+import * as EventEmitter from "events";
 
 export class GameResizer {
 
   /**
-   * @param {PIXI.Application} app
+   * @param {PIXI.Application} app 
    */
   static init(app) {
     this.app = app;
@@ -13,27 +14,38 @@ export class GameResizer {
     this.mode = ResizeMode.FullScale;
     this.lastResize = { width: this.canvas.width, height: this.canvas.height }; // canvas width and height before resize
 
-    this.emitter = new EventEmitter();
+    this.emitter = new PIXI.utils.EventEmitter();
   }
 
   static resize(windowWidth = 0, windowHeight = 0) {
-    this.windowWidth = windowWidth || window.innerWidth;
-    this.windowHeight = windowHeight || window.innerHeight;
+    this.windowWidth = windowWidth || this.canvas.width;
+    this.windowHeight = windowHeight || this.canvas.height;
     this._resizeFullScale();
     this.app.resize();
-    this.emitter.emit("resize");
+    this.emitter.emit("onresize");
+    this.emitter.emit("onresized");
   }
 
   static _resizeFullScale() {
     let style = this.canvas.style;
 
-    console.log(`--- Enter resize ${ this.mode}`);
-    console.log(`Window: ${ this.windowWidth }x${ this.windowHeight}`);
+    console.log(`--- Enter resize ${this.mode}`);
+    console.log(`Window: ${this.windowWidth}x${this.windowHeight}`);
 
-    let ratio = Math.max(GameConstant.GAME_WIDTH / this.windowWidth, GameConstant.GAME_HEIGHT / this.windowHeight);
+    this.orientation = this.windowWidth <= this.windowHeight ? Orientation.Portrait : Orientation.Landscape;
+
+    let ratio = 1;
+    if (this.orientation === Orientation.Portrait) {
+      ratio = GameConstant.GAME_WIDTH / this.windowWidth;
+    }
+    else {
+
+      ratio = Math.max(GameConstant.GAME_WIDTH / this.windowWidth, GameConstant.GAME_HEIGHT / this.windowHeight);
+      // ratio = GameConstant.GAME_WIDTH / this.windowHeight;
+    }
+
     this.width = this.windowWidth * ratio;
     this.height = this.windowHeight * ratio;
-    this.orientation = this.width <= this.height ? Orientation.Portrait : Orientation.Landscape;
 
     console.log(`Resize to: ${this.width}x${this.height} orientation: ${this.orientation}`);
     this.lastResize.width = this.canvas.width;
@@ -53,33 +65,39 @@ export class GameResizer {
     let hMargin = Math.floor((this.windowHeight - this.height * scale) / 2);
 
     style.margin = `${hMargin}px ${vMargin}px ${hMargin}px ${vMargin}px`;
-
-    console.log(this.canvas);
   }
 
   static registerOnResizeCallback(fn, context) {
-    this.emitter.on("resize", fn, context);
+    this.emitter.on("onresize", fn, context);
   }
 
-  static removeOnResizeCallback(fn, context) {
-    this.emitter.off("resize", fn, context);
+  static unregisterOnResizeCallback(fn, context) {
+    this.emitter.off("onresize", fn, context);
+  }
+
+  static registerOnResizedCallback(fn, context) {
+    this.emitter.on("onresized", fn, context);
+  }
+
+  static unregisterOnResizedCallback(fn, context) {
+    this.emitter.off("onresized", fn, context);
   }
 
   static isPortrait() {
     return this.orientation === Orientation.Portrait;
   }
 
-  static isLandScale() {
+  static isLandScape() {
     return this.orientation === Orientation.Landscape;
   }
 }
 
 export const Orientation = Object.freeze({
-  Portrait  : "portrait",
-  Landscape : "landscape",
+  Portrait: "portrait",
+  Landscape: "landscape",
 });
 
 export const ResizeMode = Object.freeze({
-  LetterBox : "letterbox",
-  FullScale : "fullscale",
+  LetterBox: "letterbox",
+  FullScale: "fullscale",
 });

@@ -2,10 +2,9 @@ import { Util } from "../../../helpers/utils";
 
 export class PureListConfig {
   /**
-   * @param {PureListConfig} source Copy properties from this object.
-   * Useful for shorthand declaration: new PureListConfig({ axisType: AxisType.Horizontal })
+   * @param {PureListConfig} source Copy properties from this object. Useful for shorthand declaration: new PureListConfig({ axisType: AxisType.Horizontal })
    */
-  constructor(source = null) {
+  constructor(source = undefined) {
     this.axisType = AxisType.Horizontal;
     this.spacing = 0;
 
@@ -14,7 +13,7 @@ export class PureListConfig {
     this.controlHeight = false;
 
     // expand items position to fit list object size
-    this.expand = false;
+    this.expand = false
 
     // centering items position
     this.centerX = false;
@@ -28,13 +27,13 @@ export class PureListConfig {
 
     this.maintainItemRatio = false;
 
-    if (source !== null) {
-      Util.copyObject(source, this);
+    if (source) {
+      Util.copyObject(this, source);
     }
   }
 }
 
 export const AxisType = Object.freeze({
-  Horizontal : "horizontal",
-  Vertical   : "vertical",
+  Horizontal: "horizontal",
+  Vertical: "vertical",
 });

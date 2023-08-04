@@ -11,9 +11,11 @@ export class PureObject {
    * @param {PureTransform} transformLandscape use transform portrait if not provided
    */
   constructor(displayObject, transformPortrait = undefined, transformLandscape = undefined) {
-    this._emitter = new EventEmitter();
+    this.emitter = new EventEmitter();
     this._posOffset = new PurePoint(); // translated position offset since object created on current game size
+    this.skipMovement = false; // do not adding position offset on update transform
     this.maintainMovementRatio = false; // maitain offset position of object after being created by screen ratio
+    this.updateTransformManually = false; // will not call update transform on game resize
 
     this.displayObject = displayObject;
 
@@ -29,8 +31,12 @@ export class PureObject {
   }
 
   _updateTransform() {
+    if (this.updateTransformManually) {
+      return;
+    }
+
     let transform = this.transform;
-    transform.updateConfig(this.naturalWidth, this.naturalHeight);
+    transform.updateConfig();
 
     // size
     if (!transform.config.useOriginalSize) {
@@ -39,11 +45,7 @@ export class PureObject {
     }
 
     // position
-    if (transform.config.ignorePivot) {
-      this.displayObject.x = transform.x;
-      this.displayObject.y = transform.y;
-    }
-    else if (this.displayObject.anchor) {
+    if (this.displayObject.anchor && !transform.config.ignorePivot) {
       this.displayObject.anchor.set(transform.pivot.x, transform.pivot.y);
       this.displayObject.x = transform.x;
       this.displayObject.y = transform.y;
@@ -54,19 +56,21 @@ export class PureObject {
     }
 
     // position offset
-    if (this.maintainMovementRatio) {
-      this._posOffset.x *= GameResizer.width / GameResizer.lastResize.width;
-      this._posOffset.y *= GameResizer.height / GameResizer.lastResize.height;
+    if (!this.skipMovement) {
+      if (this.maintainMovementRatio) {
+        this._posOffset.x *= GameResizer.width / GameResizer.lastResize.width;
+        this._posOffset.y *= GameResizer.height / GameResizer.lastResize.height;
+      }
+      this.displayObject.x += this._posOffset.x;
+      this.displayObject.y += this._posOffset.y;
     }
-    this.displayObject.x += this._posOffset.x;
-    this.displayObject.y += this._posOffset.y;
 
     // rotation
     if (this.displayObject.angle) {
       this.displayObject.angle = transform.angle;
     }
 
-    this._emitter.emit("updatetransform");
+    this.emitter.emit("updatetransform");
   }
 
   /**
@@ -74,7 +78,7 @@ export class PureObject {
    * @param {Function} fn
    */
   registerOnUpdateTransformCallback(fn) {
-    this._emitter.on("updatetransform", fn);
+    this.emitter.on("updatetransform", fn);
   }
 
   get x() {
@@ -142,11 +146,11 @@ export class PureObject {
     return GameResizer.orientation === Orientation.Portrait ? this.transformPortrait : this.transformLandscape;
   }
 
-  get visible() {
-    return this.displayObject.visible;
-  }
-
   set visible(value) {
     this.displayObject.visible = value;
+  }
+
+  get visible() {
+    return this.displayObject.visible;
   }
 }

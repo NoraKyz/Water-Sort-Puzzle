@@ -1,62 +1,84 @@
 import { Debug } from "../../../helpers/debug";
-import { GameResizer } from "../../systems/gameResizer";
-import { GameState, GameStateManager } from "../../systems/gameStateManager";
 
 export class SceneManager {
   /**
    * @class SceneManager
-   * @param {PIXI.Container} stage PIXI application stage
+   * @param {PIXI.Application} app PIXI application stage
    * @param {Array<Scene>} scenes
    */
-  static init(stage, scenes) {
-    this.stage = stage;
+  static init(scenes) {
+    /** @type {Scene} */
+    this.currentScene = undefined;
+
+    /** @type {Array<Scene>} */
+    this.additiveScenes = [];
+
+    this.sceneContainer = new PIXI.Container();
     this.scenes = scenes;
-    GameResizer.registerOnResizeCallback(this.onResize, this);
-    GameStateManager.registerOnStateChangedCallback(this._onGameStateChange, this);
-  }
-
-  static _onGameStateChange(state, prevState) {
-    if (state === GameState.Paused) {
-      this.pause();
-    }
-
-    if (prevState === GameState.Paused) {
-      this.resume();
-    }
+    this.scenes.forEach((scene) => {
+      scene.hide();
+      this.sceneContainer.addChild(scene);
+    });
   }
 
   /**
    * @param {number} dt delta time
    */
   static update(dt) {
-    this.currentScene.update(dt);
+    if (this.currentScene) {
+      this.currentScene.update(dt);
+    }
+    this.additiveScenes.forEach((scene) => {
+      scene.update(dt);
+    });
   }
 
   /**
    * @param {Scene} scene
    */
   static load(scene) {
-    Debug.log("SceneManager", `Load scene ${ scene.key}`);
-    this.stage.removeChildren();
-    this.currentScene && this.currentScene.destroy();
+    Debug.debug("Load scene", scene.key);
+    this.additiveScenes.forEach((s) => s.destroy());
+    this.additiveScenes = [];
+    let oldScene = this.currentScene;
     this.currentScene = scene;
-    this.currentScene.create();
-    this.stage.addChild(scene);
+    this.currentScene.show();
+    if (!this.currentScene.isCreated) {
+      this.currentScene.create();
+    }
+    if (oldScene) {
+      oldScene.hide();
+    }
   }
 
-  static pause() {
-    this.currentScene?.onPause();
-  }
-
-  static resume() {
-    this.currentScene?.onResume();
-  }
-
-  static onResize() {
-    this.currentScene?.resize();
+  /**
+   * @param {Scene} scene
+   */
+  static loadAdditive(scene) {
+    Debug.debug(`Load additive scene ${scene.key}`);
+    scene.show();
   }
 
   static getScene(key) {
     return this.scenes.find((s) => s.key === key);
+  }
+
+  /**
+   * @param {Scene} scene
+   */
+  static unload(scene) {
+    // this.sceneContainer.removeChild(scene);
+    scene.hide();
+    this.additiveScenes.splice(this.additiveScenes.indexOf(scene), 1);
+  }
+
+  static setPause(isPause) {
+    if (this.currentScene) {
+      this.currentScene.setPause(isPause);
+    }
+
+    if (this.additiveScenes) {
+      this.additiveScenes.forEach((scene) => scene.setPause(isPause));
+    }
   }
 }

@@ -1,19 +1,21 @@
 import { PureRect } from "../pureRect";
+import { PureTransform } from "../../core/pureTransform";
+import { PureObject } from "../../core/pureObject";
 import { AxisType, PureListConfig } from "./pureListConfig";
 import { GameResizer, Orientation } from "../../systems/gameResizer";
 
 export class PureList extends PureRect {
   /**
    * @class PureContainer
-   * @param {PureListConfig} configPortrait
-   * @param {PureTransform} transformPortrait
-   * @param {PureListConfig} configLandscape
-   * @param {PureTransform} transformLandscape
+   * @param {PureListConfig} configPortrait 
+   * @param {PureTransform} transformPortrait 
+   * @param {PureListConfig} configLandscape 
+   * @param {PureTransform} transformLandscape 
    */
-  constructor(configPortrait = null, configLandscape = null, transformPortrait = null, transformLandscape = null) {
+  constructor(configPortrait = undefined, transformPortrait = undefined, configLandscape = undefined, transformLandscape = undefined) {
     super(transformPortrait, transformLandscape);
-    this.configPortrait = configPortrait || new PureListConfig();
-    this.configLandscape = configLandscape || this.configPortrait;
+    this.configPortrait = configPortrait ? configPortrait : new PureListConfig();
+    this.configLandscape = configLandscape ? configLandscape : this.configPortrait;
 
     /**
      * @type {Array<PureObject>}
@@ -29,10 +31,13 @@ export class PureList extends PureRect {
   }
 
   /**
-   * @param {Array<PureObject>} items
+   * @param {Array<PureObject>} items 
    */
   addItems(...items) {
-    items.forEach((item) => this.items.push(item));
+    items.forEach(item => {
+      item.updateTransformManually = true;
+      this.items.push(item);
+    });
     this.updateItems();
   }
 
@@ -42,25 +47,22 @@ export class PureList extends PureRect {
     }
 
     if (this.config.axisType === AxisType.Horizontal) {
-      this.updateItemsHorizontal();
-    }
-    else if (this.config.axisType === AxisType.Vertical) {
-      this.updateItemsVertical();
-    }
-    else {
+      this.updateItems_Horizontal();
+    } else if (this.config.axisType === AxisType.Vertical) {
+      this.updateItems_Vertical();
+    } else {
       console.error("Invalid Axis Type");
     }
   }
 
-  updateItemsHorizontal() {
+  updateItems_Horizontal() {
     let x = this.x + this.config.left;
-    this.items.forEach((item) => {
+    this.items.forEach(item => {
       this.resizeItem(item);
 
       if (this.config.centerY) {
         item.y = this.y + this.height / 2 - item.height / 2;
-      }
-      else {
+      } else {
         item.y = this.y + this.config.top;
       }
 
@@ -69,23 +71,22 @@ export class PureList extends PureRect {
     });
 
     if (this.config.expand) {
-      this.expandItemsHorizontal();
+      this.expandItems_Horizontal();
     }
 
     if (this.config.centerY) {
-      this.centerItemsHorizontal();
+      this.centerItems_Horizontal();
     }
   }
 
-  updateItemsVertical() {
+  updateItems_Vertical() {
     let y = this.y + this.config.top;
-    this.items.forEach((item) => {
+    this.items.forEach(item => {
       this.resizeItem(item);
 
       if (this.config.centerX) {
         item.x = this.x + this.width / 2 - item.width / 2;
-      }
-      else {
+      } else {
         item.x = this.x + this.config.left;
       }
 
@@ -94,22 +95,22 @@ export class PureList extends PureRect {
     });
 
     if (this.config.expand) {
-      this.expandItemsVertical();
+      this.expandItems_Vertical();
     }
 
     if (this.config.centerY) {
-      this.centerItemsVertical();
+      this.centerItems_Vertical();
     }
   }
 
   /**
-   * @param {PureObject} item
+   * @param {PureObject} item 
    */
   resizeItem(item) {
     let naturalWidth = item.transform.config.naturalWidth;
     let naturalHeight = item.transform.config.naturalHeight;
-    let width = naturalWidth;
-    let height = naturalHeight;
+    let width = item.transform.config.naturalWidth;
+    let height = item.transform.config.naturalHeight;
 
     // calculate spacing
     const spacing = this.config.spacing;
@@ -137,7 +138,7 @@ export class PureList extends PureRect {
 
     // maintain aspect ratio
     if (this.config.maintainItemRatio) {
-      const ratio = Math.min(width / item.naturalWidth, height / item.naturalHeight);
+      const ratio = Math.min(width / naturalWidth, height / naturalHeight);
       width = naturalWidth * ratio;
       height = naturalHeight * ratio;
     }
@@ -146,7 +147,7 @@ export class PureList extends PureRect {
     item.height = height;
   }
 
-  centerItemsHorizontal() {
+  centerItems_Horizontal() {
     const spacing = this.config.spacing;
     const totalSpacing = spacing * (this.items.length - 1);
     const totalItemsWidth = this.getTotalItemsWidth();
@@ -155,16 +156,16 @@ export class PureList extends PureRect {
     const contentWidth = totalItemsWidth + totalSpacing;
 
     let x = this.x + (this.width - contentWidth) / 2;
-    this.items.forEach((item) => {
+    this.items.forEach(item => {
       item.x = x;
       x += item.width + spacing;
-    });
+    })
   }
 
   /**
    * @summary centering items by Y-axis
    */
-  centerItemsVertical() {
+  centerItems_Vertical() {
     const spacing = this.config.spacing;
     const totalSpacing = spacing * (this.items.length - 1);
     const totalItemsHeight = this.getTotalItemsHeight();
@@ -173,7 +174,7 @@ export class PureList extends PureRect {
     const contentHeight = totalItemsHeight + totalSpacing;
 
     let y = this.y + (this.height - contentHeight) / 2;
-    this.items.forEach((item) => {
+    this.items.forEach(item => {
       item.y = y;
       y += item.height + spacing;
     });
@@ -182,26 +183,26 @@ export class PureList extends PureRect {
   /**
    * @summary update items position X to fit list object size
    */
-  expandItemsHorizontal() {
+  expandItems_Horizontal() {
     const totalItemsWidth = this.getTotalItemsWidth();
     const totalSpacing = this.width - totalItemsWidth;
     const spacing = totalSpacing / (this.items.length - 1);
     let x = this.x;
-    this.items.forEach((item) => {
+    this.items.forEach(item => {
       item.x = x;
-      x += item.width + spacing;
+      item += item.width + spacing;
     });
   }
 
   /**
    * @summary update items position Y to fit list object size
    */
-  expandItemsVertical() {
+  expandItems_Vertical() {
     const totalItemsHeight = this.getTotalItemsHeight();
     const totalSpacing = this.height - totalItemsHeight;
     const spacing = totalSpacing / (this.items.length - 1);
     let y = this.y;
-    this.items.forEach((item) => {
+    this.items.forEach(item => {
       item.y = y;
       y += item.height + spacing;
     });
@@ -209,7 +210,7 @@ export class PureList extends PureRect {
 
   getTotalItemsWidth() {
     let totalItemsWidth = 0;
-    this.items.forEach((item) => totalItemsWidth += item.width);
+    this.items.forEach(item => totalItemsWidth += item.width);
     return totalItemsWidth;
   }
 
@@ -218,7 +219,7 @@ export class PureList extends PureRect {
    */
   getTotalItemsHeight() {
     let totalItemsHeight = 0;
-    this.items.forEach((item) => totalItemsHeight += item.height);
+    this.items.forEach(item => totalItemsHeight += item.height);
     return totalItemsHeight;
   }
 }

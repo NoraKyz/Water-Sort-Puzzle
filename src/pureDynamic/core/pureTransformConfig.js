@@ -1,9 +1,11 @@
+import { PureObject } from "./pureObject";
+
 export class PureTransformConfig {
   constructor() {
     /**
      * @type {PureObject}
      */
-    this.container = null;
+    this.container;
 
     this.alignment = Alignment.CUSTOM;
     this.width = 0;
@@ -57,22 +59,20 @@ export class PureTransformConfig {
     }
 
     if (!this.useOriginalSize) {
-      if (!this.width && (this.alignment === Alignment.VERTICAL_LEFT
-        || this.alignment === Alignment.VERTICAL_MIDDLE
-        || this.alignment === Alignment.VERTICAL_RIGHT
-      )) {
+      if (!this.width && (this.alignment === Alignment.VERTICAL_LEFT || this.alignment === Alignment.VERTICAL_MIDDLE || this.alignment === Alignment.VERTICAL_RIGHT)) {
         this.width = this.naturalWidth;
       }
-      else if (!this.height
-        && (this.alignment === Alignment.HORIZONTAL_BOTTOM
-          || this.alignment === Alignment.HORIZONTAL_MIDDLE
-          || this.alignment === Alignment.HORIZONTAL_TOP
-        )) {
+      else if (!this.height && (this.alignment === Alignment.HORIZONTAL_BOTTOM || this.alignment === Alignment.HORIZONTAL_MIDDLE || this.alignment === Alignment.HORIZONTAL_TOP)) {
         this.height = this.naturalHeight;
       }
       else {
-        this.width = this.width || this.naturalWidth;
-        this.height = this.height || this.naturalHeight;
+        if (!this.width) {
+          this.width = this.naturalWidth;
+        }
+
+        if (!this.height) {
+          this.height = this.naturalHeight;
+        }
       }
     }
   }
@@ -80,30 +80,30 @@ export class PureTransformConfig {
 
 export const Alignment = Object.freeze({
   // strect alignments
-  FULL              : "full",
-  HORIZONTAL_TOP    : "horizontal-top",
-  HORIZONTAL_MIDDLE : "horizontal-middle",
-  HORIZONTAL_BOTTOM : "horizontal-bottom",
-  VERTICAL_LEFT     : "vertical-left",
-  VERTICAL_MIDDLE   : "vertical-middle",
-  VERTICAL_RIGHT    : "vertical-right",
+  FULL: "full",
+  HORIZONTAL_TOP: "horizontal-top",
+  HORIZONTAL_MIDDLE: "horizontal-middle",
+  HORIZONTAL_BOTTOM: "horizontal-bottom",
+  VERTICAL_LEFT: "vertical-left",
+  VERTICAL_MIDDLE: "vertical-middle",
+  VERTICAL_RIGHT: "vertical-right",
 
   // pivot alignments
-  TOP_LEFT      : "top-left",
-  TOP_CENTER    : "top-center",
-  TOP_RIGHT     : "top-right",
-  MIDDLE_LEFT   : "middle-left",
-  MIDDLE_CENTER : "middle-center",
-  MIDDLE_RIGHT  : "middle-right",
-  BOTTOM_LEFT   : "bottom-left",
-  BOTTOM_CENTER : "bottom-center",
-  BOTTOM_RIGHT  : "bottom-right",
+  TOP_LEFT: "top-left",
+  TOP_CENTER: "top-center",
+  TOP_RIGHT: "top-right",
+  MIDDLE_LEFT: "middle-left",
+  MIDDLE_CENTER: "middle-center",
+  MIDDLE_RIGHT: "middle-right",
+  BOTTOM_LEFT: "bottom-left",
+  BOTTOM_CENTER: "bottom-center",
+  BOTTOM_RIGHT: "bottom-right",
 
   CUSTOM: "custom",
 });
 
 export const MaintainAspectRatioType = Object.freeze({
-  NONE : "none",
-  MIN  : "min",
-  MAX  : "max",
+  NONE: "none",
+  MIN: "min",
+  MAX: "max",
 });

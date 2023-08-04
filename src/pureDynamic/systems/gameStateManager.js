@@ -1,10 +1,6 @@
-import { EventEmitter } from "@pixi/utils";
 
 export class GameStateManager {
-  static get state() {
-    return this._state ? this._state : GameState.Tutorial;
-  }
-
+  static get state() { return this._state ? this._state : GameState.Tutorial }
   static set state(state) {
     this.prevState = this.state;
     this._state = state;
@@ -22,7 +18,7 @@ export class GameStateManager {
 
   static registerOnStateChangedCallback(fn, context) {
     if (!this.emitter) {
-      this.emitter = new EventEmitter();
+      this.emitter = new PIXI.utils.EventEmitter();
     }
     this.emitter.on("changed", fn, context);
   }
@@ -33,12 +29,12 @@ export class GameStateManager {
 }
 
 export const GameState = {
-  Tutorial : "tutorial",
-  Playing  : "playing",
-  Paused   : "paused",
-  Revive   : "revive",
-  GameOver : "gameover",
-  Lose     : "lose",
-  Win      : "win",
-  Endcard  : "endcard",
-};
+  Tutorial: "tutorial",
+  Playing: "playing",
+  Paused: "paused",
+  Revive: "revive",
+  GameOver: "gameover",
+  Lose: "lose",
+  Win: "win",
+  Home: "Home",
+}

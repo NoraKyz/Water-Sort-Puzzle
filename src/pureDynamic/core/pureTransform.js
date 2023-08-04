@@ -2,10 +2,11 @@ import { PureTransformConfig, MaintainAspectRatioType, Alignment } from "./pureT
 import { GameResizer } from "../systems/gameResizer";
 import { Util } from "../../helpers/utils";
 import { PurePoint } from "./purePoint";
+import { PureObject } from "./pureObject";
 
 export class PureTransform {
   /**
-   * @class PureTransform
+   * @class PureTransform 
    * @param {PureTransformConfig} config
    */
   constructor(config = null) {
@@ -16,7 +17,7 @@ export class PureTransform {
   }
 
   /**
-   * @param {PureObject} pureObject
+   * @param {PureObject} pureObject 
    */
   setup(pureObject) {
     this.pureObject = pureObject;
@@ -31,15 +32,15 @@ export class PureTransform {
 
     if (this.config.usePercent) {
       this.percent = {
-        x      : this.config.x,
-        y      : this.config.y,
-        width  : this.config.width,
-        height : this.config.height,
-        top    : this.config.top,
-        bottom : this.config.bottom,
-        left   : this.config.left,
-        right  : this.config.right,
-      };
+        x: this.config.x,
+        y: this.config.y,
+        width: this.config.width,
+        height: this.config.height,
+        top: this.config.top,
+        bottom: this.config.bottom,
+        left: this.config.left,
+        right: this.config.right,
+      }
     }
   }
 
@@ -51,8 +52,7 @@ export class PureTransform {
       this._containerY = bound.y;
       this._containerWidth = bound.width;
       this._containerHeight = bound.height;
-    }
-    else {
+    } else {
       this._containerX = 0;
       this._containerY = 0;
       this._containerWidth = GameResizer.width;
@@ -109,59 +109,60 @@ export class PureTransform {
 
   _updateAlignment() {
     switch (this.config.alignment) {
-    case Alignment.FULL:
-      this._alignFull();
-      break;
-    case Alignment.HORIZONTAL_TOP:
-      this._alignHorizontalTop();
-      break;
-    case Alignment.HORIZONTAL_MIDDLE:
-      this._alignHorizontalMiddle();
-      break;
-    case Alignment.HORIZONTAL_BOTTOM:
-      this._alignHorizontalBottom();
-      break;
-    case Alignment.VERTICAL_LEFT:
-      this._alignVerticalLeft();
-      break;
-    case Alignment.VERTICAL_MIDDLE:
-      this._alignVerticalMiddle();
-      break;
-    case Alignment.VERTICAL_RIGHT:
-      this._alignVerticalRight();
-      break;
-    case Alignment.TOP_LEFT:
-      this._alignCustom(0, 0, 0, 0);
-      break;
-    case Alignment.TOP_CENTER:
-      this._alignCustom(0.5, 0, 0.5, 0);
-      break;
-    case Alignment.TOP_RIGHT:
-      this._alignCustom(1, 0, 1, 0);
-      break;
-    case Alignment.MIDDLE_LEFT:
-      this._alignCustom(0, 0.5, 0, 0.5);
-      break;
-    case Alignment.MIDDLE_CENTER:
-      this._alignCustom(0.5, 0.5, 0.5, 0.5);
-      break;
-    case Alignment.MIDDLE_RIGHT:
-      this._alignCustom(1, 0.5, 1, 0.5);
-      break;
-    case Alignment.BOTTOM_LEFT:
-      this._alignCustom(0, 1, 0, 1);
-      break;
-    case Alignment.BOTTOM_CENTER:
-      this._alignCustom(0.5, 1, 0.5, 1);
-      break;
-    case Alignment.BOTTOM_RIGHT:
-      this._alignCustom(1, 1, 1, 1);
-      break;
-    case Alignment.CUSTOM:
-      this._alignCustom(this.config.pivotX, this.config.pivotY, this.config.anchorX, this.config.anchorY);
-      break;
-    default:
-      break;
+      case Alignment.FULL:
+        this._alignFull();
+        break;
+      case Alignment.HORIZONTAL_TOP:
+        this._alignHorizontalTop();
+        break;
+      case Alignment.HORIZONTAL_MIDDLE:
+        this._alignHorizontalMiddle();
+        break;
+      case Alignment.HORIZONTAL_BOTTOM:
+        this._alignHorizontalBottom();
+        break;
+      case Alignment.VERTICAL_LEFT:
+        this._alignVerticalLeft();
+        break;
+      case Alignment.VERTICAL_MIDDLE:
+        this._alignVerticalMiddle();
+        break;
+      case Alignment.VERTICAL_RIGHT:
+        this._alignVerticalRight();
+        break;
+      case Alignment.TOP_LEFT:
+        this._alignCustom(0, 0, 0, 0);
+        break;
+      case Alignment.TOP_CENTER:
+        this._alignCustom(0.5, 0, 0.5, 0);
+        break;
+      case Alignment.TOP_RIGHT:
+        this._alignCustom(1, 0, 1, 0);
+        break;
+      case Alignment.MIDDLE_LEFT:
+        this._alignCustom(0, 0.5, 0, 0.5);
+        break;
+      case Alignment.MIDDLE_CENTER:
+        this._alignCustom(0.5, 0.5, 0.5, 0.5);
+        break;
+      case Alignment.MIDDLE_RIGHT:
+        this._alignCustom(1, 0.5, 1, 0.5);
+        break;
+      case Alignment.BOTTOM_LEFT:
+        this._alignCustom(0, 1, 0, 1);
+        break;
+      case Alignment.BOTTOM_CENTER:
+        this._alignCustom(0.5, 1, 0.5, 1);
+        break;
+      case Alignment.BOTTOM_RIGHT:
+        this._alignCustom(1, 1, 1, 1);
+        break;
+      case Alignment.CUSTOM:
+        let { anchorX, anchorY, pivotX, pivotY } = this.config;
+        this._alignCustom(pivotX, pivotY, anchorX, anchorY);
+        break;
+      default:
+        break;
     }
   }
 
@@ -180,8 +181,7 @@ export class PureTransform {
     let scale = 1;
     if (this.config.maintainAspectRatioType === MaintainAspectRatioType.MIN) {
       scale = Math.min(this.width / this.config.naturalWidth, this.height / this.config.naturalHeight);
-    }
-    else if (this.config.maintainAspectRatioType === MaintainAspectRatioType.MAX) {
+    } else if (this.config.maintainAspectRatioType === MaintainAspectRatioType.MAX) {
       scale = Math.max(this.width / this.config.naturalWidth, this.height / this.config.naturalHeight);
     }
     this.width = this.config.naturalWidth * scale;

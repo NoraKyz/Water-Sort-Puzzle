@@ -1,5 +1,4 @@
 import { PureObject } from "../core/pureObject";
-import { Graphics, Rectangle } from "pixi.js";
 
 export class PureRect extends PureObject {
   /**
@@ -9,9 +8,9 @@ export class PureRect extends PureObject {
    * @param {number} naturalWidth
    * @param {number} naturalHeight
    */
-  constructor(transformPortrait = null, transformLandscape = null, naturalWidth = 0, naturalHeight = 0) {
-    super(new Rectangle(0, 0, naturalWidth, naturalHeight), transformPortrait, transformLandscape);
-    this.registerOnUpdateTransformCallback(this._onResize.bind(this));
+  constructor(transformPortrait = undefined, transformLandscape = undefined, naturalWidth = 0, naturalHeight = 0) {
+    super(new PIXI.Rectangle(0, 0, naturalWidth, naturalHeight), transformPortrait, transformLandscape);
+    this.registerOnUpdateTransformCallback(this._onUpdateTransform.bind(this));
   }
 
   /**
@@ -24,9 +23,16 @@ export class PureRect extends PureObject {
     this.color = color;
     this.alpha = alpha;
 
-    this.graphics = new Graphics();
+    this.graphics = new PIXI.Graphics();
     parent.addChild(this.graphics);
     this._draw();
+  }
+
+  clear() {
+    if (this.graphics && this.graphics.parent) {
+      this.graphics.parent.removeChild(this.graphics);
+      this.graphics = undefined;
+    }
   }
 
   _draw() {
@@ -35,18 +41,10 @@ export class PureRect extends PureObject {
     this.graphics.drawRect(this.x, this.y, this.width, this.height);
   }
 
-  _onResize() {
+  _onUpdateTransform() {
     // update graphics
     if (this.graphics) {
       this._draw();
     }
-  }
-
-  get visible() {
-    return this.graphics.visible;
-  }
-
-  set visible(value) {
-    this.graphics.visible = value;
   }
 }
