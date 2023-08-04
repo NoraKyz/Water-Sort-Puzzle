@@ -5,6 +5,7 @@ import { GameResizer } from "../../pureDynamic/systems/gameResizer";
 import { LevelEvent } from "../level/levelEvent";
 import { LevelManager } from "../level/levelManager";
 import { Level } from "../level/level";
+import { BackgroundManager } from "../../iec/object/background/backgroundManager";
 
 export class PlayScene extends Scene {
   constructor() {
@@ -40,10 +41,10 @@ export class PlayScene extends Scene {
     this.addChild(this.gameplay);
   }
 
-  _initLevels() {
-    this.levelManager = new LevelManager();
-    this.levelManager.on(LevelEvent.Start, this._onLevelStart, this);
-    this.levelManager.start();
-    this.gameplay.addChild(this.levelManager);
-  }
+  // _initLevels() {
+  //   this.levelManager = new LevelManager();
+  //   this.levelManager.on(LevelEvent.Start, this._onLevelStart, this);
+  //   this.levelManager.start();
+  //   this.gameplay.addChild(this.levelManager);
+  // }
 }
