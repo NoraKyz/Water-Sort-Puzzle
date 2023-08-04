@@ -1,10 +1,10 @@
 /* eslint-disable max-depth */
 import { Container } from "pixi.js";
-import { GameConstant } from "../../gameConstant";
-import { Util } from "../../helpers/utils";
-import { SoundManager } from "../../soundManager";
-import { Tween } from "../../systems/tween/tween";
-import { TubeState } from "../object/tube/tube";
+import { GameConstant } from "../../../gameConstant";
+import { Util } from "../../../helpers/utils";
+import { SoundManager } from "../../../soundManager";
+import { Tween } from "../../../systems/tween/tween";
+import { TubeState } from "./tube";
 
 export class TubeManager extends Container {
   constructor(levelData, tubeData) {
