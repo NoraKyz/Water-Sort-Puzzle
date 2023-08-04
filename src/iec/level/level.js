@@ -11,6 +11,7 @@ import { Sprite, Texture } from "pixi.js";
 import { Solver } from "../solver/solve";
 import { Tween } from "../../systems/tween/tween";
 import { TimeOut, TimeOutEvent } from "../basic/timeOut";
+import { SkinManager } from "../object/skin/skinManager";
 
 export class Level extends Container {
   static createLevel(index) {
@@ -26,7 +27,7 @@ export class Level extends Container {
     super();
     this.index = index;
     this.data = LevelData[index];
-    this.tubeData = TubeData[LevelData[index].tubeType];
+    this.tubeData = SkinManager.currentSkin;
     // this._initLevelText(index);
     this._initTubeManager();
     this._initTube();
@@ -93,9 +94,11 @@ export class Level extends Container {
       for (let i = 0; i < data.length; i++) {
         tube.addLiquid(data[i], GameConstant.LIQUID_HEIGHT, 100);
       }
+
       tube.position.x = tube.originalX = TubePosData[this.data.tubePosData][index].pos[0];
       tube.position.y = tube.originalY = TubePosData[this.data.tubePosData][index].pos[1];
       tube.direction = TubePosData[this.data.tubePosData][index].dirention;
+      
       tube.index = index;
       this.tubeManager.addTube(tube);
     });
