@@ -1,0 +1,14 @@
+[
+    {
+        "id": "bg_1",
+        "unlock": true
+    },
+    {
+        "id": "bg_2",
+        "unlock": false
+    },
+    {
+        "id": "bg_3",
+        "unlock": false
+    }
+]
