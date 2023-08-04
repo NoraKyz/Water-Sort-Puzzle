@@ -5,7 +5,7 @@ import LevelData from "@../../../assets/jsons/levelData.json";
 import TubePosData from "@../../../assets/jsons/tubePosData.json";
 import TubeData from "@../../../assets/jsons/tubeData.json";
 import { Tube } from "../object/tube/tube";
-import { TubeManager } from "../manager/tubeManager";
+import { TubeManager } from "../object/tube/tubeManager";
 import { GameConstant } from "../../gameConstant";
 import { Sprite, Texture } from "pixi.js";
 import { Solver } from "../solver/solve";
