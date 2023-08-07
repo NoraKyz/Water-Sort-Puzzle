@@ -10,6 +10,7 @@ import { Time } from "./systems/time/time";
 import { InputManager } from "./pureDynamic/systems/inputManager";
 import { Physics } from "./physics/physics";
 import { PlayScene } from "././iec/scenes/playScene";
+import { update } from "@tweenjs/tween.js";
 
 export class Game {
   static init() {
@@ -65,7 +66,7 @@ export class Game {
 
     SceneManager.load(SceneManager.getScene(GameConstant.SCENE_PLAY));
 
-    this.app.ticker.add(this._update.bind(this));
+    this.app.ticker.add(() => this._update());
   }
 
   static _update() {

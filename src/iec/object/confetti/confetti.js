@@ -5,7 +5,7 @@ import { Util } from "../../../helpers/utils";
 export class Confetti extends Container {
   constructor() {
     super();
-    let textures = Util.getTexturesContain("image_014_01");
+    let textures = Util.getTexturesContain("image_014_");
     this.animtedSprite = new AnimatedSprite(textures, true);
     this.animtedSprite.anchor.set(0.5);
     this.animtedSprite.y = -250;
@@ -15,6 +15,7 @@ export class Confetti extends Container {
       this.parent?.removeChild(this);
       this.emit("selfDespawn");
     };
+    
     this.addChild(this.animtedSprite);
   }
 

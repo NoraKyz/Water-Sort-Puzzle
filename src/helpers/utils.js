@@ -131,7 +131,7 @@ export class Util {
   static getTexturesContain(text) {
     let keys = Object.keys(TextureCache).filter((key) => key.indexOf(text) >= 0);
     let textures = keys.map((key) => Texture.from(key));
-    textures.sort((a, b) => a.textureCacheIds[0].localeCompare(b.textureCacheIds[0], undefined, { numeric: true, sensitivity: 'base' }));
+    //textures.sort((a, b) => a.textureCacheIds[0].localeCompare(b.textureCacheIds[0], undefined, { numeric: true, sensitivity: 'base' }));
     return textures;
   }
 }
