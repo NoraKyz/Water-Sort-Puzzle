@@ -2,6 +2,7 @@ import { PureObject } from "../core/pureObject";
 import { PureTransform } from "../core/pureTransform";
 import { GameResizer, Orientation } from "../systems/gameResizer";
 import { Util } from "../../helpers/utils";
+import { Text } from "pixi.js";
 
 export class PureText extends PureObject {
   /**
@@ -14,7 +15,7 @@ export class PureText extends PureObject {
    * @param {PIXI.TextStyle} styleLandscape use style portrait if null 
    */
   constructor(text, transformPortrait = undefined, stylePortrait = undefined, transformLandscape = undefined, styleLandscape = undefined) {
-    super(new PIXI.Text(text), transformPortrait, transformLandscape);
+    super(new Text(text), transformPortrait, transformLandscape);
 
     this.stylePortrait = stylePortrait;
     this.styleLandscape = styleLandscape ? styleLandscape : stylePortrait;

@@ -10,8 +10,7 @@ export class TopbarUI extends Container {
     }
 
     _initProperties() {
-        this.x = GameResizer.width / 2;
-        this.y = GameResizer.height / 2;
+        console.log(this.position);
     }
 
     _initComponents() {
@@ -20,6 +19,7 @@ export class TopbarUI extends Container {
 
     _initTitleLevel() {
         this.titleLevel = new TitleLevel("1");
+        this.titleLevel.y = -420;
         this.addChild(this.titleLevel);
     }
 }

@@ -8,6 +8,7 @@ import { Spawner } from "../../spawners/spawner";
 import { SoundManager } from "../../soundManager";
 import { LevelManager } from "../level/levelManager";
 import { TopbarUI } from "../ui/topbarUI/topbarUI";
+import { Level } from "../level/level";
 
 export class PlayScene extends Scene {
   constructor() {
@@ -27,8 +28,12 @@ export class PlayScene extends Scene {
 
   resize() {
     super.resize();
+    
     this.gameplay.x = GameResizer.width / 2;
     this.gameplay.y = GameResizer.height / 2;
+
+    this.topBarUI.x = GameResizer.width / 2;
+    this.topBarUI.y = GameResizer.height / 2;
   }
 
   _initBg() {
@@ -45,7 +50,7 @@ export class PlayScene extends Scene {
 
   _initLevelManager() {
     this.levelManager = new LevelManager();
-    this.levelManager.start();
+    this.levelManager.startLevel(new Level(3))
     this.gameplay.addChild(this.levelManager);
   }
 
