@@ -1,5 +1,19 @@
 [
   {
+    "stacks":[
+      [
+        1
+      ],
+      [
+        1,1,1
+      ]
+    ],
+    "colorCode": ["f27914", "6c7490", "BC245E", "145def", "f4c916"],
+    "tubePosData": "2_tube",
+    "autoCompelted": false,
+    "enableHint": true
+  },
+  {
     "stacks" :[
       [
         1,2,2,3
@@ -22,7 +36,6 @@
       ]
     ],
     "colorCode": ["f27914", "6c7490", "BC245E", "145def", "f4c916"],
-    "tubeType": "easy",
     "tubePosData": "7_tube",
     "autoCompelted": false,
     "enableHint": true
@@ -50,7 +63,6 @@
       ]
     ],
     "colorCode": ["BC245E", "f4c916", "f27914", "6c7490", "145def"],
-    "tubeType": "medium",
     "tubePosData": "7_tube",
     "autoCompelted": false,
     "enableHint": true
@@ -87,7 +99,6 @@
       ]
     ],
     "colorCode": ["6c7490", "f4c916", "88aaff", "145def", "f27914", "bc245e", "809917", "008160"],
-    "tubeType": "hard",
     "tubePosData": "10_tube",
     "autoCompelted": false,
     "enableHint": true
