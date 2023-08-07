@@ -20,7 +20,7 @@ export class Spawner {
     if (!obj) {
       obj = this.createObject();
     }
-    obj.once("selfDespawn", () => this.despawn(obj));
+    obj.on("selfDespawn", () => this.despawn(obj));
     return obj;
   }
 }
