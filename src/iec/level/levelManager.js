@@ -35,7 +35,7 @@ export class LevelManager extends Container {
 
   startLevel(level) {
     this.addChild(level);
-    level.on(LevelEvent.Complete, this._onLevelComplete, this);
+    level.on(LevelEvent.Complete, this._onLevelComplete);
     level.on(LevelEvent.Fail, this._onLevelFail, this);
     level.on("spawnConfetti", this._onSpawnConfetti, this);
     level.on("tubeTap", this._onTubeTap, this);
@@ -48,15 +48,10 @@ export class LevelManager extends Container {
     this.currLevel.autoCompleted();
   }
 
-  _onLevelComplete(level) {
-    Game.onOneLevelPassed();
-    if (this.currLevelIndex === this.levels.length / 2) {
-      Game.onMidwayProgress();
-    }
+  _onLevelComplete() {
     setTimeout(() => {
-      this.emit(LevelEvent.Complete, level);
-      this.nextLevel();
-    }, 1500);
+      this.emit(LevelEvent.Complete);
+    }, 500);
   }
 
   _onLevelFail(level) {

@@ -9,6 +9,7 @@ import { SoundManager } from "../../soundManager";
 import { LevelManager } from "../level/levelManager";
 import { TopbarUI } from "../ui/topbarUI/topbarUI";
 import { Level } from "../level/level";
+import { LevelEvent } from "../level/levelEvent";
 
 export class PlayScene extends Scene {
   constructor() {
@@ -63,11 +64,18 @@ export class PlayScene extends Scene {
 
   _initUI() {
     this.topBarUI = new TopbarUI();
-    console.log(this.topBarUI);
     this.addChild(this.topBarUI);
   }
 
   _initEvents() {
+    // this.levelManager.on(LevelEvent.Complete, () => {
+    //   this.winUI.show();
+    // });
+    // this.winUI.on("nextLevel", () => {
+    //   this.levelManager.nextLevel();
+    //   this.topBarUI.nextLevel();
+    // });
+   
     this.levelManager.on("spawnConfetti", this._spawnConfetti, this);
   }
 

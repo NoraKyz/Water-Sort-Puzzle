@@ -105,12 +105,6 @@ export class Game {
   static onLose() {
   }
 
-  static onOneLevelPassed() {
-  }
-
-  static onMidwayProgress() {
-  }
-
   static sendEvent(type, name) {
   }
 

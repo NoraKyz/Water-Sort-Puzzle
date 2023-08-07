@@ -2,7 +2,7 @@ import { Text } from "pixi.js";
 
 export class TitleLevel extends Text {
   constructor(idLevel) {
-    super("Level: " + idLevel, {
+    super(`Level ${idLevel}`, {
       fill: "#ffebef",
       fontFamily: "Comic Sans MS",
       fontSize: 64,
@@ -13,6 +13,6 @@ export class TitleLevel extends Text {
   }
 
   _setText(idLevel) {
-    this.text = "Level: " + idLevel;
+    this.text = `Level ${idLevel}`;
   }
 }
