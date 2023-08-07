@@ -90,7 +90,7 @@ export class Level extends Container {
 
   _initTube() {
     this.data.stacks.forEach((data, index) => {
-      let tube = new Tube(this.tubeData, this.data.colorCode);
+      let tube = new Tube(this.tubeData);
       for (let i = 0; i < data.length; i++) {
         tube.addLiquid(data[i], GameConstant.LIQUID_HEIGHT, 100);
       }

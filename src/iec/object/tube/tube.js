@@ -1,10 +1,9 @@
 /* eslint-disable max-depth */
 import { Container, Point, SimpleRope, Sprite, Texture } from "pixi.js";
-import { Util } from "../../../helpers/utils";
 import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
 import { Tween } from "../../../systems/tween/tween";
-import { ColorCode } from "../colorCode/colorCode";
 import { Liquid } from "../liquid/liquid";
+import colorCode from "../../../../assets/jsons/colorCodeData.json";
 
 export const TubeState = Object.freeze({
   Pouring   : "pouring",
@@ -13,7 +12,7 @@ export const TubeState = Object.freeze({
 });
 
 export class Tube extends Container {
-  constructor(tubeData, colorCode) {
+  constructor(tubeData) {
     super();
     this.colorCode = colorCode;
     this.tubeData = tubeData;
