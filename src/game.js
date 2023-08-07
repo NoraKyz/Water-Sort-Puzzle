@@ -79,7 +79,7 @@ export class Game {
       GameResizer.resize(screenSize.width, screenSize.height);
     }
     else {
-      Debug.warning("Creative", "Game resize called before game loading");
+      Debug.warn("Creative", "Game resize called before game loading");
     }
   }
 
