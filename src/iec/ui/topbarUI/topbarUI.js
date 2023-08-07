@@ -1,4 +1,6 @@
 import { Container } from "pixi.js";
+import { TitleLevel } from "./titleLevel";
+import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
 
 export class TopbarUI extends Container {
     constructor() {
@@ -8,12 +10,16 @@ export class TopbarUI extends Container {
     }
 
     _initProperties() {
+        this.x = GameResizer.width / 2;
+        this.y = GameResizer.height / 2;
     }
 
     _initComponents() {
+        this._initTitleLevel();
     }
 
     _initTitleLevel() {
-        
+        this.titleLevel = new TitleLevel("1");
+        this.addChild(this.titleLevel);
     }
 }

@@ -7,6 +7,7 @@ import { Confetti } from "../../iec/object/confetti/confetti";
 import { Spawner } from "../../spawners/spawner";
 import { SoundManager } from "../../soundManager";
 import { LevelManager } from "../level/levelManager";
+import { TopbarUI } from "../ui/topbarUI/topbarUI";
 
 export class PlayScene extends Scene {
   constructor() {
@@ -15,9 +16,12 @@ export class PlayScene extends Scene {
 
   create() {
     super.create();
+
     this._initBg();
     this._initGameplay();
-    this._initEvents();
+    this._initUI();
+    this._initEvents(); 
+
     this.resize();
   }
 
@@ -27,16 +31,16 @@ export class PlayScene extends Scene {
     this.gameplay.y = GameResizer.height / 2;
   }
 
+  _initBg() {
+    this.bgManager = new BackgroundManager();
+    this.addChild(this.bgManager);
+  }
+
   _initGameplay() {
     this.gameplay = new Container(); 
     this._initLevelManager();
     this._initConfetti();
     this.addChild(this.gameplay);
-  }
-
-  _initBg() {
-    this.bgManager = new BackgroundManager();
-    this.addChild(this.bgManager);
   }
 
   _initLevelManager() {
@@ -45,15 +49,21 @@ export class PlayScene extends Scene {
     this.gameplay.addChild(this.levelManager);
   }
 
-  _initEvents() {
-    this.levelManager.on("spawnConfetti", this._spawnConfetti, this);
-  }
-
   _initConfetti() {
     this.confettiSpawner = new Spawner();
     this.confettiSpawner.init(() => {
       return new Confetti();
     }, 2);
+  }
+
+  _initUI() {
+    this.topBarUI = new TopbarUI();
+    console.log(this.topBarUI);
+    this.addChild(this.topBarUI);
+  }
+
+  _initEvents() {
+    this.levelManager.on("spawnConfetti", this._spawnConfetti, this);
   }
 
   _spawnConfetti(tube) {
