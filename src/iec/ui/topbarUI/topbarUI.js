@@ -2,6 +2,7 @@ import { Container } from "pixi.js";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
+import { TopbarButtons } from "./topbarButtons";
 
 export class TopbarUI extends Container {
     constructor(levelManager) {
@@ -16,6 +17,7 @@ export class TopbarUI extends Container {
 
     _initComponents() {
         this._initTitleLevel();
+        this._initTopbarButtons();
     }
 
     _initTitleLevel() {
@@ -33,6 +35,11 @@ export class TopbarUI extends Container {
                 fontWeight: "bolder"
             });
         this.addChild(this.titleLevel.displayObject);
+    }
+
+    _initTopbarButtons() {
+        this.topbarButton = new TopbarButtons();
+        this.addChild(this.topbarButton);
     }
 
 
