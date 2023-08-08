@@ -10,6 +10,7 @@ import { LevelManager } from "../level/levelManager";
 import { TopbarUI } from "../ui/topbarUI/topbarUI";
 import { Level } from "../level/level";
 import { LevelEvent } from "../level/levelEvent";
+import { WinUI } from "../ui/winUI/winUI";
 
 export class PlayScene extends Scene {
   constructor() {
@@ -64,7 +65,9 @@ export class PlayScene extends Scene {
 
   _initUI() {
     this.topBarUI = new TopbarUI();
-    this.addChild(this.topBarUI);
+    //this.addChild(this.topBarUI);
+    this.winUI = new WinUI();
+    this.addChild(this.winUI);
   }
 
   _initEvents() {

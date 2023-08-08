@@ -1,3 +1,4 @@
+import { Rectangle } from "pixi.js";
 import { PureObject } from "../core/pureObject";
 
 export class PureRect extends PureObject {
@@ -9,7 +10,7 @@ export class PureRect extends PureObject {
    * @param {number} naturalHeight
    */
   constructor(transformPortrait = undefined, transformLandscape = undefined, naturalWidth = 0, naturalHeight = 0) {
-    super(new PIXI.Rectangle(0, 0, naturalWidth, naturalHeight), transformPortrait, transformLandscape);
+    super(new Rectangle(0, 0, naturalWidth, naturalHeight), transformPortrait, transformLandscape);
     this.registerOnUpdateTransformCallback(this._onUpdateTransform.bind(this));
   }
 
