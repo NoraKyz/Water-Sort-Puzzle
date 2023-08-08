@@ -42,7 +42,7 @@ export class WinUI extends Container {
     }
 
     _initNextButton() {
-        this.nextButton = new PureButton(this, Texture.from("spr_next_level"), () => {}, new PureTransform({
+        this.nextButton = new PureSprite(Texture.from("spr_next_level"), new PureTransform({
             alignment: Alignment.BOTTOM_CENTER,
             useOriginalSize: true,
         }));
