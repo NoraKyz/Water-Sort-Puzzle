@@ -51,7 +51,7 @@ export class PlayScene extends Scene {
 
   _initLevelManager() {
     this.levelManager = new LevelManager();
-    this.levelManager.startLevel(new Level(3))
+    this.levelManager.start();
     this.gameplay.addChild(this.levelManager);
   }
 
