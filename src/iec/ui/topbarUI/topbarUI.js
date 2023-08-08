@@ -42,7 +42,6 @@ export class TopbarUI extends Container {
         this.addChild(this.topbarButton);
     }
 
-
     _updateTextLevel() {
         this.titleLevel.displayObject.text = "Level " + (this.levelManager.currLevelIndex + 1);
     }

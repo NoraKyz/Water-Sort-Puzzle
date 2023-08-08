@@ -16,4 +16,9 @@ export const GameConstant = Object.freeze({
   LEVEL_OFFSET  : 1,
   LIQUID_HEIGHT : 70,
   HINT_TIME     : 3,
+  UNDO_NUMBER_PER_LEVEL : 5,
+  UNDO_NUMBER_GET_BY_ADS : 5,
+  TUBE_NUMBER_GET_BY_ADS : 1,
+  MAX_TUBE_NUMBER : 10,
+  MAX_LEVEL       : 100,
 });
