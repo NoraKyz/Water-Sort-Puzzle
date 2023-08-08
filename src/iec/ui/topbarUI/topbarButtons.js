@@ -21,7 +21,7 @@ export class TopbarButtons extends Container {
         this.undoBtn = new PureButton(Texture.from("spr_undo_btn"), () => this._onClickUndoButton(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
-            x: 15
+            x: 65,
             y: 72,
         }))
         this.addChild(this.undoBtn.displayObject);
