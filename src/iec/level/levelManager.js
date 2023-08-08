@@ -35,10 +35,10 @@ export class LevelManager extends Container {
 
   startLevel(level) {
     this.addChild(level);
-    level.on(LevelEvent.Complete, this._onLevelComplete);
-    level.on(LevelEvent.Fail, this._onLevelFail, this);
-    level.on("spawnConfetti", this._onSpawnConfetti, this);
-    level.on("tubeTap", this._onTubeTap, this);
+    level.on(LevelEvent.Complete, () => this._onLevelComplete() );
+    level.on(LevelEvent.Fail, (level) => this._onLevelFail(level), this);
+    level.on("spawnConfetti", (tube) => this._onSpawnConfetti(tube), this);
+    level.on("tubeTap", () => this._onTubeTap(), this);
     level.onStart();
     this.currLevel = level;
     this.emit(LevelEvent.Start, level);

@@ -33,9 +33,6 @@ export class PlayScene extends Scene {
     
     this.gameplay.x = GameResizer.width / 2;
     this.gameplay.y = GameResizer.height / 2;
-
-    this.topBarUI.x = GameResizer.width / 2;
-    this.topBarUI.y = GameResizer.height / 2;
   }
 
   _initBg() {
@@ -44,10 +41,11 @@ export class PlayScene extends Scene {
   }
 
   _initGameplay() {
-    this.gameplay = new Container(); 
-    this._initLevelManager();
-    this._initConfetti();
+    this.gameplay = new Container();
     this.addChild(this.gameplay);
+
+    this._initLevelManager();
+    this._initConfetti();  
   }
 
   _initLevelManager() {
@@ -64,20 +62,22 @@ export class PlayScene extends Scene {
   }
 
   _initUI() {
-    this.topBarUI = new TopbarUI();
-    //this.addChild(this.topBarUI);
+    this.topBarUI = new TopbarUI(this.levelManager);
+    this.addChild(this.topBarUI);
     this.winUI = new WinUI();
     this.addChild(this.winUI);
   }
 
   _initEvents() {
-    // this.levelManager.on(LevelEvent.Complete, () => {
-    //   this.winUI.show();
-    // });
-    // this.winUI.on("nextLevel", () => {
-    //   this.levelManager.nextLevel();
-    //   this.topBarUI.nextLevel();
-    // });
+    this.levelManager.on(LevelEvent.Complete, () => {
+      this.winUI.show();
+    });
+
+    this.winUI.on("nextLevel", () => {
+      this.levelManager.nextLevel();
+      this.topBarUI.onNextLevel();
+      this.winUI.hide();
+    });
    
     this.levelManager.on("spawnConfetti", this._spawnConfetti, this);
   }

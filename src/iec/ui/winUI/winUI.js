@@ -8,8 +8,12 @@ import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 export class WinUI extends Container {
     constructor() {
         super();
+        this._initProperties();
         this._initComponents();
-        this._initEvents();
+    }
+
+    _initProperties() {
+        this.visible = false;
     }
 
     _initComponents() {
@@ -30,7 +34,7 @@ export class WinUI extends Container {
             maintainAspectRatioType: MaintainAspectRatioType.MAX,
         }));
         this.fakeBg.displayObject.tint = 0x000000;
-        this.fakeBg.displayObject.alpha = 0.5;
+        this.fakeBg.displayObject.alpha = 0.7;
         this.addChild(this.fakeBg.displayObject);
     }
 
@@ -38,20 +42,29 @@ export class WinUI extends Container {
         this.concefettiBanner = new PureSprite(Texture.from("spr_completed"), new PureTransform({
             alignment: Alignment.MIDDLE_CENTER,
             useOriginalSize: true,
-            y: -80,
+            y: -200,
         }));
         this.addChild(this.concefettiBanner.displayObject);
     }
 
     _initNextButton() {
-        this.nextButton = new PureButton(Texture.from("spr_next_level"), () => this._onClickNextBtn(), new PureTransform({
-            alignment: Alignment.BOTTOM_CENTER,
+        this.nextButton = new PureButton(Texture.from("spr_next_level_btn"), () => this._onClickNextBtn(), new PureTransform({
+            alignment: Alignment.MIDDLE_CENTER,
             useOriginalSize: true,
+            y: 250
         }))
         this.addChild(this.nextButton.displayObject);
     }
 
     _onClickNextBtn() {
         this.emit("nextLevel");
+    }
+
+    hide() {
+        this.visible = false;
+    }
+
+    show() {
+        this.visible = true;
     }
 }
