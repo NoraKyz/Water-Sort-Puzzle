@@ -10,9 +10,10 @@ export class PureButton extends PureSprite {
    * @param {PureTransform} transformPortrait 
    * @param {PureTransform} transformLandscape 
    */
-  constructor(parent, texture, onClick, transformPortrait = undefined, transformLandscape = undefined) {
-    super(parent, texture, transformPortrait, transformLandscape);
+  constructor(texture, onClick, transformPortrait = undefined, transformLandscape = undefined) {
+    super(texture, transformPortrait, transformLandscape);
     this.displayObject.eventMode = "dynamic";
+    this.displayObject.cursor = "pointer";
     this.displayObject.buttonMode = true;
     this.displayObject.on("pointertap", onClick);
   }

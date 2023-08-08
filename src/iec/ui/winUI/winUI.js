@@ -1,13 +1,15 @@
-import { Container, Sprite, Texture } from "pixi.js";
+import { Container, Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
+import { Util } from "../../../helpers/utils";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 
 export class WinUI extends Container {
     constructor() {
         super();
         this._initComponents();
+        this._initEvents();
     }
 
     _initComponents() {
@@ -42,10 +44,10 @@ export class WinUI extends Container {
     }
 
     _initNextButton() {
-        this.nextButton = new PureSprite(Texture.from("spr_next_level"), new PureTransform({
+        this.nextButton = new PureButton(Texture.from("spr_next_level"), () => this._onClickNextBtn(), new PureTransform({
             alignment: Alignment.BOTTOM_CENTER,
             useOriginalSize: true,
-        }));
+        }))
         this.addChild(this.nextButton.displayObject);
     }
 
