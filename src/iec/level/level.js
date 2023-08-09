@@ -23,7 +23,7 @@ export class Level extends Container {
     }
   }
 
-  constructor(index, data) {
+  constructor(index) {
     super();
     this.index = index;
     this.data = LevelData[index];
@@ -40,6 +40,8 @@ export class Level extends Container {
       this.enableHint();
       this.showHint();
     }
+
+    this._initEvents();
   }
 
   onStart() {
@@ -53,6 +55,8 @@ export class Level extends Container {
   onFail() {
     this.emit(LevelEvent.Fail, this);
   }
+
+
 
   complete() {
     this.isCompleted = true;
@@ -262,5 +266,13 @@ export class Level extends Container {
       this.pourText.y = 380;
       this.addChild(this.pourText);
     }
+  }
+
+  _initEvents() {
+    this.on(LevelEvent.Undo, () => this._onUndoLevel());
+  }
+
+  _onUndoLevel() {
+    this.tubeManager.emit("undo");
   }
 }

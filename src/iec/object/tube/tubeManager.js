@@ -5,6 +5,7 @@ import { Util } from "../../../helpers/utils";
 import { SoundManager } from "../../../soundManager";
 import { Tween } from "../../../systems/tween/tween";
 import { TubeState } from "./tube";
+import { Data } from "../../../dataTest";
 
 export class TubeManager extends Container {
   constructor(levelData, tubeData) {
@@ -13,6 +14,9 @@ export class TubeManager extends Container {
     this.tubeData = tubeData;
     this.activeTube = null;
     this.tubeArray = [];
+    this.tubeUndoArray = [];
+
+    this._initEvents();
   }
 
   addTube(tube) {
@@ -118,7 +122,9 @@ export class TubeManager extends Container {
     return false;
   }
 
-  preparePour(tube1, tube2, callback = () => {}) {
+  preparePour(tube1, tube2, callback = () => { }) {
+    this._savePourData();
+
     let pourDirection = null;
     this.activeTube = null;
     tube1.state = TubeState.Pouring;
@@ -148,28 +154,28 @@ export class TubeManager extends Container {
     gap.x = point2.x - point1.x + pourPoint.x;
     gap.y = point2.y - point1.y + pourPoint.y;
     if (gap.x >= 0) {
-      gap.x = `+${ gap.x}`;
+      gap.x = `+${gap.x}`;
     }
     else {
       gap.x = gap.x.toString();
     }
     if (gap.y >= 0) {
-      gap.y = `+${ gap.y}`;
+      gap.y = `+${gap.y}`;
     }
     else {
       gap.y = gap.y.toString();
     }
     Tween.createTween(tube1, {
       position: {
-        x : gap.x,
-        y : gap.y,
+        x: gap.x,
+        y: gap.y,
       },
     }, {
       duration: 0.2,
     }).start();
     Tween.createTween(tube1.tube, { rotation: Util.toRadian(pourPoint.angle) }, {
-      duration : 0.2,
-      onUpdate : () => {
+      duration: 0.2,
+      onUpdate: () => {
         tube1.update();
       },
       onComplete: () => {
@@ -178,7 +184,7 @@ export class TubeManager extends Container {
     }).start();
   }
 
-  startPour(tube1, tube2, pourDirection, callback = () => {}, sfx = null) {
+  startPour(tube1, tube2, pourDirection, callback = () => { }, sfx = null) {
     if (sfx === null) {
       sfx = SoundManager.play("sfx_pourWater", 1, false);
     }
@@ -213,8 +219,8 @@ export class TubeManager extends Container {
       duration: 0.65,
     }).start();
     Tween.createTween(p, { p: 0 }, {
-      duration : 0.65,
-      onUpdate : () => {
+      duration: 0.65,
+      onUpdate: () => {
         targetLiquid.setPercent(100 - p.p);
         sourceLiquid.setPercent(p.p);
         tube1.updateLiquidContainer();
@@ -241,18 +247,18 @@ export class TubeManager extends Container {
     }).start();
   }
 
-  returnToOriginalPos(tube, callback = () => {}) {
+  returnToOriginalPos(tube, callback = () => { }) {
     Tween.createTween(tube, {
       position: {
-        x : tube.originalX + tube.pivot.x,
-        y : tube.originalY + tube.pivot.y,
+        x: tube.originalX + tube.pivot.x,
+        y: tube.originalY + tube.pivot.y,
       },
     }, {
       duration: 0.2,
     }).start();
     Tween.createTween(tube.tube, { rotation: 0 }, {
-      duration : 0.2,
-      onUpdate : () => {
+      duration: 0.2,
+      onUpdate: () => {
         tube.updateLiquidContainer();
       },
       onComplete: () => {
@@ -304,7 +310,33 @@ export class TubeManager extends Container {
     pourFunc();
   }
 
-  pourByIndex(i, j, callback = () => {}) {
+  pourByIndex(i, j, callback = () => { }) {
     this.preparePour(this.tubeArray[i], this.tubeArray[j], callback);
+  }
+
+  _savePourData() {
+    let undoData = [];
+    this.tubeArray.forEach((tube) => {
+      undoData.push(tube.getCurStack().reverse());
+    });
+    this.tubeUndoArray.push(undoData);
+  }
+
+  _initEvents(){
+    this.on("undo", () => this._undoPour());
+  }
+
+  _undoPour() {
+    if (this.tubeUndoArray.length > 0) {
+      Data.undoTimes--;
+
+      let undoData = this.tubeUndoArray.pop();
+      this.tubeArray.forEach((tube, id) => {
+        tube.liquidContainer.removeChildren();
+        undoData[id].forEach((data) => {
+          tube.addLiquid(data, GameConstant.LIQUID_HEIGHT, 100);
+        });
+      });
+    }
   }
 }

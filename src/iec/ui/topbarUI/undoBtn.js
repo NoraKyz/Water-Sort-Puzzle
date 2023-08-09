@@ -4,6 +4,7 @@ import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Data } from "../../../../src/dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
+import { LevelEvent } from "../../level/levelEvent";
 
 export class UndoButton extends Container {
     constructor() {
@@ -19,23 +20,23 @@ export class UndoButton extends Container {
     }
 
     _initComponents() {
-        this._initAddBtn();
+        this._initUndoBtn();
         this._initAdsBtn();
     }
 
-    _initAddBtn() {
-        this.addBtn = new Container();
-        this.addChild(this.addBtn);
+    _initUndoBtn() {
+        this.undoBtn = new Container();
+        this.addChild(this.undoBtn);
 
-        this.icAddBtn = new PureButton(Texture.from("spr_undo_btn"), () => { }, new PureTransform({
+        this.icUndoBtn = new PureButton(Texture.from("spr_undo_btn"), () => this._onClickUndoBtn(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 90,
             y: 72,
         }));
-        this.addBtn.addChild(this.icAddBtn.displayObject);
+        this.undoBtn.addChild(this.icUndoBtn.displayObject);
 
-        this.textAddBtn = new PureText(
+        this.textUndoBtn = new PureText(
             Data.undoTimes.toString(),
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
@@ -49,7 +50,7 @@ export class UndoButton extends Container {
                 fontSize: 50,
                 fontWeight: "bolder"
             });
-        this.addBtn.addChild(this.textAddBtn.displayObject);
+        this.undoBtn.addChild(this.textUndoBtn.displayObject);
     }
 
     _initAdsBtn() {
@@ -63,22 +64,36 @@ export class UndoButton extends Container {
     }
 
     _initEvents() {
-        this.on("unableUndo", () => {
-            this.addBtn.visible = false;
+        this.on("unableUndo", () => {      
+            this.undoBtn.visible = false;
             this.adsBtn.visible = true;
         });
 
-        this.on("ableAddUndo", () => {
-            this.addBtn.visible = true;
+        this.on("ableUndo", () => {
+            this.undoBtn.visible = true;
             this.adsBtn.visible = false;
         });
     }
 
     _onInit() {
+        this._setStateBtn();
+    }
+
+    _setStateBtn() {
         if (Data.undoTimes > 0) {
-            this.emit("ableAddUndo");
+            this.emit("ableUndo");
+            this._updateUndoBtn();
         } else {
             this.emit("unableUndo");
         }
+    }
+
+    _updateUndoBtn() {
+        this.textUndoBtn.text = Data.undoTimes.toString();
+    }
+
+    _onClickUndoBtn() {
+        this.parent.emit(LevelEvent.Undo);
+        this._setStateBtn();
     }
 }

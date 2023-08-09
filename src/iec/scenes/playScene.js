@@ -11,6 +11,7 @@ import { TopbarUI } from "../ui/topbarUI/topbarUI";
 import { Level } from "../level/level";
 import { LevelEvent } from "../level/levelEvent";
 import { WinUI } from "../ui/winUI/winUI";
+import { Data } from "../../dataTest";
 
 export class PlayScene extends Scene {
   constructor() {
@@ -23,14 +24,14 @@ export class PlayScene extends Scene {
     this._initBg();
     this._initGameplay();
     this._initUI();
-    this._initEvents(); 
+    this._initEvents();
 
     this.resize();
   }
 
   resize() {
     super.resize();
-    
+
     this.gameplay.x = GameResizer.width / 2;
     this.gameplay.y = GameResizer.height / 2;
   }
@@ -45,7 +46,7 @@ export class PlayScene extends Scene {
     this.addChild(this.gameplay);
 
     this._initLevelManager();
-    this._initConfetti();  
+    this._initConfetti();
   }
 
   _initLevelManager() {
@@ -78,8 +79,12 @@ export class PlayScene extends Scene {
       this.topBarUI.onNextLevel();
       this.winUI.hide();
     });
-   
+
     this.levelManager.on("spawnConfetti", this._spawnConfetti, this);
+
+    this.topBarUI.on(LevelEvent.Undo, () => {
+      this.levelManager.emit(LevelEvent.Undo);
+    });
   }
 
   _spawnConfetti(tube) {

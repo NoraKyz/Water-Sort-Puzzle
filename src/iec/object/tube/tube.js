@@ -145,12 +145,12 @@ export class Tube extends Container {
   }
 
   getCurStack() {
-    let res = "";
+    let res = [];
     this.liquidContainer.children.forEach((child) => {
       if (child.isPouring) {
         return;
       }
-      res = child.code.toString() + res;
+      res.push(child.code);
     });
     return res;
   }

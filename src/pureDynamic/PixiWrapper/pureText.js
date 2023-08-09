@@ -27,4 +27,8 @@ export class PureText extends PureObject {
     let style = GameResizer.orientation === Orientation.Portrait ? this.stylePortrait : this.styleLandscape;
     Util.copyObject(style, this.displayObject.style);
   }
+
+  set text(value) {
+    this.displayObject.text = value;
+  }
 }

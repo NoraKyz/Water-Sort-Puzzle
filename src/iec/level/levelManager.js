@@ -12,6 +12,8 @@ export class LevelManager extends Container {
     this.currLevel = null;
     this.currLevelIndex = -1;
     this._tmpPos = new Point();
+
+    this._initEvents();
   }
 
   addLevel(level) {
@@ -71,5 +73,13 @@ export class LevelManager extends Container {
 
   _onTubeTap() {
     this.emit("tubeTap");
+  }
+
+  _initEvents() {
+    this.on(LevelEvent.Undo, () => this._onUndoLevel());
+  }
+
+  _onUndoLevel() {
+    this.currLevel.emit(LevelEvent.Undo);
   }
 }
