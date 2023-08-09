@@ -2,6 +2,7 @@ import { Container, Texture } from "pixi.js";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
+import { Data } from "../../../../src/dataTest";
 
 export class AddTubeButton extends Container {
     constructor() {
@@ -9,6 +10,7 @@ export class AddTubeButton extends Container {
         this._initProperties();
         this._initComponents();
         this._initEvents();
+        this._onInit();
     }
 
     _initProperties() {
@@ -50,5 +52,13 @@ export class AddTubeButton extends Container {
             this.addBtn.displayObject.visible = true;
             this.adsBtn.displayObject.visible = false;
         });
+    }
+
+    _onInit() {
+        if (Data.addTubeTimes > 0) {
+            this.emit("ableAddTube");
+        } else {
+            this.emit("unableAddTube");
+        }
     }
 }

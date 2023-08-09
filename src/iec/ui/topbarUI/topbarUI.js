@@ -1,8 +1,12 @@
-import { Container } from "pixi.js";
+import { Container, Texture } from "pixi.js";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
-import { TopbarButtons } from "./topbarButtons";
+import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
+import { UndoButton } from "./undoBtn";
+import { AddTubeButton } from "./addTubeBtn";
+import { ReplayButton } from "./replayBtn";
+import { MenuButton } from "./menuBtn";
 
 export class TopbarUI extends Container {
     constructor(levelManager) {
@@ -17,7 +21,10 @@ export class TopbarUI extends Container {
 
     _initComponents() {
         this._initTitleLevel();
-        this._initTopbarButtons();
+        this._initMenuButton();
+        this._initReplayButton();
+        this._initUndoButton();
+        this._initAddTubeButton();
     }
 
     _initTitleLevel() {
@@ -37,9 +44,24 @@ export class TopbarUI extends Container {
         this.addChild(this.titleLevel.displayObject);
     }
 
-    _initTopbarButtons() {
-        this.topbarButton = new TopbarButtons();
-        this.addChild(this.topbarButton);
+    _initMenuButton() {
+        this.menuBtn = new MenuButton();
+        this.addChild(this.menuBtn);
+    }
+
+    _initReplayButton() {
+        this.replayBtn = new ReplayButton();
+        this.addChild(this.replayBtn);
+    }
+
+    _initUndoButton() {
+        this.undoBtn = new UndoButton();
+        this.addChild(this.undoBtn);
+    }
+
+    _initAddTubeButton() {
+        this.addTubeBtn = new AddTubeButton();
+        this.addChild(this.addTubeBtn);
     }
 
     _updateTextLevel() {
