@@ -8,10 +8,10 @@ import { TubeState } from "./tube";
 import { Data } from "../../../dataTest";
 
 export class TubeManager extends Container {
-  constructor(levelData, tubeData) {
+  constructor(levelData, skin) {
     super();
     this.levelData = levelData;
-    this.tubeData = tubeData;
+    this.skin = skin;
     this.activeTube = null;
     this.tubeArray = [];
     this.tubeUndoArray = [];
@@ -136,7 +136,7 @@ export class TubeManager extends Container {
     if (tube2.direction === "l" || (tube2.direction === "b" && tube2.position.x > tube1.position.x)) {
       tube1.changePivotTo(tube1.vertexRight);
       pourDirection = "l";
-      pourPoint.angle = this.tubeData.pourData[4 - liquids.length];
+      pourPoint.angle = this.skin.pourData[4 - liquids.length];
 
       pourPoint.x = -7;
       pourPoint.y = -250;
@@ -144,7 +144,7 @@ export class TubeManager extends Container {
     else {
       pourDirection = "r";
       tube1.changePivotTo(tube1.vertexLeft);
-      pourPoint.angle = -this.tubeData.pourData[4 - liquids.length];
+      pourPoint.angle = -this.skin.pourData[4 - liquids.length];
       pourPoint.x = 7;
       pourPoint.y = -250;
     }
@@ -198,10 +198,10 @@ export class TubeManager extends Container {
     sourceLiquid.isPouring = true;
     let pourAngle;
     if (pourDirection === "l") {
-      pourAngle = Util.toRadian(this.tubeData.pourData[4 - liquids1.length + 1]);
+      pourAngle = Util.toRadian(this.skin.pourData[4 - liquids1.length + 1]);
     }
     else {
-      pourAngle = -Util.toRadian(this.tubeData.pourData[4 - liquids1.length + 1]);
+      pourAngle = -Util.toRadian(this.skin.pourData[4 - liquids1.length + 1]);
     }
     let targetLiquid = tube2.addLiquid(liquids1.code, GameConstant.LIQUID_HEIGHT, 0);
     let p = {

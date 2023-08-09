@@ -6,7 +6,6 @@ import { BackgroundManager } from "../../iec/object/background/backgroundManager
 import { Confetti } from "../../iec/object/confetti/confetti";
 import { Spawner } from "../../spawners/spawner";
 import { SoundManager } from "../../soundManager";
-import { LevelManager } from "../level/levelManager";
 import { TopbarUI } from "../ui/topbarUI/topbarUI";
 import { Level } from "../level/level";
 import { LevelEvent } from "../level/levelEvent";
@@ -45,14 +44,14 @@ export class PlayScene extends Scene {
     this.gameplay = new Container();
     this.addChild(this.gameplay);
 
-    this._initLevelManager();
+    this._initLevel();
     this._initConfetti();
   }
 
-  _initLevelManager() {
-    this.levelManager = new LevelManager();
-    this.levelManager.start();
-    this.gameplay.addChild(this.levelManager);
+  _initLevel() {
+    this.level = new Level();
+    this.level.startLevel(Data.currentLevel);
+    this.gameplay.addChild(this.level);
   }
 
   _initConfetti() {
@@ -63,30 +62,31 @@ export class PlayScene extends Scene {
   }
 
   _initUI() {
-    this.topBarUI = new TopbarUI(this.levelManager);
+    this.topBarUI = new TopbarUI();
     this.addChild(this.topBarUI);
+
     this.winUI = new WinUI();
     this.addChild(this.winUI);
   }
 
   _initEvents() {
-    this.levelManager.on(LevelEvent.Complete, () => {
+    this.level.on(LevelEvent.Complete, () => {
       this.winUI.show();
     });
 
     this.winUI.on("nextLevel", () => {
-      this.levelManager.nextLevel();
+      this.level.nextLevel();
       this.topBarUI.onNextLevel();
       this.winUI.hide();
     });
 
-    this.levelManager.on("spawnConfetti", this._spawnConfetti, this);
+    this.level.on("spawnConfetti", this._spawnConfetti, this);
 
     this.topBarUI.on(LevelEvent.Undo, () => {
-      this.levelManager.emit(LevelEvent.Undo);
+      this.level.emit(LevelEvent.Undo);
     });
     this.topBarUI.on(LevelEvent.Replay, () => {
-      this.levelManager.emit(LevelEvent.Replay);
+      this.level.emit(LevelEvent.Replay);
     });
   }
 

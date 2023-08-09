@@ -3,6 +3,7 @@ import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Data } from "../../../../src/dataTest";
+import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 
 export class AddTubeButton extends Container {
     constructor() {
@@ -23,13 +24,32 @@ export class AddTubeButton extends Container {
     }
 
     _initAddBtn() {
-        this.addBtn = new PureButton(Texture.from("spr_add_tube_btn"), () => { }, new PureTransform({
+        this.addBtn = new Container();
+        this.addChild(this.addBtn);
+
+        this.icAddBtn = new PureButton(Texture.from("spr_add_tube_btn"), () => { }, new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 260,
             y: 72,
         }));
-        this.addChild(this.addBtn.displayObject);
+        this.addBtn.addChild(this.icAddBtn.displayObject);
+
+        this.textAddTubeBtn = new PureText(
+            Data.addTubeTimes.toString(),
+            new PureTransform({
+                alignment: Alignment.TOP_CENTER,
+                useOriginalSize: true,
+                x: 115,
+                y: 78,
+            }),
+            {
+                fill: "#ffebef",
+                fontFamily: "Comic Sans MS",
+                fontSize: 50,
+                fontWeight: "bolder"
+            });
+        this.addBtn.addChild(this.textAddTubeBtn.displayObject);
     }
 
     _initAdsBtn() {
@@ -44,13 +64,13 @@ export class AddTubeButton extends Container {
 
     _initEvents() {
         this.on("unableAddTube", () => {
-            this.addBtn.displayObject.visible = false;
-            this.adsBtn.displayObject.visible = true;
+            this.addBtn.visible = false;
+            this.adsBtn.visible = true;
         });
 
         this.on("ableAddTube", () => {
-            this.addBtn.displayObject.visible = true;
-            this.adsBtn.displayObject.visible = false;
+            this.addBtn.visible = true;
+            this.adsBtn.visible = false;
         });
     }
 

@@ -1,10 +1,10 @@
 /* eslint-disable max-depth */
 import { LevelEvent } from "./levelEvent";
 import { Container } from "@pixi/display";
-import LevelData from "@../../../assets/jsons/levelData.json";
 import TubePosData from "@../../../assets/jsons/tubePosData.json";
-import TubeData from "@../../../assets/jsons/tubeData.json";
+import LevelData from "@../../../assets/jsons/levelData.json";
 import { Tube } from "../object/tube/tube";
+import { TubeFactory } from "../object/tube/tubeFactory";
 import { TubeManager } from "../object/tube/tubeManager";
 import { GameConstant } from "../../gameConstant";
 import { Sprite, Texture } from "pixi.js";
@@ -12,77 +12,30 @@ import { Solver } from "../solver/solve";
 import { Tween } from "../../systems/tween/tween";
 import { TimeOut, TimeOutEvent } from "../basic/timeOut";
 import { SkinManager } from "../object/skin/skinManager";
+import { Data } from "../../dataTest";
 
 export class Level extends Container {
-  static createLevel(index) {
-    if (LevelData[index]) {
-      return new Level(index);
-    }
-    else {
-      return;
-    }
+  constructor() {
+    super();
+
+    this.data = LevelData[Data.currentLevel];
+    this.skin = SkinManager.currentSkin;
+
+    this._initComponents();
+    this._initEvents();
   }
 
-  constructor(index) {
-    super();
-    this.index = index;
-    this.data = LevelData[index];
-    this.tubeData = SkinManager.currentSkin;
-    // this._initLevelText(index);
+  _initComponents() {
     this._initTubeManager();
-    this._initTube();
-    if (this.data.tutorial) {
-      this._initTutorial();
-      this.tubeManager.tutorial = true;
-      this.tubeManager.tutorialNextMove = [0, 1];
-    }
+    this._initTubeFactory();
     if (this.data.enableHint) {
       this.enableHint();
       this.showHint();
     }
-
-    this._initEvents();
-  }
-
-  onStart() {
-    this.emit(LevelEvent.Start, this);
-  }
-
-  onSuccess() {
-    this.emit(LevelEvent.Success, this);
-  }
-
-  onFail() {
-    this.emit(LevelEvent.Fail, this);
-  }
-
-  complete() {
-    this.isCompleted = true;
-    this.emit(LevelEvent.Complete, this);
-  }
-
-  autoCompleted() {
-    if (this.data.autoCompelted) {
-      let solution = this.getSolution();
-      this.tubeManager.startAutoPour(solution);
-    }
-  }
-
-  getSolution() {
-    let stack = this.tubeManager.getCurrentStacks();
-    let solution = Solver.solve(new Solver(stack));
-    return solution;
-  }
-
-  _initLevelText(index) {
-    this.levelText = new Sprite(Texture.from(`spr_text_level_${index + GameConstant.LEVEL_OFFSET}`));
-    this.levelText.anchor.set(0.5);
-    this.levelText.y = -500;
-    this.addChild(this.levelText);
   }
 
   _initTubeManager() {
-    this.tubeManager = new TubeManager(this.data, this.tubeData);
+    this.tubeManager = new TubeManager(this.data, this.skin);
     this.tubeManager.on("win", this.complete, this);
     this.tubeManager.on("spawnConfetti", this._onSpawnConfetti, this);
     this.tubeManager.on("tubeTap", this._onTubeTap, this);
@@ -90,20 +43,8 @@ export class Level extends Container {
     this.addChild(this.tubeManager);
   }
 
-  _initTube() {
-    this.data.stacks.forEach((data, index) => {
-      let tube = new Tube(this.tubeData);
-      for (let i = 0; i < data.length; i++) {
-        tube.addLiquid(data[i], GameConstant.LIQUID_HEIGHT, 100);
-      }
-
-      tube.position.x = tube.originalX = TubePosData[this.data.tubePosData][index].pos[0];
-      tube.position.y = tube.originalY = TubePosData[this.data.tubePosData][index].pos[1];
-      tube.direction = TubePosData[this.data.tubePosData][index].dirention;
-      
-      tube.index = index;
-      this.tubeManager.addTube(tube);
-    });
+  _initTubeFactory() {
+    this.tubeFactory = new TubeFactory();
   }
 
   enableHint() {
@@ -121,6 +62,88 @@ export class Level extends Container {
       this.curSolutionIndex = 0;
     }
     this._initHint(this.curSolution[this.curSolutionIndex]);
+  }
+
+  _initHint(move) {
+    if (!move) {
+      this.timeOut.initTimeout();
+      return;
+    }
+    if (!this.hand) {
+      this.hand = new Sprite(Texture.from("spr_hand"));
+      this.addChild(this.hand);
+      this.hand.anchor.set(0);
+      this.hand.pivot.set(85, 15);
+      this.hand.scale.set(0.7);
+    }
+    let tube1 = this.tubeManager.getTubePosition(move[0]);
+    let tube2 = this.tubeManager.getTubePosition(move[1]);
+    this.hand.visible = true;
+    this.hand.x = tube1.x;
+    this.hand.y = tube1.y + 180;
+    this.tween1?.stop();
+    this.tween2?.stop();
+    this.tween3?.stop();
+    this.tween1 = Tween.createTween(this.hand, { position: { y: this.hand.y + 20 } }, {
+      duration: 0.5,
+      repeat: 1,
+      yoyo: true,
+      onComplete: () => {
+        this.tween3.start();
+      },
+      easing: Tween.Easing.Sinusoidal.Out
+      ,
+    }).start();
+    this.tween3 = Tween.createTween(this.hand, { position: { x: tube2.x, y: tube2.y + 180 } }, {
+      duration: 0.5,
+      onComplete: () => {
+        this.tween2 = Tween.createTween(this.hand, { position: { y: this.hand.y + 20 } }, {
+          duration: 0.5,
+          repeat: 1,
+          yoyo: true,
+          onComplete: () => {
+            setTimeout(() => {
+              this.hand.x = tube1.x;
+              this.hand.y = tube1.y + 180;
+              this.tween1.start();
+            }, 500);
+          },
+          easing: Tween.Easing.Sinusoidal.Out
+          ,
+        }).start();
+      },
+    });
+  }
+
+  autoCompleted() {
+    if (this.data.autoCompelted) {
+      let solution = this.getSolution();
+      this.tubeManager.startAutoPour(solution);
+    }
+  }
+
+  getSolution() {
+    let stack = this.tubeManager.getCurrentStacks();
+    let solution = Solver.solve(new Solver(stack));
+    return solution;
+  }
+
+  _offHint() {
+    if (this.hand) {
+      this.hand.visible = false;
+      this.tween1?.stop();
+      this.tween2?.stop();
+      this.tween3?.stop();
+    }
+  }
+
+  onFail() {
+    this.emit(LevelEvent.Fail, this);
+  }
+
+  complete() {
+    this.isCompleted = true;
+    this.emit(LevelEvent.Complete, this);
   }
 
   _onSpawnConfetti(tube) {
@@ -150,66 +173,6 @@ export class Level extends Container {
     }
   }
 
-  _initHint(move) {
-    if (!move) {
-      this.timeOut.initTimeout();
-      return;
-    }
-    if (!this.hand) {
-      this.hand = new Sprite(Texture.from("spr_hand"));
-      this.addChild(this.hand);
-      this.hand.anchor.set(0);
-      this.hand.pivot.set(85, 15);
-      this.hand.scale.set(0.7);
-    }
-    let tube1 = this.tubeManager.getTubePosition(move[0]);
-    let tube2 = this.tubeManager.getTubePosition(move[1]);
-    this.hand.visible = true;
-    this.hand.x = tube1.x;
-    this.hand.y = tube1.y + 180;
-    this.tween1?.stop();
-    this.tween2?.stop();
-    this.tween3?.stop();
-    this.tween1 = Tween.createTween(this.hand, { position: { y: this.hand.y + 20 } }, {
-      duration   : 0.5,
-      repeat     : 1,
-      yoyo       : true,
-      onComplete : () => {
-        this.tween3.start();
-      },
-      easing: Tween.Easing.Sinusoidal.Out
-      ,
-    }).start();
-    this.tween3 = Tween.createTween(this.hand, { position: { x: tube2.x, y: tube2.y + 180 } }, {
-      duration   : 0.5,
-      onComplete : () => {
-        this.tween2 = Tween.createTween(this.hand, { position: { y: this.hand.y + 20 } }, {
-          duration   : 0.5,
-          repeat     : 1,
-          yoyo       : true,
-          onComplete : () => {
-            setTimeout(() => {
-              this.hand.x = tube1.x;
-              this.hand.y = tube1.y + 180;
-              this.tween1.start();
-            }, 500);
-          },
-          easing: Tween.Easing.Sinusoidal.Out
-          ,
-        }).start();
-      },
-    });
-  }
-
-  _offHint() {
-    if (this.hand) {
-      this.hand.visible = false;
-      this.tween1?.stop();
-      this.tween2?.stop();
-      this.tween3?.stop();
-    }
-  }
-
   _initTutorial() {
     this.showPickUpText();
     this.hand = new Sprite(Texture.from("spr_hand"));
@@ -221,10 +184,10 @@ export class Level extends Container {
     this.hand.x = tube.x;
     this.hand.y = tube.y + 180;
     Tween.createTween(this.hand, { position: { y: this.hand.y + 20 } }, {
-      duration : 0.5,
-      repeat   : Infinity,
-      yoyo     : true,
-      easing   : Tween.Easing.Sinusoidal.Out
+      duration: 0.5,
+      repeat: Infinity,
+      yoyo: true,
+      easing: Tween.Easing.Sinusoidal.Out
       ,
     }).start();
     this.tubeManager.on("move1", this.onMove1, this);
@@ -268,9 +231,42 @@ export class Level extends Container {
 
   _initEvents() {
     this.on(LevelEvent.Undo, () => this._onUndoLevel());
+    this.on(LevelEvent.Replay, () => this._onResetLevel());
   }
 
   _onUndoLevel() {
     this.tubeManager.emit("undo");
+  }
+
+  _onResetLevel() { 
+    this.startLevel(Data.currentLevel);
+  }
+
+  startLevel(id) {
+    this.data = LevelData[id];
+    this.resetTube();
+  }
+
+  nextLevel() {
+    Data.currentLevel++;
+    this.startLevel(Data.currentLevel);
+  }
+
+  resetTube() {
+    this.tubeManager.removeChildren();
+
+    this.data.stacks.forEach((data, index) => {
+      let tube = this.tubeFactory.getTube(this.skin.id);
+      for (let i = 0; i < data.length; i++) {
+        tube.addLiquid(data[i], GameConstant.LIQUID_HEIGHT, 100);
+      }
+
+      tube.position.x = tube.originalX = TubePosData[this.data.tubePosData][index].pos[0];
+      tube.position.y = tube.originalY = TubePosData[this.data.tubePosData][index].pos[1];
+      tube.direction = TubePosData[this.data.tubePosData][index].dirention;
+
+      tube.index = index;
+      this.tubeManager.addTube(tube);
+    });
   }
 }

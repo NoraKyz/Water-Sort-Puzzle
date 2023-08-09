@@ -7,6 +7,7 @@ import { UndoButton } from "./undoBtn";
 import { AddTubeButton } from "./addTubeBtn";
 import { ReplayButton } from "./replayBtn";
 import { MenuButton } from "./menuBtn";
+import { Data } from "../../../dataTest";
 
 export class TopbarUI extends Container {
     constructor(levelManager) {
@@ -15,8 +16,8 @@ export class TopbarUI extends Container {
         this._initComponents();
     }
 
-    _initProperties(levelManager) {
-        this.levelManager = levelManager;
+    _initProperties() {
+        
     }
 
     _initComponents() {
@@ -29,7 +30,7 @@ export class TopbarUI extends Container {
 
     _initTitleLevel() {
         this.titleLevel = new PureText(
-            "Level " + (this.levelManager.currLevelIndex + 1),
+            "Level " + (Data.currentLevel + 1),
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
@@ -65,7 +66,7 @@ export class TopbarUI extends Container {
     }
 
     _updateTextLevel() {
-        this.titleLevel.displayObject.text = "Level " + (this.levelManager.currLevelIndex + 1);
+        this.titleLevel.displayObject.text = "Level " + (Data.currentLevel + 1);
     }
 
     onNextLevel() {
