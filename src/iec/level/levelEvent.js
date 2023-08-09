@@ -4,4 +4,5 @@ export const LevelEvent = Object.freeze({
   Success  : "success",
   Fail     : "fail",
   Undo     : "undo",
+  Replay    : "replay",
 });

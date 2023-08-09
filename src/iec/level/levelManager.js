@@ -77,9 +77,14 @@ export class LevelManager extends Container {
 
   _initEvents() {
     this.on(LevelEvent.Undo, () => this._onUndoLevel());
+    this.on(LevelEvent.Replay, () => this._onReplayLevel());
   }
 
   _onUndoLevel() {
     this.currLevel.emit(LevelEvent.Undo);
+  }
+
+  _onLevelReplay() {
+    
   }
 }

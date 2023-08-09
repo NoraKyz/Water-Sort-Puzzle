@@ -85,6 +85,9 @@ export class PlayScene extends Scene {
     this.topBarUI.on(LevelEvent.Undo, () => {
       this.levelManager.emit(LevelEvent.Undo);
     });
+    this.topBarUI.on(LevelEvent.Replay, () => {
+      this.levelManager.emit(LevelEvent.Replay);
+    });
   }
 
   _spawnConfetti(tube) {

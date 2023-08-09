@@ -56,8 +56,6 @@ export class Level extends Container {
     this.emit(LevelEvent.Fail, this);
   }
 
-
-
   complete() {
     this.isCompleted = true;
     this.emit(LevelEvent.Complete, this);
