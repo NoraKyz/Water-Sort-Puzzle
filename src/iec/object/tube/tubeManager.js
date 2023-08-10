@@ -324,7 +324,7 @@ export class TubeManager extends Container {
 
   _initEvents(){
     this.on("undo", () => this._undoPour());
-    this.on("nextLevel", () => this._onNextLevel());
+    this.on("reset", () => this._onReset());
   }
 
   _undoPour() {
@@ -341,7 +341,7 @@ export class TubeManager extends Container {
     }
   }
 
-  _onNextLevel() {
+  _onReset() {
     this.activeTube = null;
     this.tubeArray = [];
     this.tubeUndoArray = [];

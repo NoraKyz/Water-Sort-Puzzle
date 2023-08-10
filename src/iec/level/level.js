@@ -239,6 +239,7 @@ export class Level extends Container {
   }
 
   _onResetLevel() { 
+    this.tubeManager.emit("reset");
     this.startLevel(Data.currentLevel);
   }
 
@@ -249,7 +250,8 @@ export class Level extends Container {
 
   nextLevel() {
     Data.currentLevel++;
-    this.tubeManager.emit("nextLevel");
+    Data.undoTimes = GameConstant.UNDO_NUMBER_PER_LEVEL;
+    this.tubeManager.emit("reset");
     this.startLevel(Data.currentLevel);
   }
 
