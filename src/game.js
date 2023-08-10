@@ -12,6 +12,7 @@ import { Physics } from "./physics/physics";
 import { PlayScene } from "././iec/scenes/playScene";
 import { update } from "@tweenjs/tween.js";
 import { Data } from "./dataTest";
+import { ButtonManager } from "./iec/ui/buttonManager";
 
 export class Game {
   static init() {
@@ -40,6 +41,7 @@ export class Game {
     Time.init(this.app);
     GameResizer.init(this.app);
     InputManager.init(this.app.view);
+    ButtonManager.init();
     Data.init();
     // TODO: init game setting
     AssetManager.load(this._onAssetLoaded.bind(this));

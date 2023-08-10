@@ -4,6 +4,8 @@ import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
 import { Util } from "../../../helpers/utils";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
+import { ButtonManager } from "../buttonManager";
+import { GameConstant } from "../../../gameConstant";
 
 export class WinUI extends Container {
     constructor() {
@@ -52,7 +54,8 @@ export class WinUI extends Container {
             alignment: Alignment.MIDDLE_CENTER,
             useOriginalSize: true,
             y: 250
-        }))
+        }));
+        ButtonManager.addButton(GameConstant.NEXT_BUTTON, this.nextButton)
         this.addChild(this.nextButton.displayObject);
     }
 

@@ -8,6 +8,8 @@ import { AddTubeButton } from "./addTubeBtn";
 import { ReplayButton } from "./replayBtn";
 import { MenuButton } from "./menuBtn";
 import { Data } from "../../../dataTest";
+import { ButtonManager } from "../buttonManager";
+import { GameConstant } from "../../../gameConstant";
 
 export class TopbarUI extends Container {
     constructor(levelManager) {
@@ -47,21 +49,25 @@ export class TopbarUI extends Container {
 
     _initMenuButton() {
         this.menuBtn = new MenuButton();
+        ButtonManager.addButton(GameConstant.MENU_BUTTON, this.menuBtn);
         this.addChild(this.menuBtn);
     }
 
     _initReplayButton() {
         this.replayBtn = new ReplayButton();
+        ButtonManager.addButton(GameConstant.REPLAY_BUTTON, this.replayBtn);
         this.addChild(this.replayBtn);
     }
 
     _initUndoButton() {
         this.undoBtn = new UndoButton();
+        ButtonManager.addButton(GameConstant.UNDO_BUTTON, this.undoBtn);
         this.addChild(this.undoBtn);
     }
 
     _initAddTubeButton() {
         this.addTubeBtn = new AddTubeButton();
+        ButtonManager.addButton(GameConstant.ADD_TUBE_BUTTON, this.addTubeBtn);
         this.addChild(this.addTubeBtn);
     }
 

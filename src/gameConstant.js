@@ -21,4 +21,10 @@ export const GameConstant = Object.freeze({
   TUBE_NUMBER_GET_BY_ADS : 1,
   MAX_TUBE_NUMBER : 12,
   MAX_LEVEL       : 100,
+
+  REPLAY_BUTTON : "ReplayButton",
+  UNDO_BUTTON   : "UndoButton",
+  MENU_BUTTON   : "MenuButton",
+  ADD_TUBE_BUTTON : "AddTubeButton",
+  NEXT_LEVEL_BUTTON : "NextLevelButton",
 });
