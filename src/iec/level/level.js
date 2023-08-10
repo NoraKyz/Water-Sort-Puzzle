@@ -240,18 +240,22 @@ export class Level extends Container {
   }
 
   _onResetLevel() { 
+    let numberStacks = this.data.stacks.length;
+    this.data = LevelData[Data.currentLevel];
+    while(this.data.stacks.length < numberStacks) {
+      this.data.stacks.push([]);
+    }
+
     this.tubeManager.emit("reset");
-    this.startLevel(Data.currentLevel);
+    this.resetTube();
   }
 
   _onAddTube() {    
-    let cloneLevelData = JSON.parse(JSON.stringify(this.data));
-    cloneLevelData.stacks = this.tubeManager.getPourData();
-    cloneLevelData.stacks.push([]);
-    cloneLevelData.tubeNumber++;
+    this.data.stacks = this.tubeManager.getPourData();
+    this.data.stacks.push([]);
+    this.data.tubeNumber++;
     
     this.tubeManager.emit("reset");
-    this.data = cloneLevelData;
     this.resetTube();
   }
 
@@ -274,9 +278,9 @@ export class Level extends Container {
         tube.addLiquid(data[i], GameConstant.LIQUID_HEIGHT, 100);
       }
 
-      tube.position.x = tube.originalX = TubePosData[this.data.tubeNumber - 2][index].pos[0];
-      tube.position.y = tube.originalY = TubePosData[this.data.tubeNumber - 2][index].pos[1];
-      tube.direction = TubePosData[this.data.tubeNumber - 2][index].dirention;
+      tube.position.x = tube.originalX = TubePosData[this.data.tubeNumber.toString()][index].pos[0];
+      tube.position.y = tube.originalY = TubePosData[this.data.tubeNumber.toString()][index].pos[1];
+      tube.direction = TubePosData[this.data.tubeNumber.toString()][index].dirention;
 
       tube.index = index;
       this.tubeManager.addTube(tube);
