@@ -40,7 +40,7 @@ export class AddTubeButton extends Container {
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
-                x: 115,
+                x: 285,
                 y: 78,
             }),
             {

@@ -249,11 +249,11 @@ export class Level extends Container {
 
   nextLevel() {
     Data.currentLevel++;
+    this.tubeManager.emit("nextLevel");
     this.startLevel(Data.currentLevel);
   }
 
-  resetTube() {
-    this.tubeManager.removeChildren();
+  resetTube() { 
 
     this.data.stacks.forEach((data, index) => {
       let tube = this.tubeFactory.getTube(this.skin.id);

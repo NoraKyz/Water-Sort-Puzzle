@@ -324,6 +324,7 @@ export class TubeManager extends Container {
 
   _initEvents(){
     this.on("undo", () => this._undoPour());
+    this.on("nextLevel", () => this._onNextLevel());
   }
 
   _undoPour() {
@@ -338,5 +339,12 @@ export class TubeManager extends Container {
         });
       });
     }
+  }
+
+  _onNextLevel() {
+    this.activeTube = null;
+    this.tubeArray = [];
+    this.tubeUndoArray = [];
+    this.removeChildren();
   }
 }
