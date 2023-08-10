@@ -4,6 +4,7 @@ import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Data } from "../../../../src/dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
+import { LevelEvent } from "../../level/levelEvent";
 
 export class AddTubeButton extends Container {
     constructor() {
@@ -27,7 +28,7 @@ export class AddTubeButton extends Container {
         this.addBtn = new Container();
         this.addChild(this.addBtn);
 
-        this.icAddBtn = new PureButton(Texture.from("spr_add_tube_btn"), () => { }, new PureTransform({
+        this.icAddBtn = new PureButton(Texture.from("spr_add_tube_btn"), () => this._onClickAddBtn(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 260,
@@ -75,10 +76,25 @@ export class AddTubeButton extends Container {
     }
 
     _onInit() {
+        this._setStateBtn();
+    }
+
+    _setStateBtn(){
         if (Data.addTubeTimes > 0) {
             this.emit("ableAddTube");
+            this._updateAddBtn();
         } else {
             this.emit("unableAddTube");
         }
+    }
+
+    _updateAddBtn() {
+        this.textAddTubeBtn.text = Data.addTubeTimes.toString();
+    }
+
+    _onClickAddBtn() {
+        Data.addTubeTimes--;
+        this.parent.emit(LevelEvent.AddTube);
+        this._setStateBtn();
     }
 }

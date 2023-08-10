@@ -23,36 +23,26 @@ export class UndoButton extends Container {
     _initComponents() {
         this._initUndoBtn();
         this._initAdsBtn();
-        this._initText();
     }
 
     _initUndoBtn() {
-        this.undoBtn = new PureButton(Texture.from("spr_undo_btn"), () => this._onClickUndoBtn(), new PureTransform({
+        this.undoBtn = new Container();
+        this.addChild(this.undoBtn);
+
+        this.icUndoBtn = new PureButton(Texture.from("spr_undo_btn"), () => this._onClickUndoBtn(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 90,
             y: 72,
         }));
-        this.addChild(this.undoBtn.displayObject);
-    }
+        this.undoBtn.addChild(this.icUndoBtn.displayObject);
 
-    _initAdsBtn() {
-        this.adsBtn = new PureButton(Texture.from("spr_ads_get_undo_btn"), () => { }, new PureTransform({
-            alignment: Alignment.TOP_CENTER,
-            useOriginalSize: true,
-            x: 90,
-            y: 72,
-        }));
-        this.addChild(this.adsBtn.displayObject);
-    }
-
-    _initText() {
         this.textUndoBtn = new PureText(
             Data.undoTimes.toString(),
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
-                x: 130,
+                x: 115,
                 y: 78,
             }),
             {
@@ -61,20 +51,47 @@ export class UndoButton extends Container {
                 fontSize: 50,
                 fontWeight: "bolder"
             });
-        this.addChild(this.textUndoBtn.displayObject);
+        this.undoBtn.addChild(this.textUndoBtn.displayObject);
+    }
+
+    _initAdsBtn() {
+        this.adsBtn = new Container();
+        this.addChild(this.adsBtn);
+
+        this.icAdsBtn = new PureButton(Texture.from("spr_ads_get_undo_btn"), () => this._onClickAdsBtn(), new PureTransform({
+            alignment: Alignment.TOP_CENTER,
+            useOriginalSize: true,
+            x: 90,
+            y: 72,
+        }));
+        this.adsBtn.addChild(this.icAdsBtn.displayObject);
+
+        this.textAdsBtn = new PureText(
+            GameConstant.UNDO_NUMBER_GET_BY_ADS.toString(),
+            new PureTransform({
+                alignment: Alignment.TOP_CENTER,
+                useOriginalSize: true,
+                x: 132,
+                y: 80,
+            }),
+            {
+                fill: "#ffebef",
+                fontFamily: "Comic Sans MS",
+                fontSize: 45,
+                fontWeight: "bolder"
+            });
+        this.adsBtn.addChild(this.textAdsBtn.displayObject);
     }
 
     _initEvents() {
-        this.on("unableUndo", () => {
+        this.on("unableUndo", () => {      
             this.undoBtn.visible = false;
             this.adsBtn.visible = true;
-            this._setText(GameConstant.UNDO_NUMBER_GET_BY_ADS.toString());         
         });
 
         this.on("ableUndo", () => {
             this.undoBtn.visible = true;
             this.adsBtn.visible = false;
-            this._setText(Data.undoTimes.toString());
         });
     }
 
@@ -85,18 +102,23 @@ export class UndoButton extends Container {
     _setStateBtn() {
         if (Data.undoTimes > 0) {
             this.emit("ableUndo");
-            
+            this._updateUndoBtn();
         } else {
-            this.emit("unableUndo");       
+            this.emit("unableUndo");
         }
     }
 
-    _setText(text) {
-        this.textUndoBtn.text = text;
+    _updateUndoBtn() {
+        this.textUndoBtn.text = Data.undoTimes.toString();
     }
 
     _onClickUndoBtn() {
         this.parent.emit(LevelEvent.Undo);
+        this._setStateBtn();
+    }
+
+    _onClickAdsBtn() {
+        Data.undoTimes += GameConstant.UNDO_NUMBER_GET_BY_ADS;
         this._setStateBtn();
     }
 }

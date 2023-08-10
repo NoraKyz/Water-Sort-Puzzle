@@ -10,13 +10,17 @@ import { Data } from "../../../dataTest";
 export class TubeManager extends Container {
   constructor(levelData, skin) {
     super();
+    
+    this._initProperties(levelData, skin);
+    this._initEvents();
+  }
+
+  _initProperties(levelData, skin) {
     this.levelData = levelData;
     this.skin = skin;
     this.activeTube = null;
     this.tubeArray = [];
-    this.tubeUndoArray = [];
-
-    this._initEvents();
+    this.tubeUndoDataArray = [];
   }
 
   addTube(tube) {
@@ -123,7 +127,7 @@ export class TubeManager extends Container {
   }
 
   preparePour(tube1, tube2, callback = () => { }) {
-    this._savePourData();
+    this.tubeUndoDataArray.push(this.getPourData());
 
     let pourDirection = null;
     this.activeTube = null;
@@ -314,24 +318,24 @@ export class TubeManager extends Container {
     this.preparePour(this.tubeArray[i], this.tubeArray[j], callback);
   }
 
-  _savePourData() {
-    let undoData = [];
+  getPourData() {
+    let pourData = [];
     this.tubeArray.forEach((tube) => {
-      undoData.push(tube.getCurStack().reverse());
+      pourData.push(tube.getCurStack().reverse());
     });
-    this.tubeUndoArray.push(undoData);
+    return pourData;
   }
 
   _initEvents(){
-    this.on("undo", () => this._undoPour());
+    this.on("undo", () => this._onUndoPour());
     this.on("reset", () => this._onReset());
   }
 
-  _undoPour() {
-    if (this.tubeUndoArray.length > 0) {
+  _onUndoPour() {
+    if (this.tubeUndoDataArray.length > 0) {
       Data.undoTimes--;
 
-      let undoData = this.tubeUndoArray.pop();
+      let undoData = this.tubeUndoDataArray.pop();
       this.tubeArray.forEach((tube, id) => {
         tube.liquidContainer.removeChildren();
         undoData[id].forEach((data) => {
@@ -344,7 +348,7 @@ export class TubeManager extends Container {
   _onReset() {
     this.activeTube = null;
     this.tubeArray = [];
-    this.tubeUndoArray = [];
+    this.tubeUndoDataArray = [];
     this.removeChildren();
   }
 }
