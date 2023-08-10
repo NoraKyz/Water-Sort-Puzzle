@@ -239,10 +239,10 @@ export class Level extends Container {
     this.tubeManager.emit("undo");
   }
 
-  _onResetLevel() { 
+  _onResetLevel() {
     let numberStacks = this.data.stacks.length;
     this.data = LevelData[Data.currentLevel];
-    while(this.data.stacks.length < numberStacks) {
+    while (this.data.stacks.length < numberStacks) {
       this.data.stacks.push([]);
     }
 
@@ -250,13 +250,17 @@ export class Level extends Container {
     this.resetTube();
   }
 
-  _onAddTube() {    
-    this.data.stacks = this.tubeManager.getPourData();
-    this.data.stacks.push([]);
-    this.data.tubeNumber++;
-    
-    this.tubeManager.emit("reset");
-    this.resetTube();
+  _onAddTube() {
+    if (this.data.tubeNumber >= GameConstant.MAX_TUBE_NUMBER) {
+      Data.addTubeTimes--;
+      
+      this.data.stacks = this.tubeManager.getPourData();
+      this.data.stacks.push([]);
+      this.data.tubeNumber++;
+
+      this.tubeManager.emit("reset");
+      this.resetTube();
+    }
   }
 
   startLevel(id) {
@@ -271,7 +275,7 @@ export class Level extends Container {
     this.startLevel(Data.currentLevel);
   }
 
-  resetTube() { 
+  resetTube() {
     this.data.stacks.forEach((data, index) => {
       let tube = this.tubeFactory.getTube(this.skin.id);
       for (let i = 0; i < data.length; i++) {

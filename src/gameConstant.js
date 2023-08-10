@@ -19,6 +19,6 @@ export const GameConstant = Object.freeze({
   UNDO_NUMBER_PER_LEVEL : 5,
   UNDO_NUMBER_GET_BY_ADS : 5,
   TUBE_NUMBER_GET_BY_ADS : 1,
-  MAX_TUBE_NUMBER : 10,
+  MAX_TUBE_NUMBER : 12,
   MAX_LEVEL       : 100,
 });
