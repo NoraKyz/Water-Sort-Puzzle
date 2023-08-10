@@ -251,7 +251,7 @@ export class Level extends Container {
   }
 
   _onAddTube() {
-    if (this.data.tubeNumber >= GameConstant.MAX_TUBE_NUMBER) {
+    if (this.data.tubeNumber < GameConstant.MAX_TUBE_NUMBER) {
       Data.addTubeTimes--;
       
       this.data.stacks = this.tubeManager.getPourData();

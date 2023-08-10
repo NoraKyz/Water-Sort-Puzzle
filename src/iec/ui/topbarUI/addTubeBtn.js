@@ -5,6 +5,7 @@ import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Data } from "../../../../src/dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { LevelEvent } from "../../level/levelEvent";
+import { GameConstant } from "../../../gameConstant";
 
 export class AddTubeButton extends Container {
     constructor() {
@@ -54,7 +55,7 @@ export class AddTubeButton extends Container {
     }
 
     _initAdsBtn() {
-        this.adsBtn = new PureButton(Texture.from("spr_ads_get_tube_btn"), () => { }, new PureTransform({
+        this.adsBtn = new PureButton(Texture.from("spr_ads_get_tube_btn"), () => this._onClickAdsBtn(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 260,
@@ -94,6 +95,11 @@ export class AddTubeButton extends Container {
 
     _onClickAddBtn() {
         this.parent.emit(LevelEvent.AddTube);
+        this._setStateBtn();
+    }
+
+    _onClickAdsBtn() {
+        Data.addTubeTimes += GameConstant.TUBE_NUMBER_GET_BY_ADS;
         this._setStateBtn();
     }
 }
