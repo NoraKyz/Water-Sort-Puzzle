@@ -6,11 +6,12 @@ import { SoundManager } from "../../../soundManager";
 import { Tween } from "../../../systems/tween/tween";
 import { TubeState } from "./tube";
 import { Data } from "../../../dataTest";
+import { ButtonManager } from "../../ui/buttonManager";
 
 export class TubeManager extends Container {
   constructor(levelData, skin) {
     super();
-    
+
     this._initProperties(levelData, skin);
     this._initEvents();
   }
@@ -21,6 +22,7 @@ export class TubeManager extends Container {
     this.activeTube = null;
     this.tubeArray = [];
     this.tubeUndoDataArray = [];
+    this.isPouring = false;
   }
 
   addTube(tube) {
@@ -127,7 +129,6 @@ export class TubeManager extends Container {
   }
 
   preparePour(tube1, tube2, callback = () => { }) {
-    this.tubeUndoDataArray.push(this.getPourData());
 
     let pourDirection = null;
     this.activeTube = null;
@@ -188,9 +189,13 @@ export class TubeManager extends Container {
     }).start();
   }
 
-  startPour(tube1, tube2, pourDirection, callback = () => { }, sfx = null) {
-    if (sfx === null) {
-      sfx = SoundManager.play("sfx_pourWater", 1, false);
+  startPour(tube1, tube2, pourDirection, callback = () => { }, recursive = false) {
+    // Only do something once time when recursive
+    if (recursive === false) {
+      recursive = true;
+      SoundManager.play("sfx_pourWater", 1, false);
+      ButtonManager.disableAll();
+      this.tubeUndoDataArray.push(this.getPourData());
     }
     let liquids1 = tube1.getTopLiquid();
     let liquids2 = tube2.getTopLiquid();
@@ -225,6 +230,7 @@ export class TubeManager extends Container {
     Tween.createTween(p, { p: 0 }, {
       duration: 0.65,
       onUpdate: () => {
+        this.isPouring = true;
         targetLiquid.setPercent(100 - p.p);
         sourceLiquid.setPercent(p.p);
         tube1.updateLiquidContainer();
@@ -234,9 +240,13 @@ export class TubeManager extends Container {
         tube1.removeLiquid(sourceLiquid);
         tube2.offInWaterLine(waterLines);
         if (this.canPour(tube1, tube2)) {
-          this.startPour(tube1, tube2, pourDirection, callback, sfx);
+          this.startPour(tube1, tube2, pourDirection, callback, recursive);
         }
         else {
+          this.isPouring = false;
+          if (this.isPouring === false) {
+            ButtonManager.enableAll();
+          }
           tube1.offWaterSurface(pourDirection);
           tube2.offWaterSurface(pourDirection);
           if (tube2.checkResult()) {
@@ -326,7 +336,7 @@ export class TubeManager extends Container {
     return pourData;
   }
 
-  _initEvents(){
+  _initEvents() {
     this.on("undo", () => this._onUndoPour());
     this.on("reset", () => this._onReset());
   }
@@ -349,6 +359,7 @@ export class TubeManager extends Container {
     this.activeTube = null;
     this.tubeArray = [];
     this.tubeUndoDataArray = [];
+    this.isPouring = false;
     this.removeChildren();
   }
 }

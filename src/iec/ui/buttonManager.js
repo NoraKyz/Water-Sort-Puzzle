@@ -8,11 +8,23 @@ export class ButtonManager {
         this.listButton[buttonName] = button;
     }
 
-    static enableButton(buttonName) {
+    static enable(buttonName) {
         this.listButton[buttonName].eventMode = "static";
     }
 
-    static disableButton(buttonName) {
+    static disable(buttonName) {
         this.listButton[buttonName].eventMode = "none";
+    }
+
+    static disableAll() {
+        for (let buttonName in this.listButton) {
+            this.disable(buttonName);
+        }
+    }
+
+    static enableAll() {
+        for (let buttonName in this.listButton) {
+            this.enable(buttonName);
+        }
     }
 }
