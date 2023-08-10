@@ -93,7 +93,6 @@ export class AddTubeButton extends Container {
     }
 
     _onClickAddBtn() {
-        Data.addTubeTimes--;
         this.parent.emit(LevelEvent.AddTube);
         this._setStateBtn();
     }
