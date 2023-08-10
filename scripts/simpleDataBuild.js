@@ -22,14 +22,18 @@ const TEXTURE_DIR = "textures";
 
 if (dirs.includes(TEXTURE_DIR)) {
   const textureFiles = fs.readdirSync(`${ASSET_DIR}/${TEXTURE_DIR}`);
-  // console.log(textureFiles);
   textureFiles.forEach((tex) => {
     if (tex === ".DS_Store") {
       return;
     }
+    const images = fs.readdirSync(`${ASSET_DIR}/${TEXTURE_DIR}/${tex}`);
+    images.forEach(img => {
+      const basename = img.split(".")[0];
+      assetData.textures[basename] = datauri(`${ASSET_DIR}/${TEXTURE_DIR}/${tex}/${img}`).content;
+    });
     // get basename of texture
-    const basename = tex.split(".")[0];
-    assetData.textures[basename] = datauri(`${ASSET_DIR}/${TEXTURE_DIR}/${tex}`).content;
+    // const basename = tex.split(".")[0];
+    // assetData.textures[basename] = datauri(`${ASSET_DIR}/${TEXTURE_DIR}/${tex}`).content;
   });
 }
 
