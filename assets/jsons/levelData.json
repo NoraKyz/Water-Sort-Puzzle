@@ -13,8 +13,152 @@
     "autoCompelted": false,
     "enableHint": true
   },
+
   {
     "id": 1,
+    "stacks":[
+      [
+        1,2,1,2
+      ],
+      [
+        2,1,2,1
+      ],
+      []
+    ],
+    "tubeNumber": 3,
+    "autoCompelted": false,
+    "enableHint": true
+  },
+
+  {
+    "id": 2,
+    "stacks":[
+      [
+        3,1,2,3
+      ],
+      [
+        1,1,2,3
+      ],
+      [
+        2,3,1,2
+      ],
+      [],[]
+    ],
+    "tubeNumber": 5,
+    "autoCompelted": false,
+    "enableHint": true
+  },
+
+  {
+    "id": 3,
+    "stacks":[
+      [
+        1,2,3,3
+      ],
+      [
+        1,2,1,2
+      ],
+      [
+        3,1,2,3
+      ],
+      [],[]
+    ],
+    "tubeNumber": 5,
+    "autoCompelted": false,
+    "enableHint": true
+  },
+
+  {
+    "id": 4,
+    "stacks":[
+      [
+        1,2,2,2
+      ],
+      [
+        3,1,4,2
+      ],
+      [
+        4,3,1,3
+      ],
+      [
+        5,4,3,4
+      ],
+      [
+        5,5,5,1
+      ],
+      [],[]
+    ],
+    "tubeNumber": 7,
+    "autoCompelted": false,
+    "enableHint": true
+  },
+
+  {
+    "id": 5,
+    "stacks":[
+      [
+        2,3,4,5
+      ],
+      [
+        3,2,4,5
+      ],
+      [
+        5,6,3,6
+      ],
+      [
+        3,5,6,4
+      ],
+      [
+        2,2,6,4
+      ],
+      [],[]
+    ],
+    "tubeNumber": 7,
+    "autoCompelted": false,
+    "enableHint": true
+  },
+
+  {
+    "id": 6,
+    "stacks":[
+      [
+        1,2,3,2
+      ],
+      [
+        4,4,3,2
+      ],
+      [
+        5,5,4,2
+      ],
+      [
+        1,5,3,4
+      ],
+      [
+        1,3,1,5
+      ],[],[]
+    ],
+    "tubeNumber": 7,
+    "autoCompelted": false,
+    "enableHint": true
+  },
+  
+  {
+    "id": 7,
+    "stacks":[
+      [
+        
+      ],
+      [
+        
+      ]
+    ],
+    "tubeNumber": 7,
+    "autoCompelted": false,
+    "enableHint": true
+  },
+
+  {
+    "id": 49,
     "stacks" :[
       [
         1,2,2,3
@@ -41,7 +185,7 @@
     "enableHint": true
   },
   {
-    "id": 2,
+    "id": 50,
     "stacks" :[
       [
         1,2,1,3
@@ -68,7 +212,7 @@
     "enableHint": true
   },
   {
-    "id": 3,
+    "id": 51,
     "stacks" :[
       [
         1,2,3,4
