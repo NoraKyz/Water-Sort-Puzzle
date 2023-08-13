@@ -22,7 +22,6 @@ export class TubeManager extends Container {
     this.activeTube = null;
     this.tubeArray = [];
     this.tubeUndoDataArray = [];
-    this.tubeUndoDataQueue = [];
     this.isPouring = false;
   }
 
@@ -46,6 +45,7 @@ export class TubeManager extends Container {
   }
 
   _onTubeTap(event) {
+
     this.emit("tubeTap");
     if (this.isAutoCompleted) {
       return;
@@ -196,9 +196,8 @@ export class TubeManager extends Container {
       recursive = true;
       SoundManager.play("sfx_pourWater", 1, false);
       ButtonManager.disableAll();
-      if(this.isPouring) {
-        
-      }
+      this.tubeUndoDataArray.push(this.getPourData());
+      
     }
     let liquids1 = tube1.getTopLiquid();
     let liquids2 = tube2.getTopLiquid();
@@ -250,6 +249,7 @@ export class TubeManager extends Container {
           if (this.isPouring === false) {
             ButtonManager.enableAll();
           }
+
           tube1.offWaterSurface(pourDirection);
           tube2.offWaterSurface(pourDirection);
           if (tube2.checkResult()) {

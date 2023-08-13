@@ -50,7 +50,7 @@ export class PlayScene extends Scene {
 
   _initLevel() {
     this.level = new Level();
-    this.level.startLevel(Data.currentLevel);
+    this.level.startLevel(7);
     this.gameplay.addChild(this.level);
   }
 

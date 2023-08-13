@@ -2,7 +2,7 @@
 import { LevelEvent } from "./levelEvent";
 import { Container } from "@pixi/display";
 import TubePosData from "@../../../assets/jsons/tubePosData.json";
-import LevelData from "@../../../assets/jsons/levelData.json";
+import LevelData from "../../iec/level/levels.json";
 import { Tube } from "../object/tube/tube";
 import { TubeFactory } from "../object/tube/tubeFactory";
 import { TubeManager } from "../object/tube/tubeManager";
