@@ -215,21 +215,18 @@ export class Solver {
 
       if (current_state.solved()) {
 
-        // let current_key = current_state.getKey();
+        let current_key = current_state.getKey();
 
-        // const steps = [];
+        const steps = [];
 
-        // while (current_key !== initial_state.getKey()) {
+        while (current_key !== initial_state.getKey()) {
 
-        //   steps.push(parent[current_key].move);
+          steps.push(parent[current_key].move);
 
-        //   current_key = parent[current_key].key;
+          current_key = parent[current_key].key;
 
-        // }
-        // return steps.reverse();
-
-        return true;
-
+        }
+        return steps.reverse();
       }
 
       for (const move of current_state.getLegalMoves()) {
@@ -254,8 +251,7 @@ export class Solver {
 
     }
 
-    //return [];
-    return false;
+    return [];
   }
 
 }
