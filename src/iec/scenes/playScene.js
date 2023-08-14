@@ -6,7 +6,7 @@ import { BackgroundManager } from "../../iec/object/background/backgroundManager
 import { Confetti } from "../../iec/object/confetti/confetti";
 import { Spawner } from "../../spawners/spawner";
 import { SoundManager } from "../../soundManager";
-import { TopbarUI } from "../ui/topbarUI/topbarUI";
+import { TopbarUI } from "../ui/topbar/topbarUI";
 import { Level } from "../level/level";
 import { LevelEvent } from "../level/levelEvent";
 import { WinUI } from "../ui/winUI/winUI";

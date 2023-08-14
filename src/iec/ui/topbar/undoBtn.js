@@ -1,11 +1,11 @@
 import { Container, Texture } from "pixi.js";
-import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Data } from "../../../../src/dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { LevelEvent } from "../../level/levelEvent";
 import { GameConstant } from "../../../gameConstant";
+import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 
 export class UndoButton extends Container {
     constructor() {
@@ -27,9 +27,12 @@ export class UndoButton extends Container {
 
     _initUndoBtn() {
         this.undoBtn = new Container();
+        this.undoBtn.eventMode = 'static';
+        this.undoBtn.cursor = 'pointer';
+        this.undoBtn.on("pointertap", () => this._onClickUndoBtn());
         this.addChild(this.undoBtn);
 
-        this.icUndoBtn = new PureButton(Texture.from("spr_undo_btn"), () => this._onClickUndoBtn(), new PureTransform({
+        this.icUndoBtn = new PureSprite(Texture.from("spr_undo_btn"), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 90,
@@ -56,9 +59,12 @@ export class UndoButton extends Container {
 
     _initAdsBtn() {
         this.adsBtn = new Container();
+        this.adsBtn.eventMode = 'static';
+        this.adsBtn.cursor = 'pointer';
+        this.adsBtn.on("pointertap", () => this._onClickAdsBtn());
         this.addChild(this.adsBtn);
 
-        this.icAdsBtn = new PureButton(Texture.from("spr_ads_get_undo_btn"), () => this._onClickAdsBtn(), new PureTransform({
+        this.icAdsBtn = new PureSprite(Texture.from("spr_ads_get_undo_btn"), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 90,
@@ -100,9 +106,10 @@ export class UndoButton extends Container {
     }
 
     _setStateBtn() {
+        this._updateUndoBtn();
+
         if (Data.undoTimes > 0) {
-            this.emit("ableUndo");
-            this._updateUndoBtn();
+            this.emit("ableUndo");         
         } else {
             this.emit("unableUndo");
         }

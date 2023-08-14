@@ -2,10 +2,11 @@ import { Container, Texture } from "pixi.js";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
-import { Data } from "../../../../src/dataTest";
+import { Data } from "../../../dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { LevelEvent } from "../../level/levelEvent";
 import { GameConstant } from "../../../gameConstant";
+import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 
 export class AddTubeButton extends Container {
     constructor() {
@@ -27,9 +28,12 @@ export class AddTubeButton extends Container {
 
     _initAddBtn() {
         this.addBtn = new Container();
+        this.addBtn.eventMode = 'static';
+        this.addBtn.cursor = 'pointer';
+        this.addBtn.on("pointertap", () => this._onClickAddBtn());
         this.addChild(this.addBtn);
 
-        this.icAddBtn = new PureButton(Texture.from("spr_add_tube_btn"), () => this._onClickAddBtn(), new PureTransform({
+        this.icAddBtn = new PureSprite(Texture.from("spr_add_tube_btn"), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 260,
@@ -55,7 +59,7 @@ export class AddTubeButton extends Container {
     }
 
     _initAdsBtn() {
-        this.adsBtn = new PureButton(Texture.from("spr_ads_get_tube_btn"), () => this._onClickAdsBtn(), new PureTransform({
+        this.adsBtn = new PureSprite(Texture.from("spr_ads_get_tube_btn"), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
             x: 260,
@@ -81,9 +85,10 @@ export class AddTubeButton extends Container {
     }
 
     _setStateBtn(){
+        this._updateAddBtn();
+        
         if (Data.addTubeTimes > 0) {
-            this.emit("ableAddTube");
-            this._updateAddBtn();
+            this.emit("ableAddTube");      
         } else {
             this.emit("unableAddTube");
         }
