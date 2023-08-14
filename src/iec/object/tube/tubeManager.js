@@ -45,12 +45,14 @@ export class TubeManager extends Container {
   }
 
   _onTubeTap(event) {
+    let tube = event.target;
 
-    this.emit("tubeTap");
-    if (this.isAutoCompleted) {
+    if(tube.state === TubeState.Pouring) {
       return;
     }
-    let tube = event.target;
+    
+    this.emit("tubeTap");
+    
     if (this.activeTube === null) {
       if (this.tutorial) {
         if (tube === this.tubeArray[this.tutorialNextMove[0]]) {
