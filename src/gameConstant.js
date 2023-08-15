@@ -6,7 +6,10 @@ export const GameConstant = Object.freeze({
   GAME_HEIGHT             : 1280,
   ANIMATION_FAIL_DURATION : 1,
 
-  SCENE_PLAY: "PlayScene",
+  PLAY_SCREEN: "PlayScene",
+
+  TOPBAR_SCREEN: "TopbarScreen",
+  WIN_SCREEN   : "WinScreen",
 
   DEBUG_ON            : true,
   DEBUG_DRAW_COLLIDER : false,

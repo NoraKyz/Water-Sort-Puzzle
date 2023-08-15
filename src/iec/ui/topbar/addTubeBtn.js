@@ -12,7 +12,7 @@ export class AddTubeButton extends Container {
     constructor() {
         super();
         this._initProperties();
-        this._initComponents();
+        this._initElements();
         this._initEvents();
         this._onInit();
     }
@@ -21,7 +21,7 @@ export class AddTubeButton extends Container {
         
     }
 
-    _initComponents() {
+    _initElements() {
         this._initAddBtn();
         this._initAdsBtn();
     }
@@ -99,7 +99,7 @@ export class AddTubeButton extends Container {
     }
 
     _onClickAddBtn() {
-        this.parent.emit(LevelEvent.AddTube);
+        this.emit(LevelEvent.AddTube);
         this._setStateBtn();
     }
 

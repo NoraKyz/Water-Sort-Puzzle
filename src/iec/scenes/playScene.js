@@ -6,15 +6,15 @@ import { BackgroundManager } from "../../iec/object/background/backgroundManager
 import { Confetti } from "../../iec/object/confetti/confetti";
 import { Spawner } from "../../spawners/spawner";
 import { SoundManager } from "../../soundManager";
-import { TopbarUI } from "../ui/topbar/topbarUI";
 import { Level } from "../level/level";
 import { LevelEvent } from "../level/levelEvent";
-import { WinUI } from "../ui/winUI/winUI";
 import { Data } from "../../dataTest";
+import { TopbarScreen } from "../screens/topbarScreen";
+import { WinScreen } from "../screens/winScreen";
 
 export class PlayScene extends Scene {
   constructor() {
-    super(GameConstant.SCENE_PLAY);
+    super(GameConstant.PLAY_SCREEN);
   }
 
   create() {
@@ -22,7 +22,7 @@ export class PlayScene extends Scene {
 
     this._initBg();
     this._initGameplay();
-    this._initUI();
+    this._initScreens();
     this._initEvents();
 
     this.resize();
@@ -61,34 +61,39 @@ export class PlayScene extends Scene {
     }, 2);
   }
 
-  _initUI() {
-    this.topBarUI = new TopbarUI();
-    this.addChild(this.topBarUI);
+  _initScreens() {
+    this.ui.addScreens(
+      new TopbarScreen(),
+      new WinScreen(),
+    );
 
-    this.winUI = new WinUI();
-    this.addChild(this.winUI);
+    this.topbarScreen = this.ui.getScreen(GameConstant.TOPBAR_SCREEN);
+    this.winScreen = this.ui.getScreen(GameConstant.WIN_SCREEN);
+
+    this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
+    this.ui.setScreenActive(GameConstant.WIN_SCREEN, false);
   }
 
   _initEvents() {
     this.level.on(LevelEvent.Complete, () => {
-      this.winUI.show();
+      this.ui.setScreenActive(GameConstant.WIN_SCREEN);
     });
 
-    this.winUI.on("nextLevel", () => {
+    this.winScreen.on(LevelEvent.NextLevel, () => {
       this.level.nextLevel();
-      this.topBarUI.onNextLevel();
-      this.winUI.hide();
+      this.topbarScreen.onNextLevel();
+      this.ui.setScreenActive(GameConstant.WIN_SCREEN, false);
     });
 
     this.level.on("spawnConfetti", this._spawnConfetti, this);
 
-    this.topBarUI.on(LevelEvent.Undo, () => {
+    this.topbarScreen.on(LevelEvent.Undo, () => {
       this.level.emit(LevelEvent.Undo);
     });
-    this.topBarUI.on(LevelEvent.Replay, () => {
+    this.topbarScreen.on(LevelEvent.Replay, () => {
       this.level.emit(LevelEvent.Replay);
     });
-    this.topBarUI.on(LevelEvent.AddTube, () => {
+    this.topbarScreen.on(LevelEvent.AddTube, () => {
       this.level.emit(LevelEvent.AddTube);
     });
   }

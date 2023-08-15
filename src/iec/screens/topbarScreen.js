@@ -1,33 +1,43 @@
-import { Container, Texture } from "pixi.js";
-import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
-import { PureTransform } from "../../../pureDynamic/core/pureTransform";
-import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
-import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
-import { UndoButton } from "./undoBtn";
-import { AddTubeButton } from "./addTubeBtn";
-import { ReplayButton } from "./replayBtn";
-import { MenuButton } from "./menuBtn";
-import { Data } from "../../../dataTest";
-import { ButtonManager } from "../buttonManager";
-import { GameConstant } from "../../../gameConstant";
+import { Data } from "../../dataTest";
+import { GameConstant } from "../../gameConstant"
+import { PureText } from "../../pureDynamic/PixiWrapper/pureText";
+import { UIScreen } from "../../pureDynamic/PixiWrapper/screen/uiScreen"
+import { PureTransform } from "../../pureDynamic/core/pureTransform";
+import { Alignment } from "../../pureDynamic/core/pureTransformConfig";
+import { LevelEvent } from "../level/levelEvent";
+import { ButtonManager } from "../ui/buttonManager";
+import { AddTubeButton } from "../ui/topbar/addTubeBtn";
+import { MenuButton } from "../ui/topbar/menuBtn";
+import { ReplayButton } from "../ui/topbar/replayBtn";
+import { UndoButton } from "../ui/topbar/undoBtn";
 
-export class TopbarUI extends Container {
-    constructor(levelManager) {
-        super();
-        this._initProperties(levelManager);
-        this._initComponents();
+export class TopbarScreen extends UIScreen {
+    constructor() {
+        super(GameConstant.TOPBAR_SCREEN);
     }
 
-    _initProperties() {
-        
-    }
+    create() {
+        super.create();
 
-    _initComponents() {
         this._initTitleLevel();
         this._initMenuButton();
         this._initReplayButton();
         this._initUndoButton();
         this._initAddTubeButton();
+
+        this._initEvents();
+    }
+
+    _initEvents() {
+        this.replayBtn.on(LevelEvent.Replay, () => {
+            this.emit(LevelEvent.Replay);
+        });
+        this.undoBtn.on(LevelEvent.Undo, () => {
+            this.emit(LevelEvent.Undo);
+        });
+        this.addTubeBtn.on(LevelEvent.AddTube, () => {
+            this.emit(LevelEvent.AddTube);
+        });
     }
 
     _initTitleLevel() {
@@ -71,11 +81,11 @@ export class TopbarUI extends Container {
         this.addChild(this.addTubeBtn);
     }
 
-    _updateTextLevel() {
+    _updateLevel() {
         this.titleLevel.displayObject.text = "Level " + (Data.currentLevel + 1);
     }
 
     onNextLevel() {
-        this._updateTextLevel();
+        this._updateLevel();
     }
 }

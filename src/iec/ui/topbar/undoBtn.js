@@ -3,15 +3,15 @@ import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Data } from "../../../../src/dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
-import { LevelEvent } from "../../level/levelEvent";
 import { GameConstant } from "../../../gameConstant";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
+import { LevelEvent } from "../../level/levelEvent";
 
 export class UndoButton extends Container {
     constructor() {
         super();
         this._initProperties();
-        this._initComponents();
+        this._initElements();
         this._initEvents();
         this._onInit();
     }
@@ -20,7 +20,7 @@ export class UndoButton extends Container {
 
     }
 
-    _initComponents() {
+    _initElements() {
         this._initUndoBtn();
         this._initAdsBtn();
     }
@@ -120,7 +120,7 @@ export class UndoButton extends Container {
     }
 
     _onClickUndoBtn() {
-        this.parent.emit(LevelEvent.Undo);
+        this.emit(LevelEvent.Undo);
         this._setStateBtn();
     }
 

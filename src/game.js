@@ -68,7 +68,7 @@ export class Game {
     ]);
     this.app.stage.addChild(SceneManager.sceneContainer);
 
-    SceneManager.load(SceneManager.getScene(GameConstant.SCENE_PLAY));
+    SceneManager.load(SceneManager.getScene(GameConstant.PLAY_SCREEN));
 
     this.app.ticker.add(() => this._update());
   }

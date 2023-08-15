@@ -21,6 +21,6 @@ export class ReplayButton extends Container {
     }
 
     _onClickReplayBtn() {
-        this.parent.emit(LevelEvent.Replay);
+        this.emit(LevelEvent.Replay);
     }
 }

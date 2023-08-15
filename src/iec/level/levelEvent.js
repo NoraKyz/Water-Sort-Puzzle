@@ -6,4 +6,5 @@ export const LevelEvent = Object.freeze({
   Undo     : "undo",
   Replay    : "replay",
   AddTube  : "addTube",
+  NextLevel: "nextLevel",
 });

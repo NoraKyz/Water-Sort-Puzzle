@@ -1,24 +1,21 @@
-import { Container, Texture } from "pixi.js";
-import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
-import { PureTransform } from "../../../pureDynamic/core/pureTransform";
-import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
-import { Util } from "../../../helpers/utils";
-import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
-import { ButtonManager } from "../buttonManager";
-import { GameConstant } from "../../../gameConstant";
+import { Texture } from "pixi.js";
+import { GameConstant } from "../../gameConstant";
+import { PureButton } from "../../pureDynamic/PixiWrapper/pureButton";
+import { PureSprite } from "../../pureDynamic/PixiWrapper/pureSprite";
+import { UIScreen } from "../../pureDynamic/PixiWrapper/screen/uiScreen";
+import { PureTransform } from "../../pureDynamic/core/pureTransform";
+import { Alignment, MaintainAspectRatioType } from "../../pureDynamic/core/pureTransformConfig";
+import { ButtonManager } from "../ui/buttonManager";
+import { LevelEvent } from "../level/levelEvent";
 
-export class WinUI extends Container {
+export class WinScreen extends UIScreen {
     constructor() {
-        super();
-        this._initProperties();
-        this._initComponents();
+        super(GameConstant.WIN_SCREEN);
     }
 
-    _initProperties() {
-        this.visible = false;
-    }
+    create() {
+        super.create();
 
-    _initComponents() {
         this._initFakeBackground();
         this._initConcefetti();
         this._initNextButton();
@@ -60,14 +57,6 @@ export class WinUI extends Container {
     }
 
     _onClickNextBtn() {
-        this.emit("nextLevel");
-    }
-
-    hide() {
-        this.visible = false;
-    }
-
-    show() {
-        this.visible = true;
+        this.emit(LevelEvent.NextLevel);
     }
 }
