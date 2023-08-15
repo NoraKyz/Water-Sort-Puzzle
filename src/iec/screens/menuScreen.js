@@ -3,7 +3,15 @@ import { GameConstant } from "../../gameConstant"
 import { PureSprite } from "../../pureDynamic/PixiWrapper/pureSprite";
 import { UIScreen } from "./../../pureDynamic/PixiWrapper/screen/uiScreen"
 import { PureTransform } from "../../pureDynamic/core/pureTransform";
-import { MaintainAspectRatioType } from "../../pureDynamic/core/pureTransformConfig";
+import { Alignment, MaintainAspectRatioType } from "../../pureDynamic/core/pureTransformConfig";
+import { ListMenu } from "../ui/menu/listMenu";
+import { PureButton } from "../../pureDynamic/PixiWrapper/pureButton";
+import { FakeBackground } from "../ui/utils/fakeBackground";
+
+export const MenuScreenEvent = Object.freeze({
+    Close: "Close",
+    ShopShowed: "ShopShowed",
+});
 
 export class MenuScreen extends UIScreen {
     constructor() {
@@ -19,25 +27,25 @@ export class MenuScreen extends UIScreen {
     }
 
     _initBackground() {
-        this.bg = new PureSprite(Texture.WHITE, new PureTransform({
-            usePercent: true,
-            height: 1,
-            width: 1,
-            pivotX: 0.5,
-            pivotY: 0.5,
-            anchorX: 0.5,
-            anchorY: 0.5,
-            maintainAspectRatioType: MaintainAspectRatioType.MAX,
-        }));
-        this.bg.displayObject.tint = 0x000000;
-        this.bg.displayObject.alpha = 0.7;
-        this.addChild(this.bg.displayObject);
+        this.bg = new FakeBackground();
+        this.addChild(this.bg);
     }
 
     _initListMenu() {
-        
+        this.listMenu = new ListMenu();
+        this.addChild(this.listMenu);
+    }
+    _initCloseBtn() {
+        this.closeBtn = new PureButton(Texture.from("btn_close"), () => this._onCloseMenu(), new PureTransform({
+            alignment: Alignment.TOP_RIGHT,
+            x: -30,
+            y: 120,
+            uuseOriginalSize: true,
+        }));
+        this.addChild(this.closeBtn.displayObject);
     }
 
-    _initCloseBtn() {
+    _onCloseMenu() {
+        this.emit(MenuScreenEvent.Close);
     }
 }
