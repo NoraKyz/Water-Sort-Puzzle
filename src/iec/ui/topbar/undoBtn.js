@@ -35,7 +35,7 @@ export class UndoButton extends Container {
         this.icUndoBtn = new PureSprite(Texture.from("spr_undo_btn"), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
-            x: 90,
+            x: 120,
             y: 72,
         }));
         this.undoBtn.addChild(this.icUndoBtn.displayObject);
@@ -45,7 +45,7 @@ export class UndoButton extends Container {
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
-                x: 115,
+                x: 145,
                 y: 78,
             }),
             {

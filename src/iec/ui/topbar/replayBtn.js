@@ -14,7 +14,7 @@ export class ReplayButton extends Container {
         this.btn = new PureButton(Texture.from("spr_replay_level_btn"), () => this._onClickReplayBtn(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
-            x: -80,
+            x: -120,
             y: 72,
         }))
         this.addChild(this.btn.displayObject);

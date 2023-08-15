@@ -11,6 +11,10 @@ import { MenuButton } from "../ui/topbar/menuBtn";
 import { ReplayButton } from "../ui/topbar/replayBtn";
 import { UndoButton } from "../ui/topbar/undoBtn";
 
+export const TopbarScreenEvent = Object.freeze({
+    OpenMenu: "OpenMenu",
+});
+
 export class TopbarScreen extends UIScreen {
     constructor() {
         super(GameConstant.TOPBAR_SCREEN);
@@ -29,6 +33,9 @@ export class TopbarScreen extends UIScreen {
     }
 
     _initEvents() {
+        this.menuBtn.on("openMenu", () => {
+            this.emit(TopbarScreenEvent.OpenMenu);
+        });
         this.replayBtn.on(LevelEvent.Replay, () => {
             this.emit(LevelEvent.Replay);
         });

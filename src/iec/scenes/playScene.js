@@ -9,8 +9,10 @@ import { SoundManager } from "../../soundManager";
 import { Level } from "../level/level";
 import { LevelEvent } from "../level/levelEvent";
 import { Data } from "../../dataTest";
-import { TopbarScreen } from "../screens/topbarScreen";
+import { TopbarScreen, TopbarScreenEvent } from "../screens/topbarScreen";
 import { WinScreen } from "../screens/winScreen";
+import { MenuScreen } from "../screens/menuScreen";
+
 
 export class PlayScene extends Scene {
   constructor() {
@@ -65,19 +67,21 @@ export class PlayScene extends Scene {
     this.ui.addScreens(
       new TopbarScreen(),
       new WinScreen(),
+      new MenuScreen()
     );
 
     this.topbarScreen = this.ui.getScreen(GameConstant.TOPBAR_SCREEN);
     this.winScreen = this.ui.getScreen(GameConstant.WIN_SCREEN);
+    this.menuScreen = this.ui.getScreen(GameConstant.MENU_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
-    this.ui.setScreenActive(GameConstant.WIN_SCREEN, false);
   }
 
   _initEvents() {
     this.level.on(LevelEvent.Complete, () => {
       this.ui.setScreenActive(GameConstant.WIN_SCREEN);
     });
+    this.level.on("spawnConfetti", this._spawnConfetti, this);
 
     this.winScreen.on(LevelEvent.NextLevel, () => {
       this.level.nextLevel();
@@ -85,8 +89,9 @@ export class PlayScene extends Scene {
       this.ui.setScreenActive(GameConstant.WIN_SCREEN, false);
     });
 
-    this.level.on("spawnConfetti", this._spawnConfetti, this);
-
+    this.topbarScreen.on(TopbarScreenEvent.OpenMenu, () => {
+      this.ui.setScreenActive(GameConstant.MENU_SCREEN);
+    });
     this.topbarScreen.on(LevelEvent.Undo, () => {
       this.level.emit(LevelEvent.Undo);
     });

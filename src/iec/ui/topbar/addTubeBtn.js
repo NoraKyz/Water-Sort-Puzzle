@@ -36,7 +36,7 @@ export class AddTubeButton extends Container {
         this.icAddBtn = new PureSprite(Texture.from("spr_add_tube_btn"), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
-            x: 260,
+            x: 280,
             y: 72,
         }));
         this.addBtn.addChild(this.icAddBtn.displayObject);
@@ -46,7 +46,7 @@ export class AddTubeButton extends Container {
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
-                x: 285,
+                x: 305,
                 y: 78,
             }),
             {

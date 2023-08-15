@@ -10,12 +10,16 @@ export class MenuButton extends Container {
     }
 
     _create() {
-        this.btn = new PureButton(Texture.from("spr_menu_btn"), () => { }, new PureTransform({
+        this.btn = new PureButton(Texture.from("spr_menu_btn"), () => this._onClickMenuBtn(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
-            x: -250,
+            x: -280,
             y: 72,
         }))
         this.addChild(this.btn.displayObject);
+    }
+
+    _onClickMenuBtn(){
+        this.emit("openMenu");
     }
 }

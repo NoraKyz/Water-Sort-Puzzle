@@ -16,13 +16,13 @@ export class WinScreen extends UIScreen {
     create() {
         super.create();
 
-        this._initFakeBackground();
+        this._initBackground();
         this._initConcefetti();
         this._initNextButton();
     }
 
-    _initFakeBackground() {
-        this.fakeBg = new PureSprite(Texture.WHITE, new PureTransform({
+    _initBackground() {
+        this.bg = new PureSprite(Texture.WHITE, new PureTransform({
             usePercent: true,
             height: 1,
             width: 1,
@@ -32,9 +32,9 @@ export class WinScreen extends UIScreen {
             anchorY: 0.5,
             maintainAspectRatioType: MaintainAspectRatioType.MAX,
         }));
-        this.fakeBg.displayObject.tint = 0x000000;
-        this.fakeBg.displayObject.alpha = 0.7;
-        this.addChild(this.fakeBg.displayObject);
+        this.bg.displayObject.tint = 0x000000;
+        this.bg.displayObject.alpha = 0.7;
+        this.addChild(this.bg.displayObject);
     }
 
     _initConcefetti() {

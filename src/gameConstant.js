@@ -10,6 +10,7 @@ export const GameConstant = Object.freeze({
 
   TOPBAR_SCREEN: "TopbarScreen",
   WIN_SCREEN   : "WinScreen",
+  MENU_SCREEN  : "MenuScreen",
 
   DEBUG_ON            : true,
   DEBUG_DRAW_COLLIDER : false,
