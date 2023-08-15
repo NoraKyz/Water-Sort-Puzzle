@@ -4,12 +4,12 @@ import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
 
 export class FakeBackground extends Container {
-    constructor() {
+    constructor(alpha = 0.9) {
         super();
-        this._create();
+        this._create(alpha);
     }
 
-    _create() {
+    _create(alpha) {
         this.bg = new PureSprite(Texture.WHITE, new PureTransform({
             usePercent: true,
             height: 1,
@@ -22,7 +22,7 @@ export class FakeBackground extends Container {
         }));
         this.bg.displayObject.eventMode = "static";
         this.bg.displayObject.tint = 0x000000;
-        this.bg.displayObject.alpha = 0.9;
+        this.bg.displayObject.alpha = alpha;
         this.addChild(this.bg.displayObject);
     }
 }

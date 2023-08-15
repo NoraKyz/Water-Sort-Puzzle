@@ -11,7 +11,7 @@ import { LevelEvent } from "../level/levelEvent";
 import { Data } from "../../dataTest";
 import { TopbarScreen, TopbarScreenEvent } from "../screens/topbarScreen";
 import { WinScreen } from "../screens/winScreen";
-import { MenuScreen } from "../screens/menuScreen";
+import { MenuScreen, MenuScreenEvent } from "../screens/menuScreen";
 
 
 export class PlayScene extends Scene {
@@ -75,6 +75,7 @@ export class PlayScene extends Scene {
     this.menuScreen = this.ui.getScreen(GameConstant.MENU_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
+    this.ui.setScreenActive(GameConstant.MENU_SCREEN);
   }
 
   _initEvents() {
@@ -101,6 +102,10 @@ export class PlayScene extends Scene {
     this.topbarScreen.on(LevelEvent.AddTube, () => {
       this.level.emit(LevelEvent.AddTube);
     });
+
+    this.menuScreen.on(MenuScreenEvent.Close, () => {
+      this.ui.setScreenActive(GameConstant.MENU_SCREEN, false);
+    })
   }
 
   _spawnConfetti(tube) {
