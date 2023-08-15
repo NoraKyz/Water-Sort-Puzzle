@@ -47,7 +47,7 @@ export class TubeManager extends Container {
   _onTubeTap(event) {
     let tube = event.target;
 
-    if(tube.state === TubeState.Pouring) {
+    if(tube.state === TubeState.Pouring || this.isPouring) {
       return;
     }
     
@@ -196,7 +196,8 @@ export class TubeManager extends Container {
     // Only do something once time when recursive
     if (recursive === false) {
       recursive = true;
-      SoundManager.play("sfx_pourWater", 1, false);
+      this.isPouring = true;
+      SoundManager.play("sfx_pourWater", 1, false); 
       ButtonManager.disableAll();
       this.tubeUndoDataArray.push(this.getPourData());
       
@@ -234,7 +235,6 @@ export class TubeManager extends Container {
     Tween.createTween(p, { p: 0 }, {
       duration: 0.65,
       onUpdate: () => {
-        this.isPouring = true;
         targetLiquid.setPercent(100 - p.p);
         sourceLiquid.setPercent(p.p);
         tube1.updateLiquidContainer();
@@ -248,9 +248,7 @@ export class TubeManager extends Container {
         }
         else {
           this.isPouring = false;
-          if (this.isPouring === false) {
-            ButtonManager.enableAll();
-          }
+          ButtonManager.enableAll(); 
 
           tube1.offWaterSurface(pourDirection);
           tube2.offWaterSurface(pourDirection);
