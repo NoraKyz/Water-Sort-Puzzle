@@ -35,9 +35,7 @@ export class Data {
             case DataType.Coin: {
                 this.coin += value;
 
-                if (this.coin < 0) {
-                    this.coin = 0;
-                } else if (this.coin > GameConstant.MAX_COIN) {
+                if (this.coin > GameConstant.MAX_COIN) {
                     this.coin = GameConstant.MAX_COIN;
                 }
             }
