@@ -59,10 +59,10 @@ export class AddTubeButton extends Container {
     }
 
     _initAdsBtn() {
-        this.adsBtn = new PureSprite(Texture.from("spr_ads_get_tube_btn"), new PureTransform({
+        this.adsBtn = new PureButton(Texture.from("spr_ads_get_tube_btn"), () => this._onClickAdsBtn(), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
-            x: 260,
+            x: 280,
             y: 72,
         }));
         this.addChild(this.adsBtn.displayObject);
