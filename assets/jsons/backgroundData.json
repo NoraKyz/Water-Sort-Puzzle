@@ -13,5 +13,40 @@
         "id": 3,
         "bgSprite": "bg_3",
         "state": "locked"
+    },
+    {
+        "id": 4,
+        "bgSprite": "bg_4",
+        "state": "locked"
+    },
+    {
+        "id": 3,
+        "bgSprite": "bg_3",
+        "state": "locked"
+    },
+    {
+        "id": 5,
+        "bgSprite": "bg_5",
+        "state": "locked"
+    },
+    {
+        "id": 6,
+        "bgSprite": "bg_6",
+        "state": "locked"
+    },
+    {
+        "id": 7,
+        "bgSprite": "bg_7",
+        "state": "locked"
+    },
+    {
+        "id": 8,
+        "bgSprite": "bg_8",
+        "state": "locked"
+    },
+    {
+        "id": 9,
+        "bgSprite": "bg_9",
+        "state": "locked"
     }
 ]
