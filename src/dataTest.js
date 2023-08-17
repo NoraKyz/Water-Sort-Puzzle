@@ -1,3 +1,5 @@
+import { GameConstant } from "./gameConstant";
+
 export const DataType = Object.freeze({
     Coin: "coin",
 });
@@ -32,8 +34,13 @@ export class Data {
         switch (type) {
             case DataType.Coin: {
                 this.coin += value;
-                break;
-            }   
+
+                if (this.coin < 0) {
+                    this.coin = 0;
+                } else if (this.coin > GameConstant.MAX_COIN) {
+                    this.coin = GameConstant.MAX_COIN;
+                }
+            }
         }
 
         this._notify();
