@@ -1,6 +1,6 @@
 [
   {
-    "id": "skin_1",
+    "id": 1,
     "tubeSprite": "spr_tube_1",
     "tubeMaskSprite": "spr_tube_mask_1",
     "pourData": [
@@ -14,10 +14,11 @@
     "vertexOffsetY": 0,
     "waterLineX": 13,
     "liquidHeight": 70,
-    "waterLine2y": -164
+    "waterLine2y": -164,
+    "state": "selected"
   },
   {
-    "id": "skin_2",
+    "id": 2,
     "tubeSprite": "spr_tube_2",
     "tubeMaskSprite": "spr_tube_mask_2",
     "pourData": [
@@ -31,10 +32,11 @@
     "vertexOffsetY": 0,
     "waterLineX": 12,
     "liquidHeight": 70,
-    "waterLine2y": -164
+    "waterLine2y": -164,
+    "state": "locked"
   },
   {
-    "id": "skin_3",
+    "id": 3,
     "tubeSprite": "spr_tube_3",
     "tubeMaskSprite": "spr_tube_mask_3",
     "pourData": [
@@ -48,6 +50,7 @@
     "vertexOffsetY": 3,
     "waterLineX": 10,
     "liquidHeight": 70,
-    "waterLine2y": -164
+    "waterLine2y": -164,
+    "state": "locked"
   }
 ]

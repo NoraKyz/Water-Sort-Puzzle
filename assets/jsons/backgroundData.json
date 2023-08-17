@@ -1,14 +1,17 @@
 [
     {
-        "id": "bg_1",
-        "unlock": true
+        "id": 1,
+        "bgSprite": "bg_1",
+        "state": "selected"
     },
     {
-        "id": "bg_2",
-        "unlock": false
+        "id": 2,
+        "bgSprite": "bg_2",
+        "state": "locked"
     },
     {
-        "id": "bg_3",
-        "unlock": false
+        "id": 3,
+        "bgSprite": "bg_3",
+        "state": "locked"
     }
 ]
