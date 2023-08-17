@@ -3,9 +3,11 @@ import ThemeData from "../../../../assets/jsons/backgroundData.json";
 import { Data } from "../../../dataTest";
 
 export class SkinManager {
-    static _currTubeSkin = TubeData[Data.tubeSkinId-1];
-    static _currThemeSkin = ThemeData[Data.themeSkinId-1];
-    
+
+    static init() {
+        this._currTubeSkin = TubeData[0];
+        this._currThemeSkin = ThemeData[0];
+    }
 
     static get Tube() {
         return this._currTubeSkin;
@@ -17,14 +19,14 @@ export class SkinManager {
 
     static set Tube(id) {
         this._currTubeSkin.state = "unlocked";
-        this._currTubeSkin = ThemeData[id-1];
+        this._currTubeSkin = ThemeData[id - 1];
         this._currTubeSkin.state = "selected";
     }
 
     static set Theme(id) {
         this._currThemeSkin.state = "unlocked";
-        this._currThemeSkin = TubeData[id-1];
-        this._currThemeSkin.state = "selected";     
+        this._currThemeSkin = TubeData[id - 1];
+        this._currThemeSkin.state = "selected";
     }
 
     static get TubeData() {

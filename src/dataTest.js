@@ -7,6 +7,10 @@ export const DataType = Object.freeze({
 export class Data {
     static init() {
         this.observes = [];
+        
+        this.tubeSkinId = 1;
+        this.themeSkinId = 1;
+
         this.addTubeTimes = 2;
         this.undoTimes = 5;
         this.currentLevel = 0;

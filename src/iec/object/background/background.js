@@ -6,7 +6,7 @@ import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 export class Background extends PureSprite {
   constructor(bgData) {
 
-    let tex = Texture.from(bgData.id);
+    let tex = Texture.from(bgData.bgSprite);
     super(tex, new PureTransform({
       usePercent              : true,
       height                  : 1,

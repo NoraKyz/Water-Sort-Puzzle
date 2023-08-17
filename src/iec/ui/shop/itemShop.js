@@ -20,6 +20,7 @@ export class ItemShop extends Container {
     }
 
     _initProperties() {
+        this.id = this.data.id;
         this.state = this.data.state;
     }
 
@@ -28,6 +29,7 @@ export class ItemShop extends Container {
         this._initUnlockedCard();
         this._initSelectedCard();
         this._initSpr();
+        this._initEvents();
         this._setState(this.state);
     }
 
@@ -55,7 +57,10 @@ export class ItemShop extends Container {
     _initSpr() {
         this.spr = new PureSprite(Texture.from(this.texture), new PureTransform({
             useOriginalSize: true,
+            x: 100,
+            y: 40
         }));
+        this.spr.displayObject.scale.set(0.6);
         this.addChild(this.spr.displayObject);
     }
 

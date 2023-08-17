@@ -11,7 +11,6 @@ export class TubeItem extends ItemShop {
     }
 
     _onSelectedItem() {
-        super._onSelectedItem();
-        
+        super._onSelectedItem();  
     }
 }

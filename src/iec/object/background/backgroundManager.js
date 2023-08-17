@@ -17,8 +17,8 @@ export class BackgroundManager extends Container {
 
     _create() {
         this._load(BackgroundData);
-        this.set(this.bgList[0]); 
-        this.addChild(this.currentBg.displayObject);       
+        this.set(this.bgList[0]);
+        this.addChild(this.currentBg.displayObject);
     }
 
     _load(bgData) {
@@ -28,9 +28,14 @@ export class BackgroundManager extends Container {
         });
     }
 
-    set(bg) {
-        if (bg.unlock) {
-            this.currentBg = bg;
+    unlock(id) {
+        let bg = this.bgList.find(bg => bg.id === id);
+        if (bg) {
+            bg.unlock();
         }
-    } 
+    }
+
+    set(bg) {
+        this.currentBg = bg;
+    }
 }

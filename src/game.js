@@ -13,6 +13,7 @@ import { PlayScene } from "././iec/scenes/playScene";
 import { update } from "@tweenjs/tween.js";
 import { Data } from "./dataTest";
 import { ButtonManager } from "./iec/ui/buttonManager";
+import { SkinManager } from "./iec/object/skin/skinManager";
 
 export class Game {
   static init() {
@@ -43,6 +44,7 @@ export class Game {
     InputManager.init(this.app.view);
     ButtonManager.init();
     Data.init();
+    SkinManager.init();
     // TODO: init game setting
     AssetManager.load(this._onAssetLoaded.bind(this));
     // TODO: init data local
@@ -68,7 +70,7 @@ export class Game {
     ]);
     this.app.stage.addChild(SceneManager.sceneContainer);
 
-    SceneManager.load(SceneManager.getScene(GameConstant.PLAY_SCREEN));
+    SceneManager.load(SceneManager.getScene(GameConstant.PLAY_SCENE));
 
     this.app.ticker.add(() => this._update());
   }

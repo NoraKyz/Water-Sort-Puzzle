@@ -12,11 +12,12 @@ import { Data } from "../../dataTest";
 import { TopbarScreen, TopbarScreenEvent } from "../screens/topbarScreen";
 import { WinScreen } from "../screens/winScreen";
 import { MenuScreen, MenuScreenEvent } from "../screens/menuScreen";
+import { ShopScreen, ShopScreenEvent } from "../screens/shopScreen";
 
 
 export class PlayScene extends Scene {
   constructor() {
-    super(GameConstant.PLAY_SCREEN);
+    super(GameConstant.PLAY_SCENE);
   }
 
   create() {
@@ -67,15 +68,17 @@ export class PlayScene extends Scene {
     this.ui.addScreens(
       new TopbarScreen(),
       new WinScreen(),
-      new MenuScreen()
+      new MenuScreen(),
+      new ShopScreen(),
     );
 
     this.topbarScreen = this.ui.getScreen(GameConstant.TOPBAR_SCREEN);
     this.winScreen = this.ui.getScreen(GameConstant.WIN_SCREEN);
     this.menuScreen = this.ui.getScreen(GameConstant.MENU_SCREEN);
+    this.shopScreen = this.ui.getScreen(GameConstant.SHOP_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
-    this.ui.setScreenActive(GameConstant.MENU_SCREEN);
+    this.ui.setScreenActive(GameConstant.SHOP_SCREEN);
   }
 
   _initEvents() {
@@ -106,6 +109,14 @@ export class PlayScene extends Scene {
     this.menuScreen.on(MenuScreenEvent.Close, () => {
       this.ui.setScreenActive(GameConstant.MENU_SCREEN, false);
     })
+    this.menuScreen.on(MenuScreenEvent.ShopSelected, () => {
+      this.ui.setScreenActive(GameConstant.MENU_SCREEN, false);
+      this.ui.setScreenActive(GameConstant.SHOP_SCREEN);
+    })
+
+    this.shopScreen.on(ShopScreenEvent.BackToScene, () => {
+      this.ui.setScreenActive(GameConstant.SHOP_SCREEN, false);
+    });
   }
 
   _spawnConfetti(tube) {
