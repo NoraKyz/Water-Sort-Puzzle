@@ -23,6 +23,7 @@ export class UIScreen extends Container {
   }
 
   show() {
+    this.reset();
     this.visible = true;
   }
 
@@ -40,5 +41,8 @@ export class UIScreen extends Container {
   }
 
   resize() {
+  }
+
+  reset() {
   }
 }
