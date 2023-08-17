@@ -2,7 +2,7 @@ import { Container, Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
-import { ItemMenu } from "./itemMenu";
+import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { MenuScreenEvent } from "../../screens/menuScreen";
 
 export class ListMenu extends Container {
@@ -30,14 +30,16 @@ export class ListMenu extends Container {
     }
 
     _initShopBtn() {
-        this.shopBtn = new ItemMenu(
-            Texture.from("btn_shop"),
-            "Shop",
-            () => {
-                this.emit(MenuScreenEvent.ShopShowed)
-            }
-        );
-        this.shopBtn.position.set(-190,-130)
-        this.addChild(this.shopBtn);  
+        this.shopBtn = new PureButton(Texture.from("btn_shop"), () => this._onClickShopBtn(), new PureTransform({
+            alignment: Alignment.MIDDLE_CENTER,
+            useOriginalSize: true,
+            x : -195,
+            y : -105
+        }));
+        this.addChild(this.shopBtn.displayObject);
+    }
+
+    _onClickShopBtn() {
+        this.emit(MenuScreenEvent.ShopSelected)
     }
 }
