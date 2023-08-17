@@ -11,7 +11,6 @@ import { ShopBtn } from "../ui/shop/shopBtn";
 import { Data, DataType } from "../../dataTest";
 import { TubeList } from "../ui/shop/tubeList";
 import { GameResizer } from "../../pureDynamic/systems/gameResizer";
-import { ThemeList } from "../ui/shop/themeList";
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
 });
@@ -111,7 +110,7 @@ export class ShopScreen extends UIScreen {
     }
 
     _initTubeShopList() {
-        this.tubeShopList = new ThemeList();
+        this.tubeShopList = new TubeList();
         this.tubeShopList.position.set(GameResizer.width * 0.1, GameResizer.height * 0.26);
         this.addChild(this.tubeShopList);
     }
