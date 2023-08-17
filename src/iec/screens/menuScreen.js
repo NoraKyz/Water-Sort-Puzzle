@@ -10,7 +10,7 @@ import { FakeBackground } from "../ui/utils/fakeBackground";
 
 export const MenuScreenEvent = Object.freeze({
     Close: "Close",
-    ShopShowed: "ShopShowed",
+    ShopSelected: "ShopSelected",
 });
 
 export class MenuScreen extends UIScreen {
@@ -24,6 +24,8 @@ export class MenuScreen extends UIScreen {
         this._initBackground();
         this._initListMenu();
         this._initCloseBtn();
+
+        this._initEvents();
     }
 
     _initBackground() {
@@ -35,6 +37,7 @@ export class MenuScreen extends UIScreen {
         this.listMenu = new ListMenu();
         this.addChild(this.listMenu);
     }
+    
     _initCloseBtn() {
         this.closeBtn = new PureButton(Texture.from("btn_close"), () => this._onCloseMenu(), new PureTransform({
             alignment: Alignment.TOP_RIGHT,
@@ -47,5 +50,11 @@ export class MenuScreen extends UIScreen {
 
     _onCloseMenu() {
         this.emit(MenuScreenEvent.Close);
+    }
+
+    _initEvents() {
+        this.listMenu.on(MenuScreenEvent.ShopSelected, () => {
+            this.emit(MenuScreenEvent.ShopSelected);
+        });
     }
 }
