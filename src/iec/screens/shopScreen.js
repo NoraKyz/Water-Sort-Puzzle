@@ -32,6 +32,7 @@ export class ShopScreen extends UIScreen {
         this._initBuyBtn();
         this._initAdsBtn();
         this._initTubeShopList();
+        this.resize();
     }
 
     reset() {
@@ -39,6 +40,15 @@ export class ShopScreen extends UIScreen {
 
         this.tubeShopBtn.onSelected();
         this.themeShopBtn.onUnselected();
+    }
+
+    resize() {
+        super.resize();
+        let boxWidth = this.tubeShopList.width;
+        let scrollX = GameResizer.width / 2 - boxWidth / 2;
+        let scrollY = GameResizer.height * 0.26;
+        this.tubeShopList.resize();
+        this.tubeShopList.position.set(scrollX, scrollY);
     }
 
     _initBackground() {
@@ -111,7 +121,6 @@ export class ShopScreen extends UIScreen {
 
     _initTubeShopList() {
         this.tubeShopList = new TubeList();
-        this.tubeShopList.position.set(GameResizer.width * 0.1, GameResizer.height * 0.26);
         this.addChild(this.tubeShopList);
     }
 

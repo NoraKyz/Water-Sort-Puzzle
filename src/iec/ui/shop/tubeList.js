@@ -6,7 +6,7 @@ import { TubeItem } from "./tubeItem";
 export class TubeList extends ScrollBox {
     constructor() {
         super({
-            width: GameResizer.width,
+            width: 585, // 585 = (item width + elementsMargin + horPadding / 2) * columns
             height: GameResizer.height * 0.53,
             background: 0xFFFFFF,
             elementsMargin: 20,
