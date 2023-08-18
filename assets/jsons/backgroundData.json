@@ -20,11 +20,6 @@
         "state": "locked"
     },
     {
-        "id": 3,
-        "bgSprite": "bg_3",
-        "state": "locked"
-    },
-    {
         "id": 5,
         "bgSprite": "bg_5",
         "state": "locked"
