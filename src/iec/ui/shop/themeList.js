@@ -2,29 +2,24 @@ import { ScrollBox } from "@pixi/ui";
 import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
 import { SkinManager } from "../../object/skin/skinManager";
 import { ThemeItem } from "./themeItem";
+import { ItemState } from "./itemShop";
+import { Util } from "../../../helpers/utils";
+import { ItemList } from "./itemList";
 
-export class ThemeList extends ScrollBox {
+export class ThemeList extends ItemList {
     constructor() {
-        super({
-            width: GameResizer.width,
-            height: GameResizer.height * 0.53,
-            background: 0xFFFFFF,
-            elementsMargin: 20,
-            vertPadding: 0,
-            horPadding: 10         
-        });
+        super();
 
-        this._initProperties();
-        this._initSkinCards();
+        this.hide();
     }
 
     _initProperties() {
         this.background.alpha = 0;
-        this.themeData = SkinManager.ThemeData;
+        this.dataList = SkinManager.themeData;
     }
 
     _initSkinCards() {
-        this.themeData.forEach((skin) => {
+        this.dataList.forEach((skin) => {
             let skinCard = new ThemeItem(skin);
             this.addItem(skinCard);
         });

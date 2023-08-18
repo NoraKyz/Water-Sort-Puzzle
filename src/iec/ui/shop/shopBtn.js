@@ -5,12 +5,13 @@ import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 
 export class ShopBtn extends Container {
-    constructor(texture1, texture2, onClick) {
+    constructor(texture1, texture2, onClick, pos) {
         super();
 
         this.texture1 = texture1;
         this.texture2 = texture2;
         this.onClick = onClick;
+        this.pos = pos;
 
         this._create();
     }
@@ -21,17 +22,21 @@ export class ShopBtn extends Container {
     }
 
     _initBtn() {
-        this.btn = new PureButton(this.texture1, this.onClick, new PureTransform({ 
-            alignment: Alignment.MIDDLE_CENTER,
+        this.btn = new PureButton(this.texture1, this.onClick, new PureTransform({
+            alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
+            x: this.pos.x,
+            y: this.pos.y,
         }));
         this.addChild(this.btn.displayObject);
     }
 
     _initBtnSelected() {
         this.btnSelected = new PureSprite(this.texture2, new PureTransform({
-            alignment: Alignment.MIDDLE_CENTER,
+            alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
+            x: this.pos.x,
+            y: this.pos.y,
         }));
         this.addChild(this.btnSelected.displayObject);
     }

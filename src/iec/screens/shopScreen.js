@@ -11,6 +11,9 @@ import { ShopBtn } from "../ui/shop/shopBtn";
 import { Data, DataType } from "../../dataTest";
 import { TubeList } from "../ui/shop/tubeList";
 import { GameResizer } from "../../pureDynamic/systems/gameResizer";
+import { ThemeList } from "../ui/shop/themeList";
+import { SkinManager } from "../object/skin/skinManager";
+
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
 });
@@ -32,6 +35,7 @@ export class ShopScreen extends UIScreen {
         this._initBuyBtn();
         this._initAdsBtn();
         this._initTubeShopList();
+        this._initThemeShopList();
         this.resize();
     }
 
@@ -47,8 +51,10 @@ export class ShopScreen extends UIScreen {
         let boxWidth = this.tubeShopList.width;
         let scrollX = GameResizer.width / 2 - boxWidth / 2;
         let scrollY = GameResizer.height * 0.26;
+        this.themeShopList.resize();
         this.tubeShopList.resize();
         this.tubeShopList.position.set(scrollX, scrollY);
+        this.themeShopList.position.set(scrollX, scrollY);
     }
 
     _initBackground() {
@@ -84,8 +90,8 @@ export class ShopScreen extends UIScreen {
             Texture.from("btn_tube_shop"),
             Texture.from("btn_tube_shop_selected"),
             () => this._onClickTubeShopBtn(),
+            { x: -180, y: 240}
         );
-        this.tubeShopBtn.position.set(-180, -360);
         this.addChild(this.tubeShopBtn);
     }
 
@@ -94,8 +100,8 @@ export class ShopScreen extends UIScreen {
             Texture.from("btn_theme_shop"),
             Texture.from("btn_theme_shop_selected"),
             () => this._onClickThemeShopBtn(),
+            { x: 180, y: 240}
         );
-        this.themeShopBtn.position.set(180, -360);
         this.addChild(this.themeShopBtn);
     }
 
@@ -124,21 +130,50 @@ export class ShopScreen extends UIScreen {
         this.addChild(this.tubeShopList);
     }
 
+    _initThemeShopList() {
+        this.themeShopList = new ThemeList();
+        this.addChild(this.themeShopList);
+    }
+
     _onClickBackBtn() {
         this.emit(ShopScreenEvent.BackToScene);
     }
 
     _onClickTubeShopBtn() {
+        this.tubeShopList.show();
+        this.themeShopList.hide();
         this.tubeShopBtn.onSelected();
         this.themeShopBtn.onUnselected();
     }
 
     _onClickThemeShopBtn() {
+        this.tubeShopList.hide();
+        this.themeShopList.show();
         this.tubeShopBtn.onUnselected();
         this.themeShopBtn.onSelected();
     }
 
     _onClickBuyBtn() {
+        if(Data.coin < GameConstant.COINS_PER_BUY_RANDOM) {
+            return;
+        }
+
+        let randomItem = null;
+        let currList = null;
+        if(this.tubeShopList.visible) {
+            currList = this.tubeShopList;
+        } else {
+            currList = this.themeShopList;
+        }
+
+        randomItem = currList.getRandomItem();
+
+        if(randomItem === null) {
+            return;
+        }
+        
+        currList.scrollTo(randomItem.id-1)
+        SkinManager.buy(randomItem);
         Data.change(DataType.Coin, -GameConstant.COINS_PER_BUY_RANDOM);
     }
 

@@ -2,29 +2,22 @@ import { ScrollBox } from "@pixi/ui";
 import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
 import { SkinManager } from "../../object/skin/skinManager";
 import { TubeItem } from "./tubeItem";
+import { ItemState } from "./itemShop";
+import {ItemList } from "./itemList";
+import { Util } from "../../../helpers/utils";
 
-export class TubeList extends ScrollBox {
+export class TubeList extends ItemList {
     constructor() {
-        super({
-            width: 585, // 585 = (item width + elementsMargin + horPadding / 2) * columns
-            height: GameResizer.height * 0.53,
-            background: 0xFFFFFF,
-            elementsMargin: 20,
-            vertPadding: 0,
-            horPadding: 10         
-        });
-
-        this._initProperties();
-        this._initSkinCards();
+        super();
     }
 
     _initProperties() {
         this.background.alpha = 0;
-        this.tubeData = SkinManager.TubeData;
+        this.dataList = SkinManager.tubeData;
     }
 
     _initSkinCards() {
-        this.tubeData.forEach((skin) => {
+        this.dataList.forEach((skin) => {
             let skinCard = new TubeItem(skin);
             this.addItem(skinCard);
         });

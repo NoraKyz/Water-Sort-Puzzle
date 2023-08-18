@@ -2,6 +2,7 @@ import { Container, Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
+import { SkinManager } from "../../object/skin/skinManager";
 
 export const ItemState = Object.freeze({
     Locked: "locked",
@@ -22,15 +23,19 @@ export class ItemShop extends Container {
     _initProperties() {
         this.id = this.data.id;
         this.state = this.data.state;
+
+        if(this.state !== ItemState.Locked) {
+            this.onUnlocked();
+        }
     }
 
     _create() {
         this._initLockedCard();
-        this._initUnlockedCard();
-        this._initSelectedCard();
+        this._initUnlockedCard();    
         this._initSpr();
+        this._initSelectedCard();
         this._initEvents();
-        this._setState(this.state);
+        this.setState(this.state);
     }
 
     _initLockedCard() {
@@ -41,7 +46,7 @@ export class ItemShop extends Container {
     }
 
     _initUnlockedCard() {
-        this.unlockedCard = new PureButton(Texture.from("spr_item_unlocked"), () => this._onSelectedItem(), new PureTransform({
+        this.unlockedCard = new PureSprite(Texture.from("spr_item_unlocked"), new PureTransform({
             useOriginalSize: true,
         }));
         this.addChild(this.unlockedCard.displayObject);
@@ -55,13 +60,7 @@ export class ItemShop extends Container {
     }
 
     _initSpr() {
-        this.spr = new PureSprite(Texture.from(this.texture), new PureTransform({
-            useOriginalSize: true,
-            x: 100,
-            y: 40
-        }));
-        this.spr.displayObject.scale.set(0.6);
-        this.addChild(this.spr.displayObject);
+        
     }
 
     _initEvents() {
@@ -85,12 +84,18 @@ export class ItemShop extends Container {
         });
     }
 
-    _setState(state) {
+    setState(state) {
         this.state = state;
         this.emit(state);
     }
 
+    onUnlocked() {
+        this.on("pointertap", () => this._onSelectedItem());
+        this.eventMode = "static";
+        this.cursor = "pointer";
+    }
+
     _onSelectedItem() {
-        this.setState(ItemState.Selected);
+        SkinManager.set(this);
     }
 }

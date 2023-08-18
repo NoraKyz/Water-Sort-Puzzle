@@ -19,7 +19,7 @@ export class Level extends Container {
     super();
 
     this.data = LevelData[Data.currentLevel];
-    this.skin = SkinManager.Tube;
+    this.skin = SkinManager.currTubeSkin;
 
     this._initComponents();
     this._initEvents();
