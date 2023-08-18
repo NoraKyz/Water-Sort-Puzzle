@@ -22,6 +22,7 @@ export class Background extends PureSprite {
   }
 
   _initProperties(bgData) {
+    this.id = bgData.id;
     this.unlock = bgData.unlock;
   }
 }

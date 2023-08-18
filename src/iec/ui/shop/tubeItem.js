@@ -1,6 +1,6 @@
 import { Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
-import { ItemShop } from "./itemShop";
+import { ItemShop, ItemType } from "./itemShop";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 
 export class TubeItem extends ItemShop {
@@ -11,6 +11,7 @@ export class TubeItem extends ItemShop {
     _initProperties() {
         super._initProperties();
         this.texture = this.data.tubeSprite;
+        this.type = ItemType.Tube;
     }
 
     _initSpr() {

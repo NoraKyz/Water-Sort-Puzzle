@@ -1,6 +1,6 @@
 import { Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
-import { ItemShop } from "./itemShop";
+import { ItemShop, ItemType } from "./itemShop";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 
 export class ThemeItem extends ItemShop {
@@ -11,6 +11,7 @@ export class ThemeItem extends ItemShop {
     _initProperties() {
         super._initProperties();
         this.texture = this.data.bgSprite;
+        this.type = ItemType.Theme;
     }
 
     _initSpr() {
@@ -21,10 +22,5 @@ export class ThemeItem extends ItemShop {
             y: 10,
         }));
         this.addChild(this.spr.displayObject);
-    }
-
-    _onSelectedItem() {
-        super._onSelectedItem();
-        
     }
 }

@@ -233,6 +233,9 @@ export class Level extends Container {
     this.on(LevelEvent.Undo, () => this._onUndoLevel());
     this.on(LevelEvent.Replay, () => this._onResetLevel());
     this.on(LevelEvent.AddTube, () => this._onAddTube());
+
+    SkinManager.addObserver(this);
+    this.on("dataChange", () => this._onDataChange());
   }
 
   _onUndoLevel() {
@@ -253,7 +256,7 @@ export class Level extends Container {
   _onAddTube() {
     if (this.data.tubeNumber < GameConstant.MAX_TUBE_NUMBER) {
       Data.addTubeTimes--;
-      
+
       this.data.stacks = this.tubeManager.getPourData();
       this.data.stacks.push([]);
       this.data.tubeNumber++;
@@ -289,5 +292,13 @@ export class Level extends Container {
       tube.index = index;
       this.tubeManager.addTube(tube);
     });
+  }
+
+  _onDataChange() {
+    this.skin = SkinManager.currTubeSkin;
+  
+    this.data.stacks = this.tubeManager.getPourData();
+    this.tubeManager.emit("reset");
+    this.resetTube();
   }
 }

@@ -10,6 +10,11 @@ export const ItemState = Object.freeze({
     Selected: "selected",
 });
 
+export const ItemType = Object.freeze({
+    Tube: "tube",
+    Theme: "theme",
+});
+
 export class ItemShop extends Container {
     constructor(data) {
         super();
@@ -23,6 +28,7 @@ export class ItemShop extends Container {
     _initProperties() {
         this.id = this.data.id;
         this.state = this.data.state;
+        SkinManager.addObserver(this);
 
         if(this.state !== ItemState.Locked) {
             this.onUnlocked();
@@ -82,7 +88,13 @@ export class ItemShop extends Container {
             this.selectedCard.visible = true;
             this.spr.visible = true;
         });
+
+        this.on("dataChange", () => {
+            this.setState(this.data.state);
+        });
     }
+
+
 
     setState(state) {
         this.state = state;

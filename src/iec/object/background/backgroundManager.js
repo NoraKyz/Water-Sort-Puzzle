@@ -1,6 +1,8 @@
 import { Container } from "pixi.js";
 import { Background } from "./background";
 import BackgroundData from "../../../../assets/jsons/backgroundData.json";
+import { Data } from "../../../dataTest";
+import { SkinManager } from "../skin/skinManager";
 
 export class BackgroundManager extends Container {
     constructor() {
@@ -8,16 +10,18 @@ export class BackgroundManager extends Container {
 
         this._initProperties();
         this._create();
+        this._initEvents();
     }
 
     _initProperties() {
         this.currentBg = null;
         this.bgList = [];
+        SkinManager.addObserver(this);
     }
 
     _create() {
         this._load(BackgroundData);
-        this.set(this.bgList[0]);
+        this.set(Data.themeSkinId);
         this.addChild(this.currentBg.displayObject);
     }
 
@@ -28,14 +32,18 @@ export class BackgroundManager extends Container {
         });
     }
 
-    unlock(id) {
-        let bg = this.bgList.find(bg => bg.id === id);
-        if (bg) {
-            bg.unlock();
+    set(id) {
+        if(this.currentBg) {
+            this.removeChild(this.currentBg.displayObject);
         }
+
+        this.currentBg = this.bgList[id - 1];
+        this.addChild(this.currentBg.displayObject);
     }
 
-    set(bg) {
-        this.currentBg = bg;
+    _initEvents() {
+        this.on("dataChange", () => {
+            this.set(Data.themeSkinId);
+        });
     }
 }

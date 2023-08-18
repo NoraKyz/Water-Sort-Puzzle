@@ -78,7 +78,6 @@ export class PlayScene extends Scene {
     this.shopScreen = this.ui.getScreen(GameConstant.SHOP_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
-    this.ui.setScreenActive(GameConstant.SHOP_SCREEN);
   }
 
   _initEvents() {
