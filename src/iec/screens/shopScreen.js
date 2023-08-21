@@ -13,6 +13,7 @@ import { TubeList } from "../ui/shop/tubeList";
 import { GameResizer } from "../../pureDynamic/systems/gameResizer";
 import { ThemeList } from "../ui/shop/themeList";
 import { SkinManager } from "../object/skin/skinManager";
+import { DataManager } from "../data/dataManager";
 
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
@@ -154,7 +155,7 @@ export class ShopScreen extends UIScreen {
     }
 
     _onClickBuyBtn() {
-        if(Data.coin < GameConstant.COINS_PER_BUY_RANDOM) {
+        if(DataManager.coins.value < GameConstant.COINS_PER_BUY_RANDOM) {
             return;
         }
 
@@ -174,10 +175,10 @@ export class ShopScreen extends UIScreen {
         
         currList.scrollTo(randomItem.id-1)
         SkinManager.buy(randomItem);
-        Data.change(DataType.Coin, -GameConstant.COINS_PER_BUY_RANDOM);
+        DataManager.updateCoins(- GameConstant.COINS_PER_BUY_RANDOM)
     }
 
     _onClickAdsBtn() { 
-        Data.change(DataType.Coin, GameConstant.COINS_PER_ADS);
+        DataManager.updateCoins(+ GameConstant.COINS_PER_ADS)
     }
 }

@@ -4,6 +4,7 @@ import { Data } from "../../../dataTest";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
+import { DataManager, DataManagerEvent } from "../../data/dataManager";
 
 export class CoinInfor extends Container {
     constructor() {
@@ -19,7 +20,7 @@ export class CoinInfor extends Container {
 
     _initText() {
         this.text = new PureText(
-            Data.coin.toString(),
+            DataManager.coins.value,
             new PureTransform({
                 alignment: Alignment.TOP_RIGHT,
                 useOriginalSize: true,
@@ -46,11 +47,11 @@ export class CoinInfor extends Container {
     }
 
     _initEvents() {
-        Data.addObserver(this);
-        this.on("dataChange", () => this._updateCoin());
+        DataManager.addObserver(this);
+        this.on(DataManagerEvent.DataChanged, () => this._updateCoin());
     }
 
     _updateCoin() {
-        this.text.text = Data.coin.toString();
+        this.text.text = DataManager.coins.value;
     }
 }
