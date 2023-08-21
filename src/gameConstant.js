@@ -39,4 +39,24 @@ export const GameConstant = Object.freeze({
 
   TUBE_SHOP_NAME    : "Tube",
   THEME_SHOP_NAME   : "Theme",
+
+  INDEXEDDB_NAME                          : "water_sort_puzzle",
+  INDEXEDDB_VERSION                       : 1,
+  INDEXEDDB_STORE_NAME                    : "userData",
+  INDEXEDDB_COIN_KEY                      : "coin",
+  INDEXEDDB_SCORE_KEY                     : "score",
+  INDEXEDDB_LIST_GAMEPLAY_PARAMS_KEY      : "listGameplayParams",
+  INDEXEDDB_ADD_TUBE_TIMES_KEY            : "addTubeTimes",
+  INDEXEDDB_UNDO_TIMES_KEY                : "undoTimes",
+  INDEXEDDB_LIST_LEVEL_KEY                : "listLevel", // Unlocked
+  INDEXEDDB_LIST_THEME_SKIN_KEY           : "listThemeSkin", // Unlocked
+  INDEXEDDB_LIST_TUBE_SKIN_KEY            : "listTubeSkin", // Unlocked
+  
+  PLAYER_DEFAULT_COIN                     : { value : 10000 },
+  PLAYER_DEFAULT_SCORE                    : { value : 0 },
+  PLAYER_DEFAULT_ADD_TUBE_TIMES           : { value : 2 },
+  PLAYER_DEFAULT_UNDO_TIMES               : { value : 5 },
+  PLAYER_DEFAULT_LEVEL                    : { id: 1, enabled : true },
+  PLAYER_DEFAULT_THEME_SKIN               : { id: 1, enabled : true },
+  PLAYER_DEFAULT_TUBE_SKIN                : { id: 1, enabled : true },
 });
