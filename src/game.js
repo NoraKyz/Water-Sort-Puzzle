@@ -14,6 +14,8 @@ import { update } from "@tweenjs/tween.js";
 import { Data } from "./dataTest";
 import { ButtonManager } from "./iec/ui/buttonManager";
 import { SkinManager } from "./iec/object/skin/skinManager";
+import { DataLocal } from "./iec/data/dataLocal";
+import { DataManager } from "./iec/data/dataManager";
 
 export class Game {
   static init() {
@@ -47,10 +49,7 @@ export class Game {
     SkinManager.init();
     // TODO: init game setting
     AssetManager.load(this._onAssetLoaded.bind(this));
-    // TODO: init data local
-    // this.on(DataLocalEvent.Initialize, () => {
-    //   DataManager.init();
-    // });
+    DataLocal.init();
   }
 
   static getScreenSize() {

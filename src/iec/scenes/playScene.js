@@ -8,11 +8,11 @@ import { Spawner } from "../../spawners/spawner";
 import { SoundManager } from "../../soundManager";
 import { Level } from "../level/level";
 import { LevelEvent } from "../level/levelEvent";
-import { Data } from "../../dataTest";
 import { TopbarScreen, TopbarScreenEvent } from "../screens/topbarScreen";
 import { WinScreen } from "../screens/winScreen";
 import { MenuScreen, MenuScreenEvent } from "../screens/menuScreen";
 import { ShopScreen, ShopScreenEvent } from "../screens/shopScreen";
+import { DataManager } from "../data/dataManager";
 
 
 export class PlayScene extends Scene {
@@ -53,7 +53,7 @@ export class PlayScene extends Scene {
 
   _initLevel() {
     this.level = new Level();
-    this.level.startLevel(Data.currentLevel);
+    this.level.startLevel(DataManager.currentLevel);
     this.gameplay.addChild(this.level);
   }
 
@@ -88,7 +88,6 @@ export class PlayScene extends Scene {
 
     this.winScreen.on(LevelEvent.NextLevel, () => {
       this.level.nextLevel();
-      this.topbarScreen.onNextLevel();
       this.ui.setScreenActive(GameConstant.WIN_SCREEN, false);
     });
 

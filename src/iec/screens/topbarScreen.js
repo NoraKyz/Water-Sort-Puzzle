@@ -1,4 +1,3 @@
-import { Data } from "../../dataTest";
 import { GameConstant } from "../../gameConstant"
 import { PureText } from "../../pureDynamic/PixiWrapper/pureText";
 import { UIScreen } from "../../pureDynamic/PixiWrapper/screen/uiScreen"
@@ -10,6 +9,7 @@ import { AddTubeButton } from "../ui/topbar/addTubeBtn";
 import { MenuButton } from "../ui/topbar/menuBtn";
 import { ReplayButton } from "../ui/topbar/replayBtn";
 import { UndoButton } from "../ui/topbar/undoBtn";
+import { DataManager, DataManagerEvent } from "../../iec/data/dataManager";
 
 export const TopbarScreenEvent = Object.freeze({
     OpenMenu: "OpenMenu",
@@ -33,23 +33,29 @@ export class TopbarScreen extends UIScreen {
     }
 
     _initEvents() {
+        DataManager.addObserver(this);
+        this.on(DataManagerEvent.DataChanged, () => this._onDataChanged());
+
         this.menuBtn.on("openMenu", () => {
             this.emit(TopbarScreenEvent.OpenMenu);
         });
+        
         this.replayBtn.on(LevelEvent.Replay, () => {
             this.emit(LevelEvent.Replay);
         });
+
         this.undoBtn.on(LevelEvent.Undo, () => {
             this.emit(LevelEvent.Undo);
         });
+
         this.addTubeBtn.on(LevelEvent.AddTube, () => {
             this.emit(LevelEvent.AddTube);
-        });
+        }); 
     }
 
     _initTitleLevel() {
         this.titleLevel = new PureText(
-            "Level " + (Data.currentLevel + 1),
+            "Level " + DataManager.currentLevel.id,
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
@@ -61,7 +67,7 @@ export class TopbarScreen extends UIScreen {
                 fontSize: 64,
                 fontWeight: "bolder"
             });
-        this.addChild(this.titleLevel.displayObject);
+        this.addChild(this.titleLevel.displayObject);   
     }
 
     _initMenuButton() {
@@ -88,11 +94,7 @@ export class TopbarScreen extends UIScreen {
         this.addChild(this.addTubeBtn);
     }
 
-    _updateLevel() {
-        this.titleLevel.displayObject.text = "Level " + (Data.currentLevel + 1);
-    }
-
-    onNextLevel() {
-        this._updateLevel();
+    _onDataChanged() {
+        this.titleLevel.text = "Level " + DataManager.currentLevel.id;
     }
 }

@@ -2,8 +2,6 @@
 import { LevelEvent } from "./levelEvent";
 import { Container } from "@pixi/display";
 import TubePosData from "@../../../assets/jsons/tubePosData.json";
-import LevelData from "../../../assets/jsons/levelData.json";
-import { Tube } from "../object/tube/tube";
 import { TubeFactory } from "../object/tube/tubeFactory";
 import { TubeManager } from "../object/tube/tubeManager";
 import { GameConstant } from "../../gameConstant";
@@ -13,12 +11,13 @@ import { Tween } from "../../systems/tween/tween";
 import { TimeOut, TimeOutEvent } from "../basic/timeOut";
 import { SkinManager } from "../object/skin/skinManager";
 import { Data } from "../../dataTest";
+import { DataManager } from "../data/dataManager";
 
 export class Level extends Container {
   constructor() {
     super();
 
-    this.data = LevelData[Data.currentLevel];
+    this.data = DataManager.getLevelData();
     this.skin = SkinManager.currTubeSkin;
 
     this._initComponents();
@@ -244,7 +243,7 @@ export class Level extends Container {
 
   _onResetLevel() {
     let numberStacks = this.data.stacks.length;
-    this.data = LevelData[Data.currentLevel];
+    this.data = DataManager.getLevelData();
     while (this.data.stacks.length < numberStacks) {
       this.data.stacks.push([]);
     }
@@ -266,16 +265,16 @@ export class Level extends Container {
     }
   }
 
-  startLevel(id) {
-    this.data = LevelData[id];
+  startLevel(level) {
+    this.data = DataManager.getLevelData(level);
     this.resetTube();
   }
 
   nextLevel() {
-    Data.currentLevel++;
+    DataManager.nextLevel();
     Data.undoTimes = GameConstant.UNDO_NUMBER_PER_LEVEL;
     this.tubeManager.emit("reset");
-    this.startLevel(Data.currentLevel);
+    this.startLevel(DataManager.currentLevel);
   }
 
   resetTube() {

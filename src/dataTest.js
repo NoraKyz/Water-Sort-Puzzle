@@ -44,7 +44,6 @@ export class Data {
                 }
             }
         }
-
         this._notify();
     }
 }

@@ -94,8 +94,6 @@ export class ItemShop extends Container {
         });
     }
 
-
-
     setState(state) {
         this.state = state;
         this.emit(state);
