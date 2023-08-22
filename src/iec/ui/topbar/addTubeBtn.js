@@ -2,11 +2,12 @@ import { Container, Texture } from "pixi.js";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
-import { Data } from "../../../dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { LevelEvent } from "../../level/levelEvent";
 import { GameConstant } from "../../../gameConstant";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
+import { DataManager } from "../../data/dataManager";
+import { UserData } from "../../data/userData";
 
 export class AddTubeButton extends Container {
     constructor() {
@@ -42,7 +43,7 @@ export class AddTubeButton extends Container {
         this.addBtn.addChild(this.icAddBtn.displayObject);
 
         this.textAddTubeBtn = new PureText(
-            Data.addTubeTimes.toString(),
+            UserData.addTubeTimes,
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
@@ -87,7 +88,7 @@ export class AddTubeButton extends Container {
     _setStateBtn(){
         this._updateAddBtn();
         
-        if (Data.addTubeTimes > 0) {
+        if (UserData.addTubeTimes > 0) {
             this.emit("ableAddTube");      
         } else {
             this.emit("unableAddTube");
@@ -95,7 +96,7 @@ export class AddTubeButton extends Container {
     }
 
     _updateAddBtn() {
-        this.textAddTubeBtn.text = Data.addTubeTimes.toString();
+        this.textAddTubeBtn.text = UserData.addTubeTimes;
     }
 
     _onClickAddBtn() {
@@ -104,7 +105,7 @@ export class AddTubeButton extends Container {
     }
 
     _onClickAdsBtn() {
-        Data.addTubeTimes += GameConstant.TUBE_NUMBER_GET_BY_ADS;
+        DataManager.updateAddTubeTimes(+ GameConstant.TUBE_NUMBER_GET_BY_ADS);
         this._setStateBtn();
     }
 }

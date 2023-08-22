@@ -1,6 +1,5 @@
 import { Texture } from "pixi.js";
 import { GameConstant } from "../../gameConstant"
-import { PureSprite } from "../../pureDynamic/PixiWrapper/pureSprite";
 import { UIScreen } from "./../../pureDynamic/PixiWrapper/screen/uiScreen"
 import { PureTransform } from "../../pureDynamic/core/pureTransform";
 import { Alignment, MaintainAspectRatioType } from "../../pureDynamic/core/pureTransformConfig";

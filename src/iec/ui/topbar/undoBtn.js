@@ -1,11 +1,12 @@
 import { Container, Texture } from "pixi.js";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
-import { Data } from "../../../../src/dataTest";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { GameConstant } from "../../../gameConstant";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { LevelEvent } from "../../level/levelEvent";
+import { DataManager } from "../../data/dataManager";
+import { UserData } from "../../data/userData";
 
 export class UndoButton extends Container {
     constructor() {
@@ -41,7 +42,7 @@ export class UndoButton extends Container {
         this.undoBtn.addChild(this.icUndoBtn.displayObject);
 
         this.textUndoBtn = new PureText(
-            Data.undoTimes.toString(),
+            UserData.undoTimes,
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
@@ -67,7 +68,7 @@ export class UndoButton extends Container {
         this.icAdsBtn = new PureSprite(Texture.from("spr_ads_get_undo_btn"), new PureTransform({
             alignment: Alignment.TOP_CENTER,
             useOriginalSize: true,
-            x: 90,
+            x: 120,
             y: 72,
         }));
         this.adsBtn.addChild(this.icAdsBtn.displayObject);
@@ -77,7 +78,7 @@ export class UndoButton extends Container {
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
-                x: 132,
+                x: 160,
                 y: 80,
             }),
             {
@@ -108,7 +109,7 @@ export class UndoButton extends Container {
     _setStateBtn() {
         this._updateUndoBtn();
 
-        if (Data.undoTimes > 0) {
+        if (UserData.undoTimes > 0) {
             this.emit("ableUndo");         
         } else {
             this.emit("unableUndo");
@@ -116,7 +117,7 @@ export class UndoButton extends Container {
     }
 
     _updateUndoBtn() {
-        this.textUndoBtn.text = Data.undoTimes.toString();
+        this.textUndoBtn.text = UserData.undoTimes;
     }
 
     _onClickUndoBtn() {
@@ -125,7 +126,7 @@ export class UndoButton extends Container {
     }
 
     _onClickAdsBtn() {
-        Data.undoTimes += GameConstant.UNDO_NUMBER_GET_BY_ADS;
+        DataManager.updateUndoTimes(+GameConstant.UNDO_NUMBER_GET_BY_ADS);
         this._setStateBtn();
     }
 }

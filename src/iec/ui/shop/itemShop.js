@@ -1,8 +1,8 @@
 import { Container, Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
-import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
-import { SkinManager } from "../../object/skin/skinManager";
+import { DataManager, DataManagerEvent } from "../../data/dataManager";
+import { DataObserver, EventData } from "../../data/dataObserver";
 
 export const ItemState = Object.freeze({
     Locked: "locked",
@@ -11,8 +11,8 @@ export const ItemState = Object.freeze({
 });
 
 export const ItemType = Object.freeze({
-    Tube: "tube",
-    Theme: "theme",
+    Tube: "Tube",
+    Theme: "Theme",
 });
 
 export class ItemShop extends Container {
@@ -28,7 +28,7 @@ export class ItemShop extends Container {
     _initProperties() {
         this.id = this.data.id;
         this.state = this.data.state;
-        SkinManager.addObserver(this);
+        
 
         if(this.state !== ItemState.Locked) {
             this.onUnlocked();
@@ -66,7 +66,7 @@ export class ItemShop extends Container {
     }
 
     _initSpr() {
-        
+        // TODO: continue when extend this class
     }
 
     _initEvents() {
@@ -89,7 +89,8 @@ export class ItemShop extends Container {
             this.spr.visible = true;
         });
 
-        this.on("dataChange", () => {
+        DataObserver.addObserver(this);
+        this.on(EventData.DataChanged, () => {
             this.setState(this.data.state);
         });
     }
@@ -106,6 +107,6 @@ export class ItemShop extends Container {
     }
 
     _onSelectedItem() {
-        SkinManager.set(this);
+        // TODO: continue when extend this class
     }
 }

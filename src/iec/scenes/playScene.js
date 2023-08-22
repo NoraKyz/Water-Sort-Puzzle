@@ -2,7 +2,7 @@ import { Container } from "pixi.js";
 import { GameConstant } from "../../gameConstant";
 import { Scene } from "../../pureDynamic/PixiWrapper/scene/scene";
 import { GameResizer } from "../../pureDynamic/systems/gameResizer";
-import { BackgroundManager } from "../../iec/object/background/backgroundManager";
+import { Theme } from "../../iec/object/theme/theme";
 import { Confetti } from "../../iec/object/confetti/confetti";
 import { Spawner } from "../../spawners/spawner";
 import { SoundManager } from "../../soundManager";
@@ -13,6 +13,7 @@ import { WinScreen } from "../screens/winScreen";
 import { MenuScreen, MenuScreenEvent } from "../screens/menuScreen";
 import { ShopScreen, ShopScreenEvent } from "../screens/shopScreen";
 import { DataManager } from "../data/dataManager";
+import { UserData } from "../data/userData";
 
 
 export class PlayScene extends Scene {
@@ -23,7 +24,7 @@ export class PlayScene extends Scene {
   create() {
     super.create();
 
-    this._initBg();
+    this._initTheme();
     this._initGameplay();
     this._initScreens();
     this._initEvents();
@@ -38,9 +39,9 @@ export class PlayScene extends Scene {
     this.gameplay.y = GameResizer.height / 2;
   }
 
-  _initBg() {
-    this.bgManager = new BackgroundManager();
-    this.addChild(this.bgManager);
+  _initTheme() {
+    this.theme = new Theme();
+    this.addChild(this.theme);
   }
 
   _initGameplay() {
@@ -53,7 +54,7 @@ export class PlayScene extends Scene {
 
   _initLevel() {
     this.level = new Level();
-    this.level.startLevel(DataManager.currentLevel);
+    this.level.startLevel(UserData.currentLevel);
     this.gameplay.addChild(this.level);
   }
 

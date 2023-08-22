@@ -1,10 +1,6 @@
-import { ScrollBox } from "@pixi/ui";
-import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
-import { SkinManager } from "../../object/skin/skinManager";
 import { TubeItem } from "./tubeItem";
-import { ItemState } from "./itemShop";
 import {ItemList } from "./itemList";
-import { Util } from "../../../helpers/utils";
+import { UserData } from "../../data/userData";
 
 export class TubeList extends ItemList {
     constructor() {
@@ -13,7 +9,7 @@ export class TubeList extends ItemList {
 
     _initProperties() {
         this.background.alpha = 0;
-        this.dataList = SkinManager.tubeData;
+        this.dataList = UserData.listTubeSkin;
     }
 
     _initSkinCards() {

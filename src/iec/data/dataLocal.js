@@ -24,7 +24,7 @@ export class DataLocal {
     this.dbVersion = GameConstant.INDEXEDDB_VERSION;
     this.db = null;
     this.totalLoad = 0;
-    this.totalData = 6;
+    this.totalData = 8;
     var request = window.indexedDB.open(this.dbName, this.dbVersion);
     request.onupgradeneeded = (event) => {
       this.db = event.target.result;
@@ -37,8 +37,10 @@ export class DataLocal {
       this.db = event.target.result;
       this.getCoins();
       this.getScore();
-      this.getListGameplayParams();
-      this.getListLevels();
+      this.getAddTubeTimes();
+      this.getUndoTimes();
+      this.getCurrentLevel();
+      this.getListUnlockedLevels();
       this.getListThemeSkin();
       this.getListTubeSkin();
     };
@@ -85,17 +87,14 @@ export class DataLocal {
     });
   }
 
-  static getListGameplayParams() {
-    this.getData(GameConstant.INDEXEDDB_LIST_GAMEPLAY_PARAMS_KEY).then((value) => {
+  static getAddTubeTimes() {
+    this.getData(GameConstant.INDEXEDDB_ADD_TUBE_TIMES_KEY).then((value) => {
       if (typeof (value) === "undefined") {
-        this.listGameplayParams = {};
-        this.listGameplayParams[GameConstant.INDEXEDDB_ADD_TUBE_TIMES_KEY] = GameConstant.PLAYER_DEFAULT_ADD_TUBE_TIMES;
-        this.listGameplayParams[GameConstant.INDEXEDDB_UNDO_TIMES_KEY] = GameConstant.PLAYER_DEFAULT_UNDO_TIMES;
-
-        this.addData(GameConstant.INDEXEDDB_LIST_GAMEPLAY_PARAMS_KEY, this.listGameplayParams);
+        this.addTubeTimes = GameConstant.PLAYER_DEFAULT_ADD_TUBE_TIMES;
+        this.addData(GameConstant.INDEXEDDB_ADD_TUBE_TIMES_KEY, this.addTubeTimes);
       }
       else {
-        this.listGameplayParams = value;
+        this.addTubeTimes = value;
       }
       this.checkLoad();
     }).catch((error) => {
@@ -103,14 +102,44 @@ export class DataLocal {
     });
   }
 
-  static getListLevels() {
-    this.getData(GameConstant.INDEXEDDB_LIST_LEVEL_KEY).then((value) => {
+  static getUndoTimes() {
+    this.getData(GameConstant.INDEXEDDB_UNDO_TIMES_KEY).then((value) => {
       if (typeof (value) === "undefined") {
-        this.listLevels = [GameConstant.PLAYER_DEFAULT_LEVEL];
-        this.addData(GameConstant.INDEXEDDB_LIST_LEVEL_KEY, this.listLevels);
+        this.undoTimes = GameConstant.PLAYER_DEFAULT_UNDO_TIMES;
+        this.addData(GameConstant.INDEXEDDB_UNDO_TIMES_KEY, this.undoTimes);
       }
       else {
-        this.listLevels = value;
+        this.undoTimes = value;
+      }
+      this.checkLoad();
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
+  static getCurrentLevel() {
+    this.getData(GameConstant.INDEXEDDB_CURRENT_LEVEL_KEY).then((value) => {
+      if (typeof (value) === "undefined") {
+        this.currentLevel = GameConstant.PLAYER_DEFAULT_CURRENT_LEVEL;
+        this.addData(GameConstant.INDEXEDDB_CURRENT_LEVEL_KEY, this.currentLevel);
+      }
+      else {
+        this.currentLevel = value;
+      }
+      this.checkLoad();
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
+  static getListUnlockedLevels() {
+    this.getData(GameConstant.INDEXEDDB_LIST_UNLOCKED_LEVEL_KEY).then((value) => {
+      if (typeof (value) === "undefined") {
+        this.listUnlockedLevels = GameConstant.PLAYER_DEFAULT_UNLOCKED_LEVEL_LIST;
+        this.addData(GameConstant.INDEXEDDB_LIST_UNLOCKED_LEVEL_KEY, this.listUnlockedLevels);
+      }
+      else {
+        this.listUnlockedLevels = value;
       }
       this.checkLoad();
     }).catch((error) => {
@@ -121,7 +150,7 @@ export class DataLocal {
   static getListThemeSkin() {
     this.getData(GameConstant.INDEXEDDB_LIST_THEME_SKIN_KEY).then((value) => {
       if (typeof (value) === "undefined") {
-        this.listThemeSkin = [GameConstant.PLAYER_DEFAULT_THEME_SKIN];
+        this.listThemeSkin = GameConstant.PLAYER_DEFAULT_THEME_SKIN_LIST;
         this.addData(GameConstant.INDEXEDDB_LIST_THEME_SKIN_KEY, this.listThemeSkin);
       }
       else {
@@ -136,7 +165,7 @@ export class DataLocal {
   static getListTubeSkin() {
     this.getData(GameConstant.INDEXEDDB_LIST_TUBE_SKIN_KEY).then((value) => {
       if (typeof (value) === "undefined") {
-        this.listTubeSkin = [GameConstant.PLAYER_DEFAULT_TUBE_SKIN];
+        this.listTubeSkin = GameConstant.PLAYER_DEFAULT_TUBE_SKIN_LIST;
         this.addData(GameConstant.INDEXEDDB_LIST_TUBE_SKIN_KEY, this.listTubeSkin);
       }
       else {
@@ -174,29 +203,23 @@ export class DataLocal {
 
   static updateDataByKey(key, value) {
     const userData = this.db.transaction(GameConstant.INDEXEDDB_STORE_NAME, "readwrite").objectStore(GameConstant.INDEXEDDB_STORE_NAME);
-    var request = userData.get(key);
+    const request = userData.get(key);
+
     request.onsuccess = (event) => {
       var data = event.target.result;
       data = value;
-      var requestUpdate = userData.put(data, key);
+      const requestUpdate = userData.put(data, key);
       requestUpdate.onsuccess = () => {
-        Debug.log(`update ${ key } success`);
+        this[key] = data;
+        Debug.log(`update ${key} success`);
       };
       requestUpdate.onerror = (err) => {
-        Debug.error(`update ${ key } error`, err);
+        Debug.error(`update ${key} error`, err);
       };
     };
+
     request.onerror = (event) => {
       Debug.error("error: ", event);
     };
-  }
-
-  static updateAllData() {
-    this.updateDataByKey(GameConstant.INDEXEDDB_COIN_KEY, this.coins);
-    this.updateDataByKey(GameConstant.INDEXEDDB_SCORE_KEY, this.score);
-    this.updateDataByKey(GameConstant.INDEXEDDB_LIST_LEVEL_KEY, this.listLevels);
-    this.updateDataByKey(GameConstant.INDEXEDDB_LIST_GAMEPLAY_PARAMS_KEY, this.listGameplayParams);
-    this.updateDataByKey(GameConstant.INDEXEDDB_LIST_THEME_SKIN_KEY, this.listThemeSkin);
-    this.updateDataByKey(GameConstant.INDEXEDDB_LIST_TUBE_SKIN_KEY, this.listTubeSkin);
   }
 }

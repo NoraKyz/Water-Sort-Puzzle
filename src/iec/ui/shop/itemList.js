@@ -1,7 +1,5 @@
 import { ScrollBox } from "@pixi/ui";
 import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
-import { SkinManager } from "../../object/skin/skinManager";
-import { TubeItem } from "./tubeItem";
 import { ItemState } from "./itemShop";
 import { Util } from "../../../helpers/utils";
 

@@ -9,7 +9,8 @@ import { AddTubeButton } from "../ui/topbar/addTubeBtn";
 import { MenuButton } from "../ui/topbar/menuBtn";
 import { ReplayButton } from "../ui/topbar/replayBtn";
 import { UndoButton } from "../ui/topbar/undoBtn";
-import { DataManager, DataManagerEvent } from "../../iec/data/dataManager";
+import { DataObserver, EventData } from "../data/dataObserver";
+import { UserData } from "../data/userData";
 
 export const TopbarScreenEvent = Object.freeze({
     OpenMenu: "OpenMenu",
@@ -33,8 +34,8 @@ export class TopbarScreen extends UIScreen {
     }
 
     _initEvents() {
-        DataManager.addObserver(this);
-        this.on(DataManagerEvent.DataChanged, () => this._onDataChanged());
+        DataObserver.addObserver(this);
+        this.on(EventData.DataChanged, () => this._onDataChanged());
 
         this.menuBtn.on("openMenu", () => {
             this.emit(TopbarScreenEvent.OpenMenu);
@@ -55,7 +56,7 @@ export class TopbarScreen extends UIScreen {
 
     _initTitleLevel() {
         this.titleLevel = new PureText(
-            "Level " + DataManager.currentLevel.id,
+            "Level " + UserData.currentLevel,
             new PureTransform({
                 alignment: Alignment.TOP_CENTER,
                 useOriginalSize: true,
@@ -95,6 +96,6 @@ export class TopbarScreen extends UIScreen {
     }
 
     _onDataChanged() {
-        this.titleLevel.text = "Level " + DataManager.currentLevel.id;
+        this.titleLevel.text = "Level " + UserData.currentLevel;
     }
 }

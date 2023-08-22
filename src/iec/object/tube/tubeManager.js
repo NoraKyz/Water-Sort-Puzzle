@@ -5,8 +5,8 @@ import { Util } from "../../../helpers/utils";
 import { SoundManager } from "../../../soundManager";
 import { Tween } from "../../../systems/tween/tween";
 import { TubeState } from "./tube";
-import { Data } from "../../../dataTest";
 import { ButtonManager } from "../../ui/buttonManager";
+import { DataManager } from "../../data/dataManager";
 
 export class TubeManager extends Container {
   constructor(levelData, skin) {
@@ -199,8 +199,7 @@ export class TubeManager extends Container {
       this.isPouring = true;
       SoundManager.play("sfx_pourWater", 1, false); 
       ButtonManager.disableAll();
-      this.tubeUndoDataArray.push(this.getPourData());
-      
+      this.tubeUndoDataArray.push(this.getPourData());    
     }
     let liquids1 = tube1.getTopLiquid();
     let liquids2 = tube2.getTopLiquid();
@@ -346,8 +345,8 @@ export class TubeManager extends Container {
 
   _onUndoPour() {
     if (this.tubeUndoDataArray.length > 0) {
-      Data.undoTimes--;
-
+      DataManager.updateUndoTimes(-1);
+      
       let undoData = this.tubeUndoDataArray.pop();
       this.tubeArray.forEach((tube, id) => {
         tube.liquidContainer.removeChildren();

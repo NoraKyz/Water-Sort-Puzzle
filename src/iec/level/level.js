@@ -9,16 +9,16 @@ import { Sprite, Texture } from "pixi.js";
 import { Solver } from "../solver/solve";
 import { Tween } from "../../systems/tween/tween";
 import { TimeOut, TimeOutEvent } from "../basic/timeOut";
-import { SkinManager } from "../object/skin/skinManager";
-import { Data } from "../../dataTest";
 import { DataManager } from "../data/dataManager";
+import { DataObserver, EventData } from "../data/dataObserver";
+import { UserData } from "../data/userData";
 
 export class Level extends Container {
   constructor() {
     super();
 
     this.data = DataManager.getLevelData();
-    this.skin = SkinManager.currTubeSkin;
+    this.skin = DataManager.getTubeSkinData();
 
     this._initComponents();
     this._initEvents();
@@ -233,8 +233,8 @@ export class Level extends Container {
     this.on(LevelEvent.Replay, () => this._onResetLevel());
     this.on(LevelEvent.AddTube, () => this._onAddTube());
 
-    SkinManager.addObserver(this);
-    this.on("dataChange", () => this._onDataChange());
+    DataObserver.addObserver(this);
+    this.on(EventData.DataChanged, () => this._onDataChange());
   }
 
   _onUndoLevel() {
@@ -254,27 +254,28 @@ export class Level extends Container {
 
   _onAddTube() {
     if (this.data.tubeNumber < GameConstant.MAX_TUBE_NUMBER) {
-      Data.addTubeTimes--;
+      DataManager.updateAddTubeTimes(-1);
 
       this.data.stacks = this.tubeManager.getPourData();
       this.data.stacks.push([]);
       this.data.tubeNumber++;
+      
 
       this.tubeManager.emit("reset");
       this.resetTube();
     }
   }
 
-  startLevel(level) {
-    this.data = DataManager.getLevelData(level);
+  startLevel(id) {
+    this.data = DataManager.getLevelData(id);
     this.resetTube();
   }
 
   nextLevel() {
     DataManager.nextLevel();
-    Data.undoTimes = GameConstant.UNDO_NUMBER_PER_LEVEL;
+    DataManager.updateUndoTimes(5 - GameConstant.UNDO_NUMBER_PER_LEVEL)
     this.tubeManager.emit("reset");
-    this.startLevel(DataManager.currentLevel);
+    this.startLevel(UserData.currentLevel);
   }
 
   resetTube() {
@@ -294,8 +295,12 @@ export class Level extends Container {
   }
 
   _onDataChange() {
-    this.skin = SkinManager.currTubeSkin;
-  
+    if(this.skin == DataManager.getTubeSkinData()) {
+      return;
+    }
+    
+    this.skin = DataManager.getTubeSkinData();
+    
     this.data.stacks = this.tubeManager.getPourData();
     this.tubeManager.emit("reset");
     this.resetTube();

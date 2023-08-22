@@ -1,10 +1,10 @@
 import { Container, Texture } from "pixi.js";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
-import { Data } from "../../../dataTest";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
-import { DataManager, DataManagerEvent } from "../../data/dataManager";
+import { DataObserver, EventData } from "../../data/dataObserver";
+import { UserData } from "../../data/userData";
 
 export class CoinInfor extends Container {
     constructor() {
@@ -20,7 +20,7 @@ export class CoinInfor extends Container {
 
     _initText() {
         this.text = new PureText(
-            DataManager.coins.value,
+            UserData.coins,
             new PureTransform({
                 alignment: Alignment.TOP_RIGHT,
                 useOriginalSize: true,
@@ -47,11 +47,11 @@ export class CoinInfor extends Container {
     }
 
     _initEvents() {
-        DataManager.addObserver(this);
-        this.on(DataManagerEvent.DataChanged, () => this._updateCoin());
+        DataObserver.addObserver(this);
+        this.on(EventData.DataChanged, () => this._updateCoin());
     }
 
     _updateCoin() {
-        this.text.text = DataManager.coins.value;
+        this.text.text = UserData.coins;
     }
 }

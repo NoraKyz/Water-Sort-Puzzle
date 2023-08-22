@@ -11,11 +11,8 @@ import { InputManager } from "./pureDynamic/systems/inputManager";
 import { Physics } from "./physics/physics";
 import { PlayScene } from "././iec/scenes/playScene";
 import { update } from "@tweenjs/tween.js";
-import { Data } from "./dataTest";
 import { ButtonManager } from "./iec/ui/buttonManager";
-import { SkinManager } from "./iec/object/skin/skinManager";
 import { DataLocal } from "./iec/data/dataLocal";
-import { DataManager } from "./iec/data/dataManager";
 
 export class Game {
   static init() {
@@ -45,11 +42,9 @@ export class Game {
     GameResizer.init(this.app);
     InputManager.init(this.app.view);
     ButtonManager.init();
-    Data.init();
-    SkinManager.init();
-    // TODO: init game setting
-    AssetManager.load(this._onAssetLoaded.bind(this));
     DataLocal.init();
+    // TODO: init game setting
+    AssetManager.load(this._onAssetLoaded.bind(this)); 
   }
 
   static getScreenSize() {

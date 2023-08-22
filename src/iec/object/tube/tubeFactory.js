@@ -1,10 +1,10 @@
-import TubeData from "../../../../assets/jsons/tubeData.json";
 import { Spawner } from "../../../spawners/spawner";
+import { UserData } from "../../data/userData";
 import { Tube } from "./tube";
 
 export class TubeFactory { 
     constructor() {
-        this.data = TubeData;
+        this.data = UserData.listTubeSkin;
         this.spawners = {};
         this._initSpanwers();
     }

@@ -1,3 +1,6 @@
+import themeData from "../assets/jsons/themeData.json"
+import tubeData from "../assets/jsons/tubeData.json"
+
 export const GameConstant = Object.freeze({
   PLATFORM_ANDROID : "Android",
   PLATFORM_IOS     : "iOS",
@@ -43,20 +46,21 @@ export const GameConstant = Object.freeze({
   INDEXEDDB_NAME                          : "water_sort_puzzle",
   INDEXEDDB_VERSION                       : 1,
   INDEXEDDB_STORE_NAME                    : "userData",
-  INDEXEDDB_COIN_KEY                      : "coin",
+  INDEXEDDB_COIN_KEY                      : "coins",
   INDEXEDDB_SCORE_KEY                     : "score",
-  INDEXEDDB_LIST_GAMEPLAY_PARAMS_KEY      : "listGameplayParams",
   INDEXEDDB_ADD_TUBE_TIMES_KEY            : "addTubeTimes",
   INDEXEDDB_UNDO_TIMES_KEY                : "undoTimes",
-  INDEXEDDB_LIST_LEVEL_KEY                : "listLevel", // Unlocked
-  INDEXEDDB_LIST_THEME_SKIN_KEY           : "listThemeSkin", // Unlocked
-  INDEXEDDB_LIST_TUBE_SKIN_KEY            : "listTubeSkin", // Unlocked
+  INDEXEDDB_CURRENT_LEVEL_KEY             : "currentLevel",
+  INDEXEDDB_LIST_UNLOCKED_LEVEL_KEY       : "listUnlockedLevel",
+  INDEXEDDB_LIST_THEME_SKIN_KEY           : "listThemeSkin", 
+  INDEXEDDB_LIST_TUBE_SKIN_KEY            : "listTubeSkin", 
   
-  PLAYER_DEFAULT_COIN                     : { value : 10000 },
-  PLAYER_DEFAULT_SCORE                    : { value : 0 },
-  PLAYER_DEFAULT_ADD_TUBE_TIMES           : { value : 2 },
-  PLAYER_DEFAULT_UNDO_TIMES               : { value : 5 },
-  PLAYER_DEFAULT_LEVEL                    : { id: 1, enabled : true },
-  PLAYER_DEFAULT_THEME_SKIN               : { id: 1, enabled : true },
-  PLAYER_DEFAULT_TUBE_SKIN                : { id: 1, enabled : true },
+  PLAYER_DEFAULT_COIN                     : 10000 ,
+  PLAYER_DEFAULT_SCORE                    : 0,
+  PLAYER_DEFAULT_ADD_TUBE_TIMES           : 2,
+  PLAYER_DEFAULT_UNDO_TIMES               : 5,
+  PLAYER_DEFAULT_CURRENT_LEVEL            : 1,
+  PLAYER_DEFAULT_UNLOCKED_LEVEL_LIST      : [1],
+  PLAYER_DEFAULT_THEME_SKIN_LIST          : themeData,
+  PLAYER_DEFAULT_TUBE_SKIN_LIST           : tubeData,
 });
