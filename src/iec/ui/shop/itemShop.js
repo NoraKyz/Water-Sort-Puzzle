@@ -88,11 +88,6 @@ export class ItemShop extends Container {
             this.selectedCard.visible = true;
             this.spr.visible = true;
         });
-
-        DataObserver.addObserver(this);
-        this.on(EventData.DataChanged, () => {
-            this.setState(this.data.state);
-        });
     }
 
     setState(state) {

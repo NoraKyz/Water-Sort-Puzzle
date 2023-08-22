@@ -23,4 +23,8 @@ export class ThemeItem extends ItemShop {
         }));
         this.addChild(this.spr.displayObject);
     }
+
+    _onSelectedItem() {
+          
+    }
 }

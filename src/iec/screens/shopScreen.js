@@ -160,6 +160,7 @@ export class ShopScreen extends UIScreen {
 
         let randomItem = null;
         let currList = null;
+
         if(this.tubeShopList.visible) {
             currList = this.tubeShopList;
         } else {
@@ -172,7 +173,7 @@ export class ShopScreen extends UIScreen {
             return;
         }
         
-        currList.scrollTo(randomItem.id-1)
+        currList.scrollTo(randomItem.id-1);
         DataManager.updateCoins(- GameConstant.COINS_PER_BUY_RANDOM)
     }
 
