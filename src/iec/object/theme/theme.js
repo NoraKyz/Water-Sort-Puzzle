@@ -3,6 +3,7 @@ import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { DataManager } from "../../../iec/data/dataManager";
+import { DataObserver, EventData } from "../../data/dataObserver";
 
 export class Theme extends Container {
   constructor() {
@@ -10,6 +11,7 @@ export class Theme extends Container {
 
     this.data = DataManager.getThemeSkinData();
     this._create();  
+    this._initEvents();
   }
 
   _create() {
@@ -24,6 +26,18 @@ export class Theme extends Container {
       anchorY                 : 1,
       maintainAspectRatioType : MaintainAspectRatioType.MAX,
     }));
+    this.addChild(this.theme.displayObject);
+  }
+
+  _initEvents() {
+    DataObserver.addObserver(this);
+    this.on(EventData.ThemeSelected, () => this._onChangeThemeSkin());
+  }
+
+  _onChangeThemeSkin() {
+    this.data = DataManager.getThemeSkinData();
+
+    this.theme.displayObject.texture = Texture.from(this.data.bgSprite);
     this.addChild(this.theme.displayObject);
   }
 }

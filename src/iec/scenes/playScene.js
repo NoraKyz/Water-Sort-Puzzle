@@ -12,7 +12,6 @@ import { TopbarScreen, TopbarScreenEvent } from "../screens/topbarScreen";
 import { WinScreen } from "../screens/winScreen";
 import { MenuScreen, MenuScreenEvent } from "../screens/menuScreen";
 import { ShopScreen, ShopScreenEvent } from "../screens/shopScreen";
-import { DataManager } from "../data/dataManager";
 import { UserData } from "../data/userData";
 
 

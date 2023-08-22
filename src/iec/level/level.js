@@ -234,7 +234,7 @@ export class Level extends Container {
     this.on(LevelEvent.AddTube, () => this._onAddTube());
 
     DataObserver.addObserver(this);
-    this.on(EventData.DataChanged, () => this._onDataChange());
+    this.on(EventData.TubeSelected, () => this._onDataChanged());
   }
 
   _onUndoLevel() {
@@ -294,11 +294,7 @@ export class Level extends Container {
     });
   }
 
-  _onDataChange() {
-    if(this.skin == DataManager.getTubeSkinData()) {
-      return;
-    }
-    
+  _onDataChanged() {
     this.skin = DataManager.getTubeSkinData();
     
     this.data.stacks = this.tubeManager.getPourData();

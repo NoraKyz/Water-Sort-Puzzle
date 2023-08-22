@@ -1,10 +1,6 @@
 import { DataLocal } from "./dataLocal";
 export class UserData {
     static init() {
-        this._update();
-    }
-
-    static _update() {
         this.coins = DataLocal.coins;
         this.score = DataLocal.score;     
         this.addTubeTimes = DataLocal.addTubeTimes;

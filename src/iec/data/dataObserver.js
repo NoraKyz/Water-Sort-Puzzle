@@ -1,6 +1,12 @@
 
 export const EventData = Object.freeze({
-    DataChanged: "dataChanged",
+    CurrentLevelChanged: "currentLevelChanged",
+    TubeUnlocked: "skinUnlocked",
+    TubeSelected: "skinSelected",
+    ThemeUnlocked: "themeUnlocked",
+    ThemeSelected: "themeSelected",
+    CoinsChanged: "coinsChanged",
+    GamePlayParamsChanged: "gamePlayParamsChanged",
 });
 
 export class DataObserver {
@@ -19,9 +25,9 @@ export class DataObserver {
         }
     }
 
-    static notify(...args) {
+    static notify(event, ...args) {
         this.observes.forEach(observe => {
-            observe.emit(EventData.DataChanged, ...args);
+            observe.emit(event, ...args);
         });
     }
 }

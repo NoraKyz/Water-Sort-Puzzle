@@ -2,6 +2,7 @@ import { Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { ItemShop, ItemType } from "./itemShop";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
+import { EventData } from "../../data/dataObserver";
 
 export class TubeItem extends ItemShop {
     constructor(data) {
@@ -24,7 +25,13 @@ export class TubeItem extends ItemShop {
         this.addChild(this.spr.displayObject);     
     }
 
-    _onSelectedItem() {
-          
+    _initEvents() {
+        super._initEvents();
+        this.on(EventData.TubeUnlocked, () => this._onDataChanged());
+        this.on(EventData.TubeSelected, () => this._onDataChanged());
+    }
+
+    _onDataChanged() {
+        super._onDataChanged();
     }
 }

@@ -48,10 +48,10 @@ export class CoinInfor extends Container {
 
     _initEvents() {
         DataObserver.addObserver(this);
-        this.on(EventData.DataChanged, () => this._updateCoin());
+        this.on(EventData.CoinsChanged, () => this.onDataChanged());
     }
 
-    _updateCoin() {
+    onDataChanged() {
         this.text.text = UserData.coins;
     }
 }

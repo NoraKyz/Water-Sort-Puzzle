@@ -28,7 +28,6 @@ export class ItemShop extends Container {
     _initProperties() {
         this.id = this.data.id;
         this.state = this.data.state;
-        
 
         if(this.state !== ItemState.Locked) {
             this.onUnlocked();
@@ -41,7 +40,8 @@ export class ItemShop extends Container {
         this._initSpr();
         this._initSelectedCard();
         this._initEvents();
-        this.setState(this.state);
+
+        this.emit(this.state);
     }
 
     _initLockedCard() {
@@ -88,11 +88,8 @@ export class ItemShop extends Container {
             this.selectedCard.visible = true;
             this.spr.visible = true;
         });
-    }
 
-    setState(state) {
-        this.state = state;
-        this.emit(state);
+        DataObserver.addObserver(this);
     }
 
     onUnlocked() {
@@ -102,6 +99,11 @@ export class ItemShop extends Container {
     }
 
     _onSelectedItem() {
-        // TODO: continue when extend this class
+        DataManager.skinSelected(this);
+    }
+
+    _onDataChanged() {
+        this.state = this.data.state;
+        this.emit(this.state);
     }
 }

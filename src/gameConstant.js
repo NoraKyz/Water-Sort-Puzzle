@@ -55,7 +55,7 @@ export const GameConstant = Object.freeze({
   INDEXEDDB_LIST_THEME_SKIN_KEY           : "listThemeSkin", 
   INDEXEDDB_LIST_TUBE_SKIN_KEY            : "listTubeSkin", 
   
-  PLAYER_DEFAULT_COIN                     : 10000000 ,
+  PLAYER_DEFAULT_COIN                     : 10000,
   PLAYER_DEFAULT_SCORE                    : 0,
   PLAYER_DEFAULT_ADD_TUBE_TIMES           : 2,
   PLAYER_DEFAULT_UNDO_TIMES               : 5,

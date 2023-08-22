@@ -35,7 +35,7 @@ export class TopbarScreen extends UIScreen {
 
     _initEvents() {
         DataObserver.addObserver(this);
-        this.on(EventData.DataChanged, () => this._onDataChanged());
+        this.on(EventData.CurrentLevelChanged, () => this._onDataChanged());
 
         this.menuBtn.on("openMenu", () => {
             this.emit(TopbarScreenEvent.OpenMenu);

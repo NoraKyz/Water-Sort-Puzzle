@@ -13,6 +13,7 @@ import { GameResizer } from "../../pureDynamic/systems/gameResizer";
 import { ThemeList } from "../ui/shop/themeList";
 import { DataManager } from "../data/dataManager";
 import { UserData } from "../data/userData";
+import { ItemState } from "../ui/shop/itemShop";
 
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
@@ -158,8 +159,7 @@ export class ShopScreen extends UIScreen {
             return;
         }
 
-        let randomItem = null;
-        let currList = null;
+        let randomItem = null, currList = null;
 
         if(this.tubeShopList.visible) {
             currList = this.tubeShopList;
@@ -174,6 +174,8 @@ export class ShopScreen extends UIScreen {
         }
         
         currList.scrollTo(randomItem.id-1);
+        randomItem.onUnlocked();
+        DataManager.unlockSkin(randomItem);
         DataManager.updateCoins(- GameConstant.COINS_PER_BUY_RANDOM)
     }
 
