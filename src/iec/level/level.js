@@ -273,7 +273,8 @@ export class Level extends Container {
 
   nextLevel() {
     DataManager.nextLevel();
-    DataManager.updateUndoTimes(5 - GameConstant.UNDO_NUMBER_PER_LEVEL)
+    DataManager.updateUndoTimes(5 - GameConstant.UNDO_NUMBER_PER_LEVEL);
+    DataManager.updateCoins(+50);
     this.tubeManager.emit("reset");
     this.startLevel(UserData.currentLevel);
   }

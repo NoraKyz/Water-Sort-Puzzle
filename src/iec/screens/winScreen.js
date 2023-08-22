@@ -8,6 +8,7 @@ import { Alignment, MaintainAspectRatioType } from "../../pureDynamic/core/pureT
 import { ButtonManager } from "../ui/buttonManager";
 import { LevelEvent } from "../level/levelEvent";
 import { FakeBackground } from "../ui/utils/fakeBackground";
+import { CoinAdded } from "../ui/win/coinAdded";
 
 export class WinScreen extends UIScreen {
     constructor() {
@@ -20,6 +21,7 @@ export class WinScreen extends UIScreen {
         this._initBackground();
         this._initConcefetti();
         this._initNextButton();
+        this._initCoinAdded();
     }
 
     _initBackground() {
@@ -44,6 +46,11 @@ export class WinScreen extends UIScreen {
         }));
         ButtonManager.addButton(GameConstant.NEXT_BUTTON, this.nextButton)
         this.addChild(this.nextButton.displayObject);
+    }
+
+    _initCoinAdded() {
+        this.coinAdded = new CoinAdded();
+        this.addChild(this.coinAdded);
     }
 
     _onClickNextBtn() {
