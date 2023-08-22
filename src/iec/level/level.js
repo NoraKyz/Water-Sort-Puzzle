@@ -261,7 +261,7 @@ export class Level extends Container {
       this.data.tubeNumber++;
       
 
-      this.tubeManager.emit("reset");
+      this.tubeManager.emit("addTube");
       this.resetTube();
     }
   }

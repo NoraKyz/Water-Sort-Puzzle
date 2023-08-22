@@ -341,6 +341,7 @@ export class TubeManager extends Container {
   _initEvents() {
     this.on("undo", () => this._onUndoPour());
     this.on("reset", () => this._onReset());
+    this.on("addTube", () => this._onAddTube());
   }
 
   _onUndoPour() {
@@ -361,6 +362,18 @@ export class TubeManager extends Container {
     this.activeTube = null;
     this.tubeArray = [];
     this.tubeUndoDataArray = [];
+    this.isPouring = false;
+    this.removeChildren();
+  }
+
+  _onAddTube() {
+    this.activeTube = null;
+    this.tubeArray = [];
+
+    this.tubeUndoDataArray.forEach((tubeUndoData) => {
+      tubeUndoData.push([]);
+    });
+
     this.isPouring = false;
     this.removeChildren();
   }
