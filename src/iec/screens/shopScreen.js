@@ -13,7 +13,6 @@ import { GameResizer } from "../../pureDynamic/systems/gameResizer";
 import { ThemeList } from "../ui/shop/themeList";
 import { DataManager } from "../data/dataManager";
 import { UserData } from "../data/userData";
-import { ItemState } from "../ui/shop/itemShop";
 
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
@@ -45,6 +44,8 @@ export class ShopScreen extends UIScreen {
 
         this.tubeShopBtn.onSelected();
         this.themeShopBtn.onUnselected();
+        this.tubeShopList.show();
+        this.themeShopList.hide();
     }
 
     resize() {
