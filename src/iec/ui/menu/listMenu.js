@@ -4,6 +4,7 @@ import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { MenuScreenEvent } from "../../screens/menuScreen";
+import { SoundButton } from "./soundBtn";
 
 export class ListMenu extends Container {
     constructor() {
@@ -27,6 +28,7 @@ export class ListMenu extends Container {
 
     _initList() {
         this._initShopBtn();
+        this._initSoundBtn();
     }
 
     _initShopBtn() {
@@ -37,6 +39,11 @@ export class ListMenu extends Container {
             y : -105
         }));
         this.addChild(this.shopBtn.displayObject);
+    }
+
+    _initSoundBtn(){
+        this.soundBtn = new SoundButton();
+        this.addChild(this.soundBtn);
     }
 
     _onClickShopBtn() {
