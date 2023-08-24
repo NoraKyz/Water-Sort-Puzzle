@@ -259,7 +259,7 @@ export class Tube extends Container {
     this.waterSurfaceTween?.stop();
     this.waterSurfaceTween2?.stop();
     this.waterSurfaceTween2 = Tween.createTween(this.waterSurface, { y: "+15" }, {
-      duration : 0.2,
+      duration : 0.2 / this.parent.speed,
       onUpdate : () => {
         this.updateWaterSurface(direction);
       },

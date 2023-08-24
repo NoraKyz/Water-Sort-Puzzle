@@ -22,7 +22,6 @@ export const GameConstant = Object.freeze({
   SHOW_GAME_TAG       : false,
 
   LEVEL_OFFSET  : 1,
-  LIQUID_HEIGHT : 70,
   HINT_TIME     : 3,
   UNDO_NUMBER_PER_LEVEL   : 5,
   UNDO_NUMBER_GET_BY_ADS  : 5,

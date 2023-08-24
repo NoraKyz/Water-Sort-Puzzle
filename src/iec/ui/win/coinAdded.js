@@ -19,7 +19,7 @@ export class CoinAdded extends Container {
             alignment: Alignment.MIDDLE_CENTER,
             width: 200,
             height: 103,
-            y: 40
+            y: -120
         }));
 
         console.log(Texture.from("spr_coins_added"));

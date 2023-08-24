@@ -7,6 +7,7 @@ import { Tween } from "../../../systems/tween/tween";
 import { TubeState } from "./tube";
 import { ButtonManager } from "../../ui/buttonManager";
 import { DataManager } from "../../data/dataManager";
+import { LevelEvent } from "../../level/levelEvent";
 
 export class TubeManager extends Container {
   constructor(levelData, skin) {
@@ -23,6 +24,7 @@ export class TubeManager extends Container {
     this.tubeArray = [];
     this.tubeUndoDataArray = [];
     this.isPouring = false;
+    this.speed = 1;
   }
 
   addTube(tube) {
@@ -179,10 +181,10 @@ export class TubeManager extends Container {
         y: gap.y,
       },
     }, {
-      duration: 0.2,
+      duration: 0.2 / this.speed,
     }).start();
     Tween.createTween(tube1.tube, { rotation: Util.toRadian(pourPoint.angle) }, {
-      duration: 0.2,
+      duration: 0.2 / this.speed,
       onUpdate: () => {
         tube1.update();
       },
@@ -216,7 +218,7 @@ export class TubeManager extends Container {
     else {
       pourAngle = -Util.toRadian(this.skin.pourData[4 - liquids1.length + 1]);
     }
-    let targetLiquid = tube2.addLiquid(liquids1.code, GameConstant.LIQUID_HEIGHT, 0);
+    let targetLiquid = tube2.addLiquid(liquids1.code, this.skin.liquidHeight, 0);
     let p = {
       p: 100,
     };
@@ -229,10 +231,10 @@ export class TubeManager extends Container {
      * }
      */
     Tween.createTween(tube1.tube, { rotation: pourAngle }, {
-      duration: 0.65,
+      duration: 0.65 / this.speed,
     }).start();
     Tween.createTween(p, { p: 0 }, {
-      duration: 0.65,
+      duration: 0.65 / this.speed,
       onUpdate: () => {
         targetLiquid.setPercent(100 - p.p);
         sourceLiquid.setPercent(p.p);
@@ -270,10 +272,10 @@ export class TubeManager extends Container {
         y: tube.originalY + tube.pivot.y,
       },
     }, {
-      duration: 0.2,
+      duration: 0.2 / this.speed,
     }).start();
     Tween.createTween(tube.tube, { rotation: 0 }, {
-      duration: 0.2,
+      duration: 0.2 / this.speed,
       onUpdate: () => {
         tube.updateLiquidContainer();
       },
@@ -342,6 +344,13 @@ export class TubeManager extends Container {
     this.on("undo", () => this._onUndoPour());
     this.on("reset", () => this._onReset());
     this.on("addTube", () => this._onAddTube());
+    this.on(LevelEvent.SpeedDown, () => {
+      this.speed = 1;
+    });
+    this.on(LevelEvent.SpeedUp, () => {
+      this.speed = 2;
+    });
+    
   }
 
   _onUndoPour() {
@@ -352,7 +361,7 @@ export class TubeManager extends Container {
       this.tubeArray.forEach((tube, id) => {
         tube.liquidContainer.removeChildren();
         undoData[id].forEach((data) => {
-          tube.addLiquid(data, GameConstant.LIQUID_HEIGHT, 100);
+          tube.addLiquid(data, this.skin.liquidHeight, 100);
         });
       });
     }

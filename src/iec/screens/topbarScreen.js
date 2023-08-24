@@ -11,6 +11,7 @@ import { ReplayButton } from "../ui/topbar/replayBtn";
 import { UndoButton } from "../ui/topbar/undoBtn";
 import { DataObserver, EventData } from "../data/dataObserver";
 import { UserData } from "../data/userData";
+import { SpeedButton } from "../ui/topbar/speedBtn";
 
 export const TopbarScreenEvent = Object.freeze({
     OpenMenu: "OpenMenu",
@@ -29,6 +30,7 @@ export class TopbarScreen extends UIScreen {
         this._initReplayButton();
         this._initUndoButton();
         this._initAddTubeButton();
+        this._initSpeedButton();
 
         this._initEvents();
     }
@@ -52,6 +54,14 @@ export class TopbarScreen extends UIScreen {
         this.addTubeBtn.on(LevelEvent.AddTube, () => {
             this.emit(LevelEvent.AddTube);
         }); 
+
+        this.speedBtn.on(LevelEvent.SpeedUp, () => {
+            this.emit(LevelEvent.SpeedUp);
+        });
+        
+        this.speedBtn.on(LevelEvent.SpeedDown, () => {
+            this.emit(LevelEvent.SpeedDown);
+        });
     }
 
     _initTitleLevel() {
@@ -87,6 +97,11 @@ export class TopbarScreen extends UIScreen {
         this.undoBtn = new UndoButton();
         ButtonManager.addButton(GameConstant.UNDO_BUTTON, this.undoBtn);
         this.addChild(this.undoBtn);
+    }
+
+    _initSpeedButton() {
+        this.speedBtn = new SpeedButton();
+        this.addChild(this.speedBtn);
     }
 
     _initAddTubeButton() {

@@ -240,6 +240,8 @@ export class Level extends Container {
     this.on(LevelEvent.Undo, () => this._onUndoLevel());
     this.on(LevelEvent.Replay, () => this._onResetLevel());
     this.on(LevelEvent.AddTube, () => this._onAddTube());
+    this.on(LevelEvent.SpeedUp, () => this.tubeManager.emit(LevelEvent.SpeedUp));
+    this.on(LevelEvent.SpeedDown, () => this.tubeManager.emit(LevelEvent.SpeedDown));
 
     DataObserver.addObserver(this);
     this.on(EventData.TubeSelected, () => this._onDataChanged());
@@ -291,7 +293,7 @@ export class Level extends Container {
     this.data.stacks.forEach((data, index) => {
       let tube = this.tubeFactory.getTube(this.skin.id);
       for (let i = 0; i < data.length; i++) {
-        tube.addLiquid(data[i], GameConstant.LIQUID_HEIGHT, 100);
+        tube.addLiquid(data[i], this.skin.liquidHeight, 100);
       }
 
       tube.position.x = tube.originalX = this.tubePosData[this.data.tubeNumber.toString()][index].pos[0];
