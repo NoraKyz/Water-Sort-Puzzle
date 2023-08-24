@@ -7,10 +7,8 @@ export class DebugAdapter extends EventEmitter {
   }
 
   onLoad() {
-    console.debug("[Ads Mock - Adapter] OnLoad");
+    console.debug("[KAds Mock - Adapter] OnLoad");
     this.emit("gameLoad", { width: window.innerWidth, height: window.innerHeight });
-    this.emit("visible");
-
     window.addEventListener("resize", () => {
       this.emit("resize", { width: window.innerWidth, height: window.innerHeight });
     });
@@ -28,44 +26,44 @@ export class DebugAdapter extends EventEmitter {
   }
 
   onAssetLoaded() {
-    console.debug("[Ads Mock - Adapter] OnAssetLoaded");
+    console.debug("[KAds Mock - Adapter] OnAssetLoaded");
   }
 
   onStart() {
-    console.debug("[Ads Mock - Adapter] OnStart");
+    console.debug("[KAds Mock - Adapter] OnStart");
   }
 
   onInteraction() {
-    console.debug("[Ads Mock - Adapter] OnInteraction");
+    console.debug("[KAds Mock - Adapter] OnInteraction");
   }
 
   onWin() {
-    console.debug("[Ads Mock - Adapter] OnWin");
+    console.debug("[KAds Mock - Adapter] OnWin");
   }
 
   onLose() {
-    console.debug("[Ads Mock - Adapter] OnLose");
+    console.debug("[KAds Mock - Adapter] OnLose");
   }
 
   onReplay() {
-    console.debug("[Ads Mock - Adapter] OnReplay");
+    console.debug("[KAds Mock - Adapter] OnReplay");
   }
 
   onOneLevelPassed() {
-    console.debug("[Ads Mock - Adapter] OnOneLevelPassed");
+    console.debug("[KAds Mock - Adapter] OnOneLevelPassed");
   }
 
   onMidwayProgress() {
-    console.debug("[Ads Mock - Adapter] onMidwayProgress");
+    console.debug("[KAds Mock - Adapter] onMidwayProgress");
   }
 
   onSendEvent(type, name) {
-    console.debug("[Ads Mock - Adapter] onSendEvent", type, name);
+    console.debug("[KAds Mock - Adapter] onSendEvent", type, name);
   }
 
   onCTAClick(url) {
-    console.log(`[Ads Mock - Adapter] OnCTAClicked: ${ url}`);
     window.open(url);
+    console.log(`[KAds Mock - Adapter] OnCTAClicked: ${ url}`);
   }
 
   getScreenSize() {
@@ -73,36 +71,25 @@ export class DebugAdapter extends EventEmitter {
   }
 }
 
-export default class Ads extends EventEmitter {
+export default class KAds extends EventEmitter {
   constructor() {
     super();
     /** @type {AdsAdapter} */
     this.adapter = new DebugAdapter();
-    this.adType = "DEBUG";
+    this.adType = "PREVIEW";
     this.platform = this.getPlatform();
-    console.log("[Ads Mock] Ads Inited");
+    console.log("[KAds Mock] KAds Inited");
   }
 
   registerEvents(gameObject) {
     if (this.adapter) {
-      this.checkHaveFunction(gameObject.load) && this.adapter.addListener("gameLoad", () => {
-        gameObject.load();
-      });
-      this.checkHaveFunction(gameObject.setPause) && this.adapter.addListener("gamePause", () => {
-        gameObject.setPause(true);
-      });
-      this.checkHaveFunction(gameObject.setPause) && this.adapter.addListener("gameResume", () => {
-        gameObject.setPause(false);
-      });
-      this.checkHaveFunction(gameObject.resize) && this.adapter.addListener("resize", (size) => {
-        gameObject.resize(size);
-      });
-      this.checkHaveFunction(gameObject.onVisible) && this.adapter.addListener("visible", () => {
-        gameObject.onVisible();
-      });
+      this.checkHaveFunction(gameObject.load) && this.adapter.addListener("gameLoad", () => gameObject.load());
+      this.checkHaveFunction(gameObject.setPause) && this.adapter.addListener("gamePause", () => gameObject.setPause(true));
+      this.checkHaveFunction(gameObject.setPause) && this.adapter.addListener("gameResume", () => gameObject.setPause(false));
+      this.checkHaveFunction(gameObject.resize) && this.adapter.addListener("resize", (size) => gameObject.resize(size));
     }
     else {
-      console.warn("[Ads Mock] Ads Adapter is null");
+      console.warn("[KAds Mock] Ads Adapter is null");
     }
   }
 
@@ -111,11 +98,11 @@ export default class Ads extends EventEmitter {
       return true;
     }
     else if (typeof objFunc === "undefined") {
-      console.error("[Ads Mock] The game object was not implemented a function yet");
+      console.error("[KAds Mock] The game object was not implemented a function yet");
       return false;
     }
     else {
-      console.warn(`[Ads Mock] It's neither undefined nor a function. It's a ${ typeof objFunc}`);
+      console.warn(`[KAds Mock] It's neither undefined nor a function. It's a ${ typeof objFunc}`);
       return false;
     }
   }
@@ -130,7 +117,7 @@ export default class Ads extends EventEmitter {
 
   onCTAClick() {
     let storeURL = (this.platform === "android") ? metadata.androidStoreURL : metadata.iosStoreURL;
-    console.log(`[Ads Mock] onCTAClick: ${ storeURL}`);
+    console.log(`[KAds Mock] onCTAClick: ${ storeURL}`);
     this.adapter.onCTAClick(storeURL);
   }
 
