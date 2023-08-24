@@ -559,5 +559,198 @@
       ],
       "dirention": "l"
     }
+  ],
+  "13": [
+    {
+      "pos": [
+        -300,
+        -120
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -200,
+        -120
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -100,
+        -120
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        0,
+        -120
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        100,
+        -120
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        200,
+        -120
+      ],
+      "dirention": "l"
+    },
+    {
+      "pos": [
+        300,
+        -120
+      ],
+      "dirention": "l"
+    },
+    {
+      "pos": [
+        -300,
+        280
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -180,
+        280
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -60,
+        280
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        60,
+        280
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        180,
+        280
+      ],
+      "dirention": "l"
+    },
+    {
+      "pos": [
+        300,
+        280
+      ],
+      "dirention": "l"
+    }
+  ],
+  "14": [
+    {
+      "pos": [
+        -300,
+        -120
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -200,
+        -120
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -100,
+        -120
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        0,
+        -120
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        100,
+        -120
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        200,
+        -120
+      ],
+      "dirention": "l"
+    },
+    {
+      "pos": [
+        300,
+        -120
+      ],
+      "dirention": "l"
+    },
+    {
+      "pos": [
+        -300,
+        280
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -200,
+        280
+      ],
+      "dirention": "r"
+    },
+    {
+      "pos": [
+        -100,
+        280
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        0,
+        280
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        100,
+        280
+      ],
+      "dirention": "b"
+    },
+    {
+      "pos": [
+        200,
+        280
+      ],
+      "dirention": "l"
+    },
+    {
+      "pos": [
+        300,
+        280
+      ],
+      "dirention": "l"
+    }
   ]
 }
