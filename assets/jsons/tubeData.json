@@ -13,7 +13,7 @@
     "vertexOffsetX": 0,
     "vertexOffsetY": 0,
     "waterLineX": 13,
-    "liquidHeight": 70,
+    "liquidHeight": 67,
     "waterLine2y": -164,
     "state": "selected"
   },
@@ -28,10 +28,10 @@
       86.5,
       110
     ],
-    "vertexOffsetX": -20,
+    "vertexOffsetX": -28,
     "vertexOffsetY": 0,
     "waterLineX": 12,
-    "liquidHeight": 70,
+    "liquidHeight": 62,
     "waterLine2y": -164,
     "state": "locked"
   },
@@ -49,6 +49,24 @@
     "vertexOffsetX": -28,
     "vertexOffsetY": 3,
     "waterLineX": 10,
+    "liquidHeight": 70,
+    "waterLine2y": -164,
+    "state": "locked"
+  },
+  {
+    "id": 4,
+    "tubeSprite": "spr_tube_4",
+    "tubeMaskSprite": "spr_tube_mask_4",
+    "pourData": [
+      44,
+      63,
+      75,
+      83,
+      90
+    ],
+    "vertexOffsetX": -18,
+    "vertexOffsetY": 0,
+    "waterLineX": 13,
     "liquidHeight": 70,
     "waterLine2y": -164,
     "state": "locked"
