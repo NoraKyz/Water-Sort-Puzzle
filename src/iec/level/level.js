@@ -1,7 +1,8 @@
 /* eslint-disable max-depth */
 import { LevelEvent } from "./levelEvent";
 import { Container } from "@pixi/display";
-import TubePosData from "@../../../assets/jsons/tubePosData.json";
+import TubePosPortraitData from "@../../../assets/jsons/tubePosPortraitData.json";
+import TubePosLandscapeData from "@../../../assets/jsons/tubePosLandscapeData.json";
 import { TubeFactory } from "../object/tube/tubeFactory";
 import { TubeManager } from "../object/tube/tubeManager";
 import { GameConstant } from "../../gameConstant";
@@ -12,6 +13,7 @@ import { TimeOut, TimeOutEvent } from "../basic/timeOut";
 import { DataManager } from "../data/dataManager";
 import { DataObserver, EventData } from "../data/dataObserver";
 import { UserData } from "../data/userData";
+import { GameResizer, Orientation } from "../../pureDynamic/systems/gameResizer";
 
 export class Level extends Container {
   constructor() {
@@ -19,6 +21,12 @@ export class Level extends Container {
 
     this.data = DataManager.getLevelData();
     this.skin = DataManager.getTubeSkinData();
+    
+    if(GameResizer.orientation === Orientation.Portrait) {
+      this.tubePosData = TubePosPortraitData;
+    } else {
+      this.tubePosData = TubePosLandscapeData;
+    }
 
     this._initComponents();
     this._initEvents();
@@ -286,9 +294,9 @@ export class Level extends Container {
         tube.addLiquid(data[i], GameConstant.LIQUID_HEIGHT, 100);
       }
 
-      tube.position.x = tube.originalX = TubePosData[this.data.tubeNumber.toString()][index].pos[0];
-      tube.position.y = tube.originalY = TubePosData[this.data.tubeNumber.toString()][index].pos[1];
-      tube.direction = TubePosData[this.data.tubeNumber.toString()][index].dirention;
+      tube.position.x = tube.originalX = this.tubePosData[this.data.tubeNumber.toString()][index].pos[0];
+      tube.position.y = tube.originalY = this.tubePosData[this.data.tubeNumber.toString()][index].pos[1];
+      tube.direction = this.tubePosData[this.data.tubeNumber.toString()][index].dirention;
 
       tube.index = index;
       this.tubeManager.addTube(tube);
