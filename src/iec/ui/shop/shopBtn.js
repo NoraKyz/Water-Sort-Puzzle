@@ -23,20 +23,26 @@ export class ShopBtn extends Container {
 
     _initBtn() {
         this.btn = new PureButton(this.texture1, this.onClick, new PureTransform({
-            alignment: Alignment.TOP_CENTER,
+            alignment: Alignment.CUSTOM,
             useOriginalSize: true,
+            anchorX: 0.5,
+            anchorY: 0.17,
+            pivotX: 0.5,
+            pivotY: 0,
             x: this.pos.x,
-            y: this.pos.y,
         }));
         this.addChild(this.btn.displayObject);
     }
 
     _initBtnSelected() {
         this.btnSelected = new PureSprite(this.texture2, new PureTransform({
-            alignment: Alignment.TOP_CENTER,
+            alignment: Alignment.CUSTOM,
             useOriginalSize: true,
+            anchorX: 0.5,
+            anchorY: 0.17,
+            pivotX: 0.5,
+            pivotY: 0,
             x: this.pos.x,
-            y: this.pos.y,
         }));
         this.addChild(this.btnSelected.displayObject);
     }

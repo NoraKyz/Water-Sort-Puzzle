@@ -1,17 +1,17 @@
 import { ScrollBox } from "@pixi/ui";
-import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
 import { ItemState } from "./itemShop";
 import { Util } from "../../../helpers/utils";
 
 export class ItemList extends ScrollBox {
-    constructor() {
+    constructor(width, height) {
         super({
-            width: 585, // 585 = (item width + elementsMargin + horPadding / 2) * columns
-            height: GameResizer.height * 0.53,
+            width: width, // 585 = (item width + elementsMargin + horPadding / 2) * columns
+            height: height,
             background: 0xFFFFFF,
             elementsMargin: 20,
             vertPadding: 0,
-            horPadding: 10         
+            horPadding: 10,
+            disableDynamicRendering: true,
         });
 
         this._initProperties();
@@ -19,7 +19,7 @@ export class ItemList extends ScrollBox {
     }
 
     _initProperties() {
-        
+        this.itemList = [];
     }
 
     _initSkinCards() {

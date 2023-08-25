@@ -1,8 +1,7 @@
-import { Container, Texture } from "pixi.js";
+import { Container, Sprite, Texture } from "pixi.js";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
-import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { DataObserver, EventData } from "../../data/dataObserver";
 import { UserData } from "../../data/userData";
 
@@ -19,31 +18,31 @@ export class CoinInfor extends Container {
     }
 
     _initText() {
+        let pTransform = new PureTransform({
+            alignment: Alignment.TOP_RIGHT,
+            useOriginalSize: true,
+            x: -30,
+            y: 18
+        });
         this.text = new PureText(
             UserData.coins,
-            new PureTransform({
-                alignment: Alignment.TOP_RIGHT,
-                useOriginalSize: true,
-                x: -30,
-                y: 40
-            }),
+            pTransform,
             {
                 fill: "#ffebef",
                 fontFamily: "Comic Sans MS",
-                fontSize: 60,
+                fontSize: 45,
                 fontWeight: "bolder"
             });
         this.addChild(this.text.displayObject);
     }
 
     _initCoinIcon() {
-        this.ic = new PureSprite(Texture.from("spr_coin"), new PureTransform({
-            alignment: Alignment.TOP_RIGHT,
-            useOriginalSize: true,
-            x: -this.text.displayObject.width * 1.1 - 30 ,
-            y: 48
-        }));
-        this.addChild(this.ic.displayObject);
+        this.ic = new Sprite(Texture.from("spr_coin"));
+        this.ic.anchor.set(1, 0);
+        this.ic.scale.set(0.75);
+        this.ic.x = -this.text.displayObject.width;
+        this.ic.y = 7.5;
+        this.text.displayObject.addChild(this.ic);
     }
 
     _initEvents() {

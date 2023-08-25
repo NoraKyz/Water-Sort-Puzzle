@@ -4,7 +4,7 @@ import { PureButton } from "../../pureDynamic/PixiWrapper/pureButton";
 import { UIScreen } from "../../pureDynamic/PixiWrapper/screen/uiScreen";
 import { FakeBackground } from "../ui/utils/fakeBackground";
 import { PureTransform } from "../../pureDynamic/core/pureTransform";
-import { Alignment } from "../../pureDynamic/core/pureTransformConfig";
+import { Alignment, MaintainAspectRatioType } from "../../pureDynamic/core/pureTransformConfig";
 import { ShopName } from "../ui/shop/shopName";
 import { CoinInfor } from "../ui/shop/coinInfor";
 import { ShopBtn } from "../ui/shop/shopBtn";
@@ -65,15 +65,30 @@ export class ShopScreen extends UIScreen {
     }
 
     _initBackBtn() {
+        let pTransform = new PureTransform({
+            alignment: Alignment.TOP_LEFT,
+            usePercent: true,
+            maintainAspectRatioType: MaintainAspectRatioType.MAX,
+            height: 0.05,
+            width: 0.1,
+            x: 40,
+            y: 20
+        });
+        let lTransform = new PureTransform({
+            alignment: Alignment.TOP_LEFT,
+            usePercent: true,
+            maintainAspectRatioType: MaintainAspectRatioType.MIN,
+            height: 0.07,
+            width: 0.1,
+            x: 40,
+            y: 20
+        });
         this.backBtn = new PureButton(
             Texture.from("btn_back"),
             () => this._onClickBackBtn(),
-            new PureTransform({
-                alignment: Alignment.TOP_LEFT,
-                useOriginalSize: true,
-                x: 40,
-                y: 40
-            }));
+            pTransform,
+            lTransform
+        );
         this.addChild(this.backBtn.displayObject);
     }
 
@@ -109,20 +124,26 @@ export class ShopScreen extends UIScreen {
 
     _initBuyBtn() {
         this.buyBtn = new PureButton(Texture.from("btn_random_buy"), () => this._onClickBuyBtn(), new PureTransform({
-            alignment: Alignment.BOTTOM_CENTER,
+            alignment: Alignment.CUSTOM,
             useOriginalSize: true,
             x: -180,
-            y: -160,
+            anchorX: 0.5,
+            pivotX: 0.5,
+            anchorY: 0.8,
+            pivotY: 0,
         }));
         this.addChild(this.buyBtn.displayObject);
     }
 
     _initAdsBtn() {
         this.adsBtn = new PureButton(Texture.from("btn_ads_get_coins"), () => this._onClickAdsBtn(), new PureTransform({
-            alignment: Alignment.BOTTOM_CENTER,
+            alignment: Alignment.CUSTOM,
             useOriginalSize: true,
             x: 180,
-            y: -160,
+            anchorX: 0.5,
+            pivotX: 0.5,
+            anchorY: 0.8,
+            pivotY: 0,
         }));
         this.addChild(this.adsBtn.displayObject);
     }

@@ -14,10 +14,12 @@ export class ShopName extends Container {
         this.shopName = new PureText(
             GameConstant.TUBE_SHOP_NAME,
             new PureTransform({
-                alignment: Alignment.TOP_CENTER,
+                alignment: Alignment.CUSTOM,
                 useOriginalSize: true,
-                x: -20,
-                y: 120
+                anchorX: 0.5,
+                anchorY: 0.05,
+                pivotX: 0.5,
+                pivotY: 0,
             }), {
                 fill: "#ffebef",
                 fontFamily: "Comic Sans MS",
