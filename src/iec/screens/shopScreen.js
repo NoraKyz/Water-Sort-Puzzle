@@ -53,7 +53,7 @@ export class ShopScreen extends UIScreen {
         super.resize();
         let boxWidth = this.tubeShopList.width;
         let scrollX = GameResizer.width / 2 - boxWidth / 2;
-        let scrollY = GameResizer.height * 0.23;
+        let scrollY = GameResizer.height * 0.25;
         this.themeShopList.resize();
         this.tubeShopList.resize();
         this.tubeShopList.position.set(scrollX, scrollY);
