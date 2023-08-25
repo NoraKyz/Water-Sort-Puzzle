@@ -2,6 +2,7 @@ import { ItemState } from "./itemShop";
 import { Util } from "../../../helpers/utils";
 import { GameResizer } from "../../../pureDynamic/systems/gameResizer";
 import { ScrollView } from "../../../pureDynamic/core/scollView/scrollView";
+
 export class ItemList extends ScrollView {
     constructor(width, height) {
         super({

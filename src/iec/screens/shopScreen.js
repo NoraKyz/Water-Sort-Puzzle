@@ -36,6 +36,7 @@ export class ShopScreen extends UIScreen {
         this._initAdsBtn();
         this._initTubeShopList();
         this._initThemeShopList();
+
         this.resize();
     }
 
@@ -52,7 +53,7 @@ export class ShopScreen extends UIScreen {
         super.resize();
         let boxWidth = this.tubeShopList.width;
         let scrollX = GameResizer.width / 2 - boxWidth / 2;
-        let scrollY = GameResizer.height * 0.26;
+        let scrollY = GameResizer.height * 0.23;
         this.themeShopList.resize();
         this.tubeShopList.resize();
         this.tubeShopList.position.set(scrollX, scrollY);
@@ -68,11 +69,11 @@ export class ShopScreen extends UIScreen {
         let pTransform = new PureTransform({
             alignment: Alignment.TOP_LEFT,
             usePercent: true,
-            maintainAspectRatioType: MaintainAspectRatioType.MAX,
+            maintainAspectRatioType: MaintainAspectRatioType.MIN,
             height: 0.05,
             width: 0.1,
             x: 40,
-            y: 20
+            y: 30
         });
         let lTransform = new PureTransform({
             alignment: Alignment.TOP_LEFT,
@@ -107,7 +108,7 @@ export class ShopScreen extends UIScreen {
             Texture.from("btn_tube_shop"),
             Texture.from("btn_tube_shop_selected"),
             () => this._onClickTubeShopBtn(),
-            { x: -180, y: 240}
+            { x: -180, y: 0 }
         );
         this.addChild(this.tubeShopBtn);
     }
@@ -117,7 +118,7 @@ export class ShopScreen extends UIScreen {
             Texture.from("btn_theme_shop"),
             Texture.from("btn_theme_shop_selected"),
             () => this._onClickThemeShopBtn(),
-            { x: 180, y: 240}
+            { x: 180, y: 0 }
         );
         this.addChild(this.themeShopBtn);
     }
@@ -177,13 +178,13 @@ export class ShopScreen extends UIScreen {
     }
 
     _onClickBuyBtn() {
-        if(UserData.coins < GameConstant.COINS_PER_BUY_RANDOM) {
+        if (UserData.coins < GameConstant.COINS_PER_BUY_RANDOM) {
             return;
         }
 
         let randomItem = null, currList = null;
 
-        if(this.tubeShopList.visible) {
+        if (this.tubeShopList.visible) {
             currList = this.tubeShopList;
         } else {
             currList = this.themeShopList;
@@ -191,17 +192,17 @@ export class ShopScreen extends UIScreen {
 
         randomItem = currList.getRandomItem();
 
-        if(randomItem === null) {
+        if (randomItem === null) {
             return;
         }
-        
-        currList.scrollTo(randomItem.id-1);
+
+        currList.scrollTo(randomItem.id - 1);
         randomItem.onUnlocked();
         DataManager.unlockSkin(randomItem);
         DataManager.updateCoins(- GameConstant.COINS_PER_BUY_RANDOM)
     }
 
-    _onClickAdsBtn() { 
+    _onClickAdsBtn() {
         DataManager.updateCoins(+ GameConstant.COINS_PER_ADS)
     }
 }
