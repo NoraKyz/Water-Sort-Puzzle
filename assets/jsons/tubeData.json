@@ -13,7 +13,7 @@
     "vertexOffsetX": 0,
     "vertexOffsetY": 0,
     "waterLineX": 13,
-    "liquidHeight": 67,
+    "liquidHeight": 58,
     "waterLine2y": -164,
     "state": "selected"
   },
@@ -31,7 +31,7 @@
     "vertexOffsetX": -28,
     "vertexOffsetY": 0,
     "waterLineX": 12,
-    "liquidHeight": 62,
+    "liquidHeight": 55,
     "waterLine2y": -164,
     "state": "locked"
   },
@@ -49,7 +49,7 @@
     "vertexOffsetX": -28,
     "vertexOffsetY": 3,
     "waterLineX": 10,
-    "liquidHeight": 70,
+    "liquidHeight": 60,
     "waterLine2y": -164,
     "state": "locked"
   },
@@ -67,7 +67,7 @@
     "vertexOffsetX": -18,
     "vertexOffsetY": 0,
     "waterLineX": 13,
-    "liquidHeight": 70,
+    "liquidHeight": 62,
     "waterLine2y": -164,
     "state": "locked"
   }
