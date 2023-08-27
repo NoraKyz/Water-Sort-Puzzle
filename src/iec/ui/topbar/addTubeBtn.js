@@ -48,7 +48,7 @@ export class AddTubeButton extends Container {
     _initAddBtn() {
         this.addBtn = new PureButton(
             Texture.from("spr_add_tube_btn"),
-            () => this._onClickUndoBtn(),
+            () => this._onClickAddBtn(),
             this.pTransform,
             this.lTransform
         );

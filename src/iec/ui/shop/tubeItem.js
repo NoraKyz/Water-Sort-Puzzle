@@ -1,4 +1,4 @@
-import { Texture } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { ItemShop, ItemType } from "./itemShop";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
@@ -16,13 +16,10 @@ export class TubeItem extends ItemShop {
     }
 
     _initSpr() {
-        this.spr = new PureSprite(Texture.from(this.texture), new PureTransform({
-            useOriginalSize: true,
-            x: 105,
-            y: 40
-        }));
-        this.spr.displayObject.scale.set(0.6);
-        this.addChild(this.spr.displayObject);     
+        this.spr = new Sprite(Texture.from(this.texture));
+        this.spr.position.set(110, 40);
+        this.spr.scale.set(0.7);
+        this.addChild(this.spr);
     }
 
     _initEvents() {

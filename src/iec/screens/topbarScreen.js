@@ -2,7 +2,7 @@ import { GameConstant } from "../../gameConstant"
 import { PureText } from "../../pureDynamic/PixiWrapper/pureText";
 import { UIScreen } from "../../pureDynamic/PixiWrapper/screen/uiScreen"
 import { PureTransform } from "../../pureDynamic/core/pureTransform";
-import { Alignment } from "../../pureDynamic/core/pureTransformConfig";
+import { Alignment, MaintainAspectRatioType } from "../../pureDynamic/core/pureTransformConfig";
 import { LevelEvent } from "../level/levelEvent";
 import { ButtonManager } from "../ui/buttonManager";
 import { AddTubeButton } from "../ui/topbar/addTubeBtn";
@@ -42,7 +42,7 @@ export class TopbarScreen extends UIScreen {
         this.menuBtn.on("openMenu", () => {
             this.emit(TopbarScreenEvent.OpenMenu);
         });
-        
+
         this.replayBtn.on(LevelEvent.Replay, () => {
             this.emit(LevelEvent.Replay);
         });
@@ -53,32 +53,52 @@ export class TopbarScreen extends UIScreen {
 
         this.addTubeBtn.on(LevelEvent.AddTube, () => {
             this.emit(LevelEvent.AddTube);
-        }); 
+        });
 
         this.speedBtn.on(LevelEvent.SpeedUp, () => {
             this.emit(LevelEvent.SpeedUp);
         });
-        
+
         this.speedBtn.on(LevelEvent.SpeedDown, () => {
             this.emit(LevelEvent.SpeedDown);
         });
     }
 
     _initTitleLevel() {
+        let pTransform = new PureTransform({
+            alignment: Alignment.CUSTOM,
+            useOriginalSize: true,           
+            anchorX: 0.5,
+            anchorY: 0.12,
+            pivotX: 0.5,
+            pivotY: 0
+        });
+
+        let lTransform = new PureTransform({
+            alignment: Alignment.TOP_CENTER,
+            useOriginalSize: true,
+            y: 200
+        });
+
+
         this.titleLevel = new PureText(
             "Level " + UserData.currentLevel,
-            new PureTransform({
-                alignment: Alignment.TOP_CENTER,
-                useOriginalSize: true,
-                y: 200,
-            }),
+            pTransform,
+            {
+                fill: "#ffebef",
+                fontFamily: "Comic Sans MS",
+                fontSize: 55,
+                fontWeight: "bolder"
+            },
+            lTransform,
             {
                 fill: "#ffebef",
                 fontFamily: "Comic Sans MS",
                 fontSize: 64,
                 fontWeight: "bolder"
-            });
-        this.addChild(this.titleLevel.displayObject);   
+            },
+        );
+        this.addChild(this.titleLevel.displayObject);
     }
 
     _initMenuButton() {
