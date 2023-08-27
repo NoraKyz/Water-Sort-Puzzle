@@ -1,6 +1,6 @@
-import { Container, Texture } from "pixi.js";
+import { Container, Text, Texture } from "pixi.js";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
-import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
+import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { PureText } from "../../../pureDynamic/PixiWrapper/pureText";
 import { LevelEvent } from "../../level/levelEvent";
@@ -19,7 +19,25 @@ export class AddTubeButton extends Container {
     }
 
     _initProperties() {
-        
+        this.pTransform = new PureTransform({
+            alignment: Alignment.TOP_CENTER,
+            usePercent: true,
+            maintainAspectRatioType: MaintainAspectRatioType.MIN,
+            height: 0.12,
+            width: 0.14,
+            x: 280,
+            y: 40,
+        });
+
+        this.lTransform = new PureTransform({
+            alignment: Alignment.TOP_CENTER,
+            usePercent: true,
+            maintainAspectRatioType: MaintainAspectRatioType.MIN,
+            height: 0.06,
+            width: 0.12,
+            x: 280,
+            y: 70,
+        });
     }
 
     _initElements() {
@@ -28,45 +46,45 @@ export class AddTubeButton extends Container {
     }
 
     _initAddBtn() {
-        this.addBtn = new Container();
-        this.addBtn.eventMode = 'static';
-        this.addBtn.cursor = 'pointer';
-        this.addBtn.on("pointertap", () => this._onClickAddBtn());
-        this.addChild(this.addBtn);
+        this.addBtn = new PureButton(
+            Texture.from("spr_add_tube_btn"),
+            () => this._onClickUndoBtn(),
+            this.pTransform,
+            this.lTransform
+        );
+        this.addChild(this.addBtn.displayObject);
 
-        this.icAddBtn = new PureSprite(Texture.from("spr_add_tube_btn"), new PureTransform({
-            alignment: Alignment.TOP_CENTER,
-            useOriginalSize: true,
-            x: 280,
-            y: 72,
-        }));
-        this.addBtn.addChild(this.icAddBtn.displayObject);
-
-        this.textAddTubeBtn = new PureText(
-            UserData.addTubeTimes,
-            new PureTransform({
-                alignment: Alignment.TOP_CENTER,
-                useOriginalSize: true,
-                x: 305,
-                y: 78,
-            }),
+        this.textAddBtn = new Text(
+            UserData.undoTimes,
             {
                 fill: "#ffebef",
                 fontFamily: "Comic Sans MS",
                 fontSize: 50,
                 fontWeight: "bolder"
             });
-        this.addBtn.addChild(this.textAddTubeBtn.displayObject);
+        this.textAddBtn.position.set(this.addBtn.displayObject.width * 0.2, 10);
+        this.addBtn.displayObject.addChild(this.textAddBtn);
     }
 
     _initAdsBtn() {
-        this.adsBtn = new PureButton(Texture.from("spr_ads_get_tube_btn"), () => this._onClickAdsBtn(), new PureTransform({
-            alignment: Alignment.TOP_CENTER,
-            useOriginalSize: true,
-            x: 280,
-            y: 72,
-        }));
+        this.adsBtn = new PureButton(
+            Texture.from("spr_ads_get_tube_btn"),
+            () => this._onClickAdsBtn(),
+            this.pTransform,
+            this.lTransform
+        );
         this.addChild(this.adsBtn.displayObject);
+
+        this.textAdsBtn = new Text(
+            GameConstant.TUBE_NUMBER_GET_BY_ADS.toString(),
+            {
+                fill: "#ffebef",
+                fontFamily: "Comic Sans MS",
+                fontSize: 45,
+                fontWeight: "bolder"
+            });
+        this.textAdsBtn.position.set(this.adsBtn.displayObject.width * 0.25, 8);
+        this.adsBtn.displayObject.addChild(this.textAdsBtn);
     }
 
     _initEvents() {
@@ -85,18 +103,18 @@ export class AddTubeButton extends Container {
         this._setStateBtn();
     }
 
-    _setStateBtn(){
+    _setStateBtn() {
         this._updateAddBtn();
-        
+
         if (UserData.addTubeTimes > 0) {
-            this.emit("ableAddTube");      
+            this.emit("ableAddTube");
         } else {
             this.emit("unableAddTube");
         }
     }
 
     _updateAddBtn() {
-        this.textAddTubeBtn.text = UserData.addTubeTimes;
+        this.textAddBtn.text = UserData.addTubeTimes;
     }
 
     _onClickAddBtn() {

@@ -58,7 +58,7 @@ export const GameConstant = Object.freeze({
   PLAYER_DEFAULT_SCORE                    : 0,
   PLAYER_DEFAULT_ADD_TUBE_TIMES           : 2,
   PLAYER_DEFAULT_UNDO_TIMES               : 5,
-  PLAYER_DEFAULT_CURRENT_LEVEL            : 1,
+  PLAYER_DEFAULT_CURRENT_LEVEL            : 100,
   PLAYER_DEFAULT_UNLOCKED_LEVEL_LIST      : [1],
   PLAYER_DEFAULT_THEME_SKIN_LIST          : themeData,
   PLAYER_DEFAULT_TUBE_SKIN_LIST           : tubeData,

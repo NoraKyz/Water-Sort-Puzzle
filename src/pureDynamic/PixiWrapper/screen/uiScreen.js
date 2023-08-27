@@ -24,6 +24,7 @@ export class UIScreen extends Container {
 
   show() {
     this.reset();
+    this.resize();
     this.visible = true;
   }
 
