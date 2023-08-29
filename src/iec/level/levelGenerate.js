@@ -89,7 +89,7 @@ function generateLevels(numberOfLevels) {
         }
 
         if (level === null) continue;
-        // TODO: Change solve method return boolean to use
+        // TODO: Change solve method return boolean to use, and package.json to "module"
         const isSolvable = Solver.solve(new Solver(level.stacks));
         if (isSolvable) {
             levels.push({
