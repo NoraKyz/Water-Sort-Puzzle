@@ -252,6 +252,7 @@ export class Level extends Container {
     this.on(LevelEvent.AddTube, () => this._onAddTube());
     this.on(LevelEvent.SpeedUp, () => this.tubeManager.emit(LevelEvent.SpeedUp));
     this.on(LevelEvent.SpeedDown, () => this.tubeManager.emit(LevelEvent.SpeedDown));
+    this.on(LevelEvent.Hint, () => this._onEnableHint());
 
     DataObserver.addObserver(this);
     this.on(EventData.TubeSelected, () => this._onDataChanged());
@@ -317,6 +318,11 @@ export class Level extends Container {
       tube.index = index;
       this.tubeManager.addTube(tube);
     });
+  }
+
+  _onEnableHint() {
+    console.log("Fsdf");
+    this.data.enableHint = true;
   }
 
   _onDataChanged() {

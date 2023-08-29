@@ -109,6 +109,9 @@ export class PlayScene extends Scene {
     this.topbarScreen.on(LevelEvent.SpeedDown, () => {
       this.level.emit(LevelEvent.SpeedDown);
     });
+    this.topbarScreen.on(LevelEvent.Hint, () => {
+      this.level.emit(LevelEvent.Hint);
+    });
 
     this.menuScreen.on(MenuScreenEvent.Close, () => {
       this.ui.setScreenActive(GameConstant.MENU_SCREEN, false);

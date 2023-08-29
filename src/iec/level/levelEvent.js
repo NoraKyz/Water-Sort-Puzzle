@@ -9,4 +9,5 @@ export const LevelEvent = Object.freeze({
   NextLevel: "nextLevel",
   SpeedUp: "speedUp",
   SpeedDown: "speedDown",
+  Hint: "hint",
 });

@@ -12,6 +12,7 @@ import { UndoButton } from "../ui/topbar/undoBtn";
 import { DataObserver, EventData } from "../data/dataObserver";
 import { UserData } from "../data/userData";
 import { SpeedButton } from "../ui/topbar/speedBtn";
+import { HintButton } from "../ui/topbar/hintBtn.";
 
 export const TopbarScreenEvent = Object.freeze({
     OpenMenu: "OpenMenu",
@@ -31,6 +32,7 @@ export class TopbarScreen extends UIScreen {
         this._initUndoButton();
         this._initAddTubeButton();
         this._initSpeedButton();
+        this._initHintButton();
 
         this._initEvents();
     }
@@ -61,6 +63,9 @@ export class TopbarScreen extends UIScreen {
 
         this.speedBtn.on(LevelEvent.SpeedDown, () => {
             this.emit(LevelEvent.SpeedDown);
+        });
+        this.hintBtn.on(LevelEvent.Hint, () => {
+            this.emit(LevelEvent.Hint);
         });
     }
 
@@ -121,6 +126,7 @@ export class TopbarScreen extends UIScreen {
 
     _initSpeedButton() {
         this.speedBtn = new SpeedButton();
+        ButtonManager.addButton(GameConstant.SPEED_BUTTON, this.speedBtn);
         this.addChild(this.speedBtn);
     }
 
@@ -128,6 +134,12 @@ export class TopbarScreen extends UIScreen {
         this.addTubeBtn = new AddTubeButton();
         ButtonManager.addButton(GameConstant.ADD_TUBE_BUTTON, this.addTubeBtn);
         this.addChild(this.addTubeBtn);
+    }
+
+    _initHintButton() {
+        this.hintBtn = new HintButton();
+        ButtonManager.addButton(GameConstant.HINT_BUTTON, this.hintBtn);
+        this.addChild(this.hintBtn);
     }
 
     _onDataChanged() {
