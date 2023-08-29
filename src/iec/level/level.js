@@ -37,7 +37,6 @@ export class Level extends Container {
     this._initTubeFactory();
     if (this.data.enableHint) {
       this.enableHint();
-      this.showHint();
     }
   }
 
@@ -64,10 +63,12 @@ export class Level extends Container {
     if (this.isCompleted) {
       return;
     }
+    
     if (!this.curSolution) {
       this.curSolution = this.getSolution();
       this.curSolutionIndex = 0;
     }
+
     this._initHint(this.curSolution[this.curSolutionIndex]);
   }
 
@@ -130,8 +131,8 @@ export class Level extends Container {
   }
 
   getSolution() {
-    let stack = this.tubeManager.getCurrentStacks();
-    let solution = Solver.solve(new Solver(stack));
+    let stacks = this.tubeManager.getCurrentStacks();
+    let solution = Solver.solve(new Solver(stacks));
     return solution;
   }
 
@@ -278,6 +279,7 @@ export class Level extends Container {
 
   startLevel(id) {
     this.data = DataManager.getLevelData(id);
+    this.isCompleted = false;
     this.resetTube();
   }
 

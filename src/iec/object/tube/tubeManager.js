@@ -335,7 +335,7 @@ export class TubeManager extends Container {
   getPourData() {
     let pourData = [];
     this.tubeArray.forEach((tube) => {
-      pourData.push(tube.getCurStack().reverse());
+      pourData.push(tube.getCurStack());
     });
     return pourData;
   }

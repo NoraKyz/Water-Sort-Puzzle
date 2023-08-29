@@ -152,7 +152,7 @@ export class Tube extends Container {
       }
       res.push(child.code);
     });
-    return res;
+    return res.reverse();
   }
 
   getTopLiquid() {
