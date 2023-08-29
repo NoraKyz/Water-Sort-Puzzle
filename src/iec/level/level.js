@@ -35,9 +35,7 @@ export class Level extends Container {
   _initComponents() {
     this._initTubeManager();
     this._initTubeFactory();
-    if (this.data.enableHint) {
-      this.enableHint();
-    }
+    this._enableHint();
   }
 
   _initTubeManager() {
@@ -53,13 +51,17 @@ export class Level extends Container {
     this.tubeFactory = new TubeFactory();
   }
 
-  enableHint() {
+  _enableHint() {
     this.timeOut = new TimeOut(GameConstant.HINT_TIME);
     this.timeOut.on(TimeOutEvent.TimeOut, this.showHint, this);
     this.timeOut.initTimeout();
   }
 
   showHint() {
+    if(!this.data.enableHint) {
+      return;
+    }
+
     if (this.isCompleted) {
       return;
     }
@@ -121,6 +123,13 @@ export class Level extends Container {
         }).start();
       },
     });
+  }
+
+  _resetHint() {
+    this.curSolution = null;
+    this.isCompleted = false;
+    this._offHint();
+    this.timeOut.initTimeout();
   }
 
   autoCompleted() {
@@ -250,6 +259,7 @@ export class Level extends Container {
 
   _onUndoLevel() {
     this.tubeManager.emit("undo");
+    this._resetHint();
   }
 
   _onResetLevel() {
@@ -261,6 +271,7 @@ export class Level extends Container {
 
     this.tubeManager.emit("reset");
     this.resetTube();
+    this._resetHint();
   }
 
   _onAddTube() {
@@ -274,13 +285,14 @@ export class Level extends Container {
 
       this.tubeManager.emit("addTube");
       this.resetTube();
+      this._resetHint();
     }
   }
 
   startLevel(id) {
-    this.data = DataManager.getLevelData(id);
-    this.isCompleted = false;
+    this.data = DataManager.getLevelData(id); 
     this.resetTube();
+    this._resetHint();
   }
 
   nextLevel() {
