@@ -10,11 +10,13 @@ export const GameConstant = Object.freeze({
   ANIMATION_FAIL_DURATION : 1,
 
   PLAY_SCENE  : "PlayScene",
+  LOADING_SCENE: "LoadingScene",
 
   TOPBAR_SCREEN: "TopbarScreen",
   WIN_SCREEN   : "WinScreen",
   MENU_SCREEN  : "MenuScreen",
   SHOP_SCREEN  : "ShopScreen",
+  LOADING_SCREEN: "LoadingScreen",
 
   DEBUG_ON            : true,
   DEBUG_DRAW_COLLIDER : false,

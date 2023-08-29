@@ -13,6 +13,7 @@ import { PlayScene } from "././iec/scenes/playScene";
 import { update } from "@tweenjs/tween.js";
 import { ButtonManager } from "./iec/ui/buttonManager";
 import { DataLocal } from "./iec/data/dataLocal";
+import { LoadingScene, LoadingSceneEvent } from "./iec/scenes/loadingScene";
 
 export class Game {
   static init() {
@@ -44,7 +45,7 @@ export class Game {
     ButtonManager.init();
     DataLocal.init();
     // TODO: init game setting
-    AssetManager.load(this._onAssetLoaded.bind(this)); 
+    AssetManager.load(this._onAssetLoaded.bind(this));
   }
 
   static getScreenSize() {
@@ -60,11 +61,19 @@ export class Game {
 
     Physics.init(this.app);
     SceneManager.init([
+      // TODO: Add scenes here
       new PlayScene(),
+      new LoadingScene(),
     ]);
     this.app.stage.addChild(SceneManager.sceneContainer);
 
-    SceneManager.load(SceneManager.getScene(GameConstant.PLAY_SCENE));
+    let playScene = SceneManager.getScene(GameConstant.PLAY_SCENE);
+    let loadingScene = SceneManager.getScene(GameConstant.LOADING_SCENE);
+
+    SceneManager.load(loadingScene);
+    loadingScene.on(LoadingSceneEvent.LoadCompleted, () => {
+      SceneManager.load(playScene);
+    });
 
     this.app.ticker.add(() => this._update());
   }
