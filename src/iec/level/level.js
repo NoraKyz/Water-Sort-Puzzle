@@ -62,6 +62,8 @@ export class Level extends Container {
       return;
     }
 
+    console.log("showHint");
+
     if (this.isCompleted) {
       return;
     }
@@ -321,7 +323,6 @@ export class Level extends Container {
   }
 
   _onEnableHint() {
-    console.log("Fsdf");
     this.data.enableHint = true;
   }
 
