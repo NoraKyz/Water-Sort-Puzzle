@@ -222,12 +222,12 @@ export class ShopScreen extends UIScreen {
         this.y = GameResizer.height;
 
         this.tweenFadeIn = Tween.createTween(this, { y : 0 }, {
-            duration: 1,
+            duration: 0.7,
             easing: Tween.Easing.Back.Out
         });
 
         this.tweenFadeOut = Tween.createTween(this, { y : GameResizer.height }, {
-            duration: 1,
+            duration: 0.7,
             easing: Tween.Easing.Back.In,
             onComplete: () => {
                 super.hide();
