@@ -22,8 +22,6 @@ export class CoinAdded extends Container {
             y: -120
         }));
 
-        console.log(Texture.from("spr_coins_added"));
-
         this.addChild(this.spr.displayObject);
     }
 }
