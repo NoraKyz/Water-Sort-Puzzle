@@ -25,6 +25,7 @@ export const GameConstant = Object.freeze({
   SOUND_ENABLED       : true,
   SHOW_GAME_TAG       : false,
   SHOW_LIST_LEVEl    : true,
+  SAVE_DATA_ENABLED   : true,
 
   LEVEL_OFFSET  : 1,
   HINT_TIME     : 3,

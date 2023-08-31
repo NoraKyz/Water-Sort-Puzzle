@@ -8,9 +8,9 @@ export const DataLocalEvent = Object.freeze({
 });
 
 export const DataLocalState = Object.freeze({
-  Loaded   : "loaded",
-  Loading  : "loading",
-  Unloaded : "unloaded",
+  Loaded: "loaded",
+  Loading: "loading",
+  Unloaded: "unloaded",
 });
 
 export class DataLocal {
@@ -193,7 +193,11 @@ export class DataLocal {
       const userData = this.db.transaction(GameConstant.INDEXEDDB_STORE_NAME, "readwrite").objectStore(GameConstant.INDEXEDDB_STORE_NAME);
       let request = userData.get(key);
       request.onsuccess = (event) => {
-        resolve(event.target.result);
+        if (GameConstant.SAVE_DATA_ENABLED === true) {
+          resolve(event.target.result);
+        } else {
+          resolve(undefined);
+        }
       };
       request.onerror = (event) => {
         reject(event);
@@ -202,6 +206,10 @@ export class DataLocal {
   }
 
   static updateDataByKey(key, value) {
+    if (GameConstant.SAVE_DATA_ENABLED === false) {
+      return;
+    }
+
     const userData = this.db.transaction(GameConstant.INDEXEDDB_STORE_NAME, "readwrite").objectStore(GameConstant.INDEXEDDB_STORE_NAME);
     const request = userData.get(key);
 
