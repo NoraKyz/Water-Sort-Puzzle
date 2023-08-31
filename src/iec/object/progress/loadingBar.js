@@ -87,7 +87,8 @@ export class LoadingBar extends PIXI.Container {
   _initProgressDot() {
     let texture = Texture.from("progressBar_dot");
     this.dot = new Sprite(texture);
-    this.dot.anchor.set(0.5, 0.4);
+    this.dot.anchor.set(0.5, 0.5);
+    this.dot.y = this.bg.displayObject.height / 2;
     this.progress.displayObject.addChild(this.dot);
   }
 
