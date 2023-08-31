@@ -10,10 +10,11 @@ import { Time } from "./systems/time/time";
 import { InputManager } from "./pureDynamic/systems/inputManager";
 import { Physics } from "./physics/physics";
 import { PlayScene } from "././iec/scenes/playScene";
-import { update } from "@tweenjs/tween.js";
 import { ButtonManager } from "./iec/ui/buttonManager";
 import { DataLocal } from "./iec/data/dataLocal";
 import { LoadingScene, LoadingSceneEvent } from "./iec/scenes/loadingScene";
+import { GameState, GameStateManager } from "./pureDynamic/systems/gameStateManager";
+import { SoundManager } from "./soundManager";
 
 export class Game {
   static init() {
@@ -24,7 +25,7 @@ export class Game {
   }
 
   static load() {
-    Debug.log("Creative", "Load");
+    Debug.log("ABIGame", "Load");
     this.app = new PIXI.Application({
       width: GameConstant.GAME_WIDTH,
       height: GameConstant.GAME_HEIGHT,
@@ -55,7 +56,7 @@ export class Game {
   static _create() {
     this.gameCreated = true;
     let screenSize = this.getScreenSize();
-    Debug.log("Creative", "Create", screenSize);
+    Debug.log("ABIGame", "Create", screenSize);
 
     this.resize(screenSize);
 
@@ -75,6 +76,8 @@ export class Game {
       SceneManager.load(playScene);
     });
 
+    // lock 60FPS;
+    this.app.ticker.maxFPS = GameConstant.MAX_FPS;
     this.app.ticker.add(() => this._update());
   }
 
@@ -88,7 +91,7 @@ export class Game {
       GameResizer.resize(screenSize.width, screenSize.height);
     }
     else {
-      Debug.warn("Creative", "Game resize called before game loading");
+      Debug.warn("ABIGame", "Game resize called before game loading");
     }
   }
 
@@ -109,6 +112,46 @@ export class Game {
   }
 
   static onWin() {
+  }
+
+  static setPause(isPause) {
+    if (isPause) {
+      this.pause();
+    }
+    else {
+      this.resume();
+    }
+  }
+
+  static pause() {
+    Debug.log("ABIGame", "Pause");
+    if (!this.gameCreated) {
+      Debug.warn("ABIGame", "Pause before game creation!");
+      return;
+    }
+
+    if (GameStateManager.state !== GameState.Paused) {
+      SoundManager.muteAll();
+      GameStateManager.state = GameState.Paused;
+      SceneManager.setPause(true);
+      Time.scale = 0;
+    }
+  }
+
+  static resume() {
+    Debug.log("ABIGame", "Resume");
+
+    if (!this.gameCreated) {
+      Debug.warn("ABIGame", "Resume before game creation!");
+      return;
+    }
+
+    if (GameStateManager.state === GameState.Paused) {
+      SoundManager.unMuteAll();
+      GameStateManager.state = GameStateManager.prevState;
+      SceneManager.setPause(false);
+      Time.scale = 1;
+    }
   }
 
   static onLose() {
@@ -135,8 +178,8 @@ window.onresize = function () {
 };
 
 window.onblur = function () {
-
+  Game.setPause(true);
 };
 window.onfocus = function () {
-
+  Game.setPause(false);
 };
