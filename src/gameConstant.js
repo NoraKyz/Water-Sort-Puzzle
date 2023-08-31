@@ -6,7 +6,8 @@ export const GameConstant = Object.freeze({
   PLATFORM_IOS     : "iOS",
 
   GAME_WIDTH              : 720,
-  GAME_HEIGHT             : 1280,
+  GAME_HEIGHT: 1280,
+  MAX_FPS: 60, // lock 60FPS or 30FPS
   ANIMATION_FAIL_DURATION : 1,
 
   PLAY_SCENE  : "PlayScene",

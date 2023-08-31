@@ -76,6 +76,8 @@ export class Game {
       SceneManager.load(playScene);
     });
 
+    // lock 60FPS;
+    this.app.ticker.maxFPS = GameConstant.MAX_FPS;
     this.app.ticker.add(() => this._update());
   }
 
