@@ -13,6 +13,7 @@ import { WinScreen } from "../screens/winScreen";
 import { MenuScreen, MenuScreenEvent } from "../screens/menuScreen";
 import { ShopScreen, ShopScreenEvent } from "../screens/shopScreen";
 import { UserData } from "../data/userData";
+import { LevelScreen, LevelScreenEvent } from "../screens/levelScreen";
 
 
 export class PlayScene extends Scene {
@@ -70,12 +71,14 @@ export class PlayScene extends Scene {
       new WinScreen(),
       new MenuScreen(),
       new ShopScreen(),
+      new LevelScreen(),
     );
 
     this.topbarScreen = this.ui.getScreen(GameConstant.TOPBAR_SCREEN);
     this.winScreen = this.ui.getScreen(GameConstant.WIN_SCREEN);
     this.menuScreen = this.ui.getScreen(GameConstant.MENU_SCREEN);
     this.shopScreen = this.ui.getScreen(GameConstant.SHOP_SCREEN);
+    this.levelScreen = this.ui.getScreen(GameConstant.LEVEL_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
   }
@@ -119,10 +122,22 @@ export class PlayScene extends Scene {
     this.menuScreen.on(MenuScreenEvent.ShopSelected, () => {
       this.ui.setScreenActive(GameConstant.MENU_SCREEN, false);
       this.ui.setScreenActive(GameConstant.SHOP_SCREEN);
-    })
+    });
+    this.menuScreen.on(MenuScreenEvent.ListLevelSelected, () => {
+      this.ui.setScreenActive(GameConstant.MENU_SCREEN, false);
+      this.ui.setScreenActive(GameConstant.LEVEL_SCREEN);
+    });
 
     this.shopScreen.on(ShopScreenEvent.BackToScene, () => {
       this.ui.setScreenActive(GameConstant.SHOP_SCREEN, false);
+    });
+
+    this.levelScreen.on(LevelScreenEvent.Close, () => {
+      this.ui.setScreenActive(GameConstant.LEVEL_SCREEN, false);
+    });
+    this.levelScreen.on(LevelScreenEvent.LevelSelected, (level) => {
+      this.level.startLevel(level);
+      this.levelScreen.emit(LevelScreenEvent.Close);
     });
   }
 
