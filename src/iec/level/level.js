@@ -62,8 +62,6 @@ export class Level extends Container {
       return;
     }
 
-    console.log("showHint");
-
     if (this.isCompleted) {
       return;
     }
