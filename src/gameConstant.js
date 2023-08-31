@@ -33,7 +33,7 @@ export const GameConstant = Object.freeze({
   UNDO_NUMBER_GET_BY_ADS  : 5,
   TUBE_NUMBER_GET_BY_ADS  : 1,
   MAX_TUBE_NUMBER         : 14,
-  MAX_LEVEL               : 100,
+  MAX_LEVEL               : 500,
   MAX_COIN                : 99999,
   COINS_PER_LEVEL         : 50,
   COINS_PER_ADS           : 500,
