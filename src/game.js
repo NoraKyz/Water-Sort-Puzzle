@@ -126,7 +126,7 @@ export class Game {
   static pause() {
     Debug.log("ABIGame", "Pause");
     if (!this.gameCreated) {
-      Debug.warning("ABIGame", "Pause before game creation!");
+      Debug.warn("ABIGame", "Pause before game creation!");
       return;
     }
 
@@ -142,7 +142,7 @@ export class Game {
     Debug.log("ABIGame", "Resume");
 
     if (!this.gameCreated) {
-      Debug.warning("ABIGame", "Resume before game creation!");
+      Debug.warn("ABIGame", "Resume before game creation!");
       return;
     }
 
