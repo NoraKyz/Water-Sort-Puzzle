@@ -88,7 +88,6 @@ export class DataManager {
             UserData.listTubeSkin[UserData.currentTubeSkin - 1].state = "unlocked";
             UserData.currentTubeSkin = item.id;
             UserData.listTubeSkin.find((skin) => skin.id === item.id).state = "selected";
-            console.log(UserData.listTubeSkin);
             DataLocal.updateDataByKey(
                 GameConstant.INDEXEDDB_LIST_TUBE_SKIN_KEY,
                 UserData.listTubeSkin

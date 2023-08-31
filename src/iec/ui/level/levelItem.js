@@ -26,7 +26,6 @@ export class LevelItem extends Container {
         this.eventMode = 'static'
         this.cursor = 'pointer';
         this.on('pointertap', () => {
-            console.log("LevelItem: " + this.data);
             this.parent.parent.parent.emit(LevelScreenEvent.LevelSelected, this.data);
         });
     }
