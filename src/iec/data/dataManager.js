@@ -7,7 +7,7 @@ import { ItemType } from "../ui/shop/itemShop";
 
 export class DataManager {
     static init() {
-        
+
         UserData.init();
         DataObserver.init();
     }
@@ -24,15 +24,33 @@ export class DataManager {
         return UserData.listThemeSkin[id - 1];
     }
 
+    static startLevel(id) {
+        UserData.currentLevel = id;
+        DataLocal.updateDataByKey(GameConstant.INDEXEDDB_CURRENT_LEVEL_KEY, UserData.currentLevel);
+
+        if (UserData.listUnlockedLevels.find((level) => level === id) === undefined) {
+            UserData.listUnlockedLevels.push(UserData.currentLevel)
+            DataLocal.updateDataByKey(
+                GameConstant.INDEXEDDB_LIST_UNLOCKED_LEVEL_KEY,
+                UserData.listUnlockedLevels
+            )
+        }
+
+        DataObserver.notify(EventData.CurrentLevelChanged);
+    }
+
     static nextLevel() {
         UserData.currentLevel += 1;
-        UserData.listUnlockedLevels.push(UserData.currentLevel)
-
         DataLocal.updateDataByKey(GameConstant.INDEXEDDB_CURRENT_LEVEL_KEY, UserData.currentLevel);
-        DataLocal.updateDataByKey(
-            GameConstant.INDEXEDDB_LIST_UNLOCKED_LEVEL_KEY,
-            UserData.listUnlockedLevels
-        )
+        
+        if (UserData.listUnlockedLevels.find((level) => level === UserData.currentLevel) === undefined) {
+            UserData.listUnlockedLevels.push(UserData.currentLevel)
+            DataLocal.updateDataByKey(
+                GameConstant.INDEXEDDB_LIST_UNLOCKED_LEVEL_KEY,
+                UserData.listUnlockedLevels
+            )
+        }
+
         DataObserver.notify(EventData.CurrentLevelChanged);
     }
 

@@ -17,11 +17,13 @@ export const GameConstant = Object.freeze({
   MENU_SCREEN  : "MenuScreen",
   SHOP_SCREEN  : "ShopScreen",
   LOADING_SCREEN: "LoadingScreen",
+  LEVEL_SCREEN: "LevelScreen",
 
   DEBUG_ON            : true,
   DEBUG_DRAW_COLLIDER : false,
   SOUND_ENABLED       : true,
   SHOW_GAME_TAG       : false,
+  SHOW_LIST_LEVEl    : true,
 
   LEVEL_OFFSET  : 1,
   HINT_TIME     : 3,

@@ -293,6 +293,8 @@ export class Level extends Container {
   }
 
   startLevel(id) {
+    DataManager.startLevel(id);
+    this.tubeManager.emit("reset");
     this.data = DataManager.getLevelData(id); 
     this.resetTube();
     this._resetHint();

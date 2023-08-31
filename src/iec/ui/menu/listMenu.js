@@ -5,6 +5,8 @@ import { Alignment } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
 import { MenuScreenEvent } from "../../screens/menuScreen";
 import { SoundButton } from "./soundBtn";
+import { ListLevelButton } from "./listLevelBtn";
+import { GameConstant } from "../../../gameConstant";
 
 export class ListMenu extends Container {
     constructor() {
@@ -29,6 +31,9 @@ export class ListMenu extends Container {
     _initList() {
         this._initShopBtn();
         this._initSoundBtn();
+        if(GameConstant.SHOW_LIST_LEVEl) {
+            this._initListLevelBtn();
+        }
     }
 
     _initShopBtn() {
@@ -44,6 +49,11 @@ export class ListMenu extends Container {
     _initSoundBtn(){
         this.soundBtn = new SoundButton();
         this.addChild(this.soundBtn);
+    }
+
+    _initListLevelBtn() {
+        this.listLevelBtn = new ListLevelButton();
+        this.addChild(this.listLevelBtn);
     }
 
     _onClickShopBtn() {
