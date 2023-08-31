@@ -51,9 +51,9 @@ export class LevelScreen extends UIScreen {
     
     _initCloseBtn() {
         this.closeBtn = new PureButton(Texture.from("btn_close"), () => this._onCloseMenu(), new PureTransform({
-            alignment: Alignment.TOP_RIGHT,
-            x: -30,
-            y: 120,
+            alignment: Alignment.MIDDLE_CENTER,
+            x: 300,
+            y: -320,
             uuseOriginalSize: true,
         }));
         this.addChild(this.closeBtn.displayObject);
