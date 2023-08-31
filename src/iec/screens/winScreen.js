@@ -9,6 +9,7 @@ import { ButtonManager } from "../ui/buttonManager";
 import { LevelEvent } from "../level/levelEvent";
 import { FakeBackground } from "../ui/utils/fakeBackground";
 import { CoinAdded } from "../ui/win/coinAdded";
+import { Tween } from "../../systems/tween/tween"
 
 export class WinScreen extends UIScreen {
     constructor() {
@@ -22,6 +23,8 @@ export class WinScreen extends UIScreen {
         this._initConcefetti();
         this._initNextButton();
         this._initCoinAdded();
+
+        this._initEffects();
     }
 
     _initBackground() {
@@ -55,5 +58,29 @@ export class WinScreen extends UIScreen {
 
     _onClickNextBtn() {
         this.emit(LevelEvent.NextLevel);
+    }
+
+    show() {
+        super.show();
+        this.tweenFadeIn.start();
+    }
+
+    hide() {
+        this.tweenFadeOut.start();
+    }
+
+    _initEffects() {
+        this.alpha = 0;
+
+        this.tweenFadeIn = Tween.createTween(this, { alpha: 1 }, {
+            duration: 0.2
+        });
+
+        this.tweenFadeOut = Tween.createTween(this, { alpha: 0 }, {
+            duration: 0.2,
+            onComplete: () => {
+                super.hide();
+            }
+        });
     }
 }

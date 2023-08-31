@@ -6,10 +6,12 @@ import { Alignment, MaintainAspectRatioType } from "../../pureDynamic/core/pureT
 import { ListMenu } from "../ui/menu/listMenu";
 import { PureButton } from "../../pureDynamic/PixiWrapper/pureButton";
 import { FakeBackground } from "../ui/utils/fakeBackground";
+import { Tween } from "../../systems/tween/tween";
 
 export const MenuScreenEvent = Object.freeze({
     Close: "Close",
     ShopSelected: "ShopSelected",
+    ListLevelSelected: "ListLevelSelected",
 });
 
 export class MenuScreen extends UIScreen {
@@ -24,6 +26,7 @@ export class MenuScreen extends UIScreen {
         this._initListMenu();
         this._initCloseBtn();
 
+        this._initEffects();
         this._initEvents();
     }
 
@@ -54,6 +57,33 @@ export class MenuScreen extends UIScreen {
     _initEvents() {
         this.listMenu.on(MenuScreenEvent.ShopSelected, () => {
             this.emit(MenuScreenEvent.ShopSelected);
+        });
+        this.listMenu.on(MenuScreenEvent.ListLevelSelected, () => {
+            this.emit(MenuScreenEvent.ListLevelSelected);
+        });
+    }
+
+    show() {
+        super.show();
+        this.tweenFadeIn.start();
+    }
+
+    hide() {
+        this.tweenFadeOut.start();
+    }
+
+    _initEffects() {
+        this.alpha = 0;
+
+        this.tweenFadeIn = Tween.createTween(this, { alpha: 1 }, {
+            duration: 0.2
+        });
+
+        this.tweenFadeOut = Tween.createTween(this, { alpha: 0  }, {
+            duration: 0.2,
+            onComplete: () => {
+                super.hide();
+            }
         });
     }
 }

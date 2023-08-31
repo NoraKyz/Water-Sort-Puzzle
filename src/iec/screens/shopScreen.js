@@ -13,6 +13,7 @@ import { GameResizer } from "../../pureDynamic/systems/gameResizer";
 import { ThemeList } from "../ui/shop/themeList";
 import { DataManager } from "../data/dataManager";
 import { UserData } from "../data/userData";
+import { Tween } from "../../systems/tween/tween";
 
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
@@ -37,6 +38,7 @@ export class ShopScreen extends UIScreen {
         this._initTubeShopList();
         this._initThemeShopList();
 
+        this._initEffects();
         this.resize();
     }
 
@@ -58,6 +60,7 @@ export class ShopScreen extends UIScreen {
         this.tubeShopList.resize();
         this.tubeShopList.position.set(scrollX, scrollY);
         this.themeShopList.position.set(scrollX, scrollY);
+        this._initEffects();
     }
 
     _initBackground() {
@@ -204,5 +207,31 @@ export class ShopScreen extends UIScreen {
 
     _onClickAdsBtn() {
         DataManager.updateCoins(+ GameConstant.COINS_PER_ADS)
+    }
+
+    show() {
+        super.show();
+        this.tweenFadeIn.start();
+    }
+
+    hide() {
+        this.tweenFadeOut.start();
+    }
+
+    _initEffects() {
+        this.y = GameResizer.height;
+
+        this.tweenFadeIn = Tween.createTween(this, { y : 0 }, {
+            duration: 1,
+            easing: Tween.Easing.Back.Out
+        });
+
+        this.tweenFadeOut = Tween.createTween(this, { y : GameResizer.height }, {
+            duration: 1,
+            easing: Tween.Easing.Back.In,
+            onComplete: () => {
+                super.hide();
+            }
+        });
     }
 }
