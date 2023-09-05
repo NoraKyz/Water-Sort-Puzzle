@@ -20,6 +20,7 @@ export class AdsManager {
     static init() {
         this.emitter = new EventEmitter();  
         this.abiGameSDK = window.AbigamesSdk;
+        console.log(this.abiGameSDK);
     }
 
     static showBanner(elementId, bannerSize = AdBannerSize.SIZE4) {
