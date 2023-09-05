@@ -119,32 +119,24 @@ export class Game {
     this.bannerAdsElement = document.createElement("div");
     this.bannerAdsElement.id = id;
     this.bannerAdsStyle = this.bannerAdsElement.style;
+    this.bannerAdsStyle.width = "100%";
+    this.bannerAdsStyle.height = "250px";
+    this.bannerAdsStyle.position = "absolute";
+    this.bannerAdsStyle.bottom = "0px";
+    this.bannerAdsStyle.left = "0px";
     document.body.appendChild(this.bannerAdsElement);
 
     this.showBannerAds();
   }
 
   static showBannerAds() {
-    if (AdsManager.hasAdblock() || GameStateManager.prevState === GameState.Playing) {
-      return;
-    }
-
-    let bannerSize = null;
-    if (window.innerWidth < window.innerHeight) {
-      this.bannerAdsStyle.width = "300px";
-      this.bannerAdsStyle.height = "250px";
-      this.bannerAdsStyle.inset = "120px 0 0 auto";
-      this.bannerAdsStyle.float = "right";
-      bannerSize = AdBannerSize.SIZE1;
-    } else {
-      this.bannerAdsStyle.width = "100%";
-      this.bannerAdsStyle.height = "90px";
-      this.bannerAdsStyle.inset = "auto 0 0 0";
-      bannerSize = AdBannerSize.SIZE3;
-    }
-
-    AdsManager.showBanner(this.bannerAdsElement.id, bannerSize);
-    this.onResizeBannerAds();
+    AdsManager.hasAdblock((rs) => {
+      if (rs || GameStateManager.prevState === GameState.Playing) {
+        return;
+      }
+      AdsManager.showBanner(this.bannerAdsElement.id, AdBannerSize.SIZE1);
+      this.onResizeBannerAds();
+    });
   }
 
   static disableBannerAds() {

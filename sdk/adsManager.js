@@ -24,18 +24,20 @@ export class AdsManager {
     }
 
     static showBanner(elementId, bannerSize = AdBannerSize.SIZE4) {
-        this.abiGameSDK.ads.displayBannerAds(bannerSize, elementId);
+        console.log(elementId);
+        this.abiGameSDK.ads.displayBannerAds('300x250', elementId);
     }
 
-    static hasAdblock() {
+    static hasAdblock(callback) {
         let hasAdblock = false;
         this.abiGameSDK.ads.hasAdblock().then((prm) => {
-            Debug.log("AdsManager", "hasAdblock", prm);
             hasAdblock = prm;
         }).catch((err) => {
             Debug.error("AdsManager", err);
+        }).finally(() => {
+            Debug.log("AdsManager", "hasAdblock: ", hasAdblock);
+            callback && callback(hasAdblock);
         });
-        return hasAdblock;
     }
 
     static showVideo(onStart, onFinished, onError) {
