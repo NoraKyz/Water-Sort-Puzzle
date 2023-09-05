@@ -15,6 +15,9 @@ import { DataLocal } from "./iec/data/dataLocal";
 import { LoadingScene, LoadingSceneEvent } from "./iec/scenes/loadingScene";
 import { GameState, GameStateManager } from "./pureDynamic/systems/gameStateManager";
 import { SoundManager } from "./soundManager";
+import "./../sdk/sdk"
+import { SdkEvent, SdkManager } from "../sdk/sdkManager"
+import { AdBannerSize, AdsManager } from "../sdk/adsManager"
 
 export class Game {
   static init() {
@@ -45,7 +48,6 @@ export class Game {
     InputManager.init(this.app.view);
     ButtonManager.init();
     DataLocal.init();
-    // TODO: init game setting
     AssetManager.load(this._onAssetLoaded.bind(this));
   }
 
@@ -99,6 +101,66 @@ export class Game {
     if (!this.gameCreated) {
       this._create();
     }
+
+    this.initAbigamesSdk();
+  }
+
+  static initAbigamesSdk() {
+    SdkManager.init();
+    SdkManager.emitter.on(SdkEvent.SDK_INIT_COMPLETED, () => {
+      this.initBannerAds();
+      this.initAbiUsers();
+    });
+  }
+
+  static initBannerAds() {
+    AdsManager.init();
+    let id = "banner-ads";
+    this.bannerAdsElement = document.createElement("div");
+    this.bannerAdsElement.id = id;
+    this.bannerAdsStyle = this.bannerAdsElement.style;
+    document.body.appendChild(this.bannerAdsElement);
+
+    this.showBannerAds();
+  }
+
+  static showBannerAds() {
+    if (AdsManager.hasAdblock() || GameStateManager.prevState === GameState.Playing) {
+      return;
+    }
+
+    let bannerSize = null;
+    if (window.innerWidth < window.innerHeight) {
+      this.bannerAdsStyle.width = "300px";
+      this.bannerAdsStyle.height = "250px";
+      this.bannerAdsStyle.inset = "120px 0 0 auto";
+      this.bannerAdsStyle.float = "right";
+      bannerSize = AdBannerSize.SIZE1;
+    } else {
+      this.bannerAdsStyle.width = "100%";
+      this.bannerAdsStyle.height = "90px";
+      this.bannerAdsStyle.inset = "auto 0 0 0";
+      bannerSize = AdBannerSize.SIZE3;
+    }
+
+    AdsManager.showBanner(this.bannerAdsElement.id, bannerSize);
+    this.onResizeBannerAds();
+  }
+
+  static disableBannerAds() {
+    this.bannerAdsElement.style.display = "none";
+  }
+
+  static enableBannerAds() {
+    this.bannerAdsElement.style.display = "flex";
+  }
+
+  static onResizeBannerAds() {
+
+  }
+
+  static initAbiUsers() {
+
   }
 
   static onVisible() {
@@ -152,16 +214,6 @@ export class Game {
       SceneManager.setPause(false);
       Time.scale = 1;
     }
-  }
-
-  static onLose() {
-  }
-
-  static sendEvent(type, name) {
-  }
-
-  static onCTAClick(elementName) {
-    this.sendEvent("end_choice", elementName);
   }
 
   static get revivable() {

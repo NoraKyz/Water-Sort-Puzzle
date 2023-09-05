@@ -36,5 +36,5 @@ export const GameState = {
   GameOver: "gameover",
   Lose: "lose",
   Win: "win",
-  Home: "Home",
+  Home: "home",
 }
