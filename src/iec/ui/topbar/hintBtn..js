@@ -56,7 +56,7 @@ export class HintButton extends Container {
     }
 
     _onClickHintBtn() {
-        AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
+        AdsManager.showVideo(AdsType.INTERSTITIAL, () => { }, () => {
             this.emit(LevelEvent.Hint);
         })
     }
