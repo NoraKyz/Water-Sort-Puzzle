@@ -3,14 +3,15 @@ import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { LevelEvent } from "../../level/levelEvent";
+import { AdsManager, AdsType } from "../../../../sdk/adsManager";
 
 export class HintButton extends Container {
     constructor() {
-        super(); 
+        super();
 
         this._initProperties();
         this._create();
-        this._initEvents();      
+        this._initEvents();
     }
 
     _initProperties() {
@@ -55,6 +56,8 @@ export class HintButton extends Container {
     }
 
     _onClickHintBtn() {
-        this.emit(LevelEvent.Hint);
+        AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
+            this.emit(LevelEvent.Hint);
+        })
     }
 }

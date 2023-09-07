@@ -3,14 +3,15 @@ import { PureTransform } from "../../../pureDynamic/core/pureTransform";
 import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pureTransformConfig";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { LevelEvent } from "../../level/levelEvent";
+import { AdsManager, AdsType } from "../../../../sdk/adsManager";
 
 export class SpeedButton extends Container {
     constructor() {
-        super(); 
+        super();
 
         this._initProperties();
         this._create();
-        this._initEvents();      
+        this._initEvents();
     }
 
     _initProperties() {
@@ -69,10 +70,12 @@ export class SpeedButton extends Container {
         this.btn1.visible = !this.btn1.visible;
         this.btn2.visible = !this.btn2.visible;
 
-        if(this.btn1.visible) {
+        if (this.btn1.visible) {
             this.parent.emit(LevelEvent.SpeedDown);
         } else {
-            this.parent.emit(LevelEvent.SpeedUp);
+            AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
+                this.parent.emit(LevelEvent.SpeedUp);
+            })
         }
     }
 }

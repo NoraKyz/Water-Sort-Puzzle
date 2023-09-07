@@ -8,6 +8,7 @@ import { GameConstant } from "../../../gameConstant";
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { DataManager } from "../../data/dataManager";
 import { UserData } from "../../data/userData";
+import { AdsManager, AdsType } from "../../../../sdk/adsManager";
 
 export class AddTubeButton extends Container {
     constructor() {
@@ -123,7 +124,9 @@ export class AddTubeButton extends Container {
     }
 
     _onClickAdsBtn() {
-        DataManager.updateAddTubeTimes(+ GameConstant.TUBE_NUMBER_GET_BY_ADS);
-        this._setStateBtn();
+        AdsManager.showVideo(AdsType.REWARDED ,() => { }, () => {
+            DataManager.updateAddTubeTimes(+ GameConstant.TUBE_NUMBER_GET_BY_ADS);
+            this._setStateBtn();
+        })
     }
 }

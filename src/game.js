@@ -144,7 +144,7 @@ export class Game {
         this.bannerAdsStyle.position = "absolute";
         this.bannerAdsStyle.bottom = "0px";
         this.bannerAdsStyle.left = "0px";
-        bannerSize = AdBannerSize.SIZE5;
+        bannerSize = AdBannerSize.SIZE3;
       }
 
       AdsManager.showBanner(this.bannerAdsElement.id, bannerSize);

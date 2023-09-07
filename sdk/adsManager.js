@@ -16,9 +16,14 @@ export const AdBannerSize = Object.freeze({
     SIZE5: "468x60",
 });
 
+export const AdsType = Object.freeze({
+    REWARDED: "rewarded",
+    INTERSTITIAL: "interstitial",
+});
+
 export class AdsManager {
     static init() {
-        this.emitter = new EventEmitter();  
+        this.emitter = new EventEmitter();
         this.abiGameSDK = window.AbigamesSdk;
     }
 
@@ -38,21 +43,23 @@ export class AdsManager {
         });
     }
 
-    static showVideo(onStart, onFinished, onError) {
-        this.abiGameSDK.ads.displayVideoAds({
-            adStarted: () => {
-                onStart && onStart();
-                this.onAdStarted();
-            },
-            adFinished: () => {
-                onFinished && onFinished();
-                this.onAdFinished();
-            },
-            adError: () => {
-                onError && onError();
-                this.onAdError();
-            },
-        });
+    static showVideo(adsType, onStart, onFinished, onError) {
+        this.abiGameSDK.ads.displayVideoAds(
+            adsType,
+            {
+                adStarted: () => {
+                    onStart && onStart();
+                    this.onAdStarted();
+                },
+                adFinished: () => {
+                    onFinished && onFinished();
+                    this.onAdFinished();
+                },
+                adError: () => {
+                    onError && onError();
+                    this.onAdError();
+                },
+            });
     }
 
     static onAdStarted() {

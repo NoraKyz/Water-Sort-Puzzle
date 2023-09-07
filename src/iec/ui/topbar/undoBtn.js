@@ -8,6 +8,7 @@ import { LevelEvent } from "../../level/levelEvent";
 import { DataManager } from "../../data/dataManager";
 import { UserData } from "../../data/userData";
 import { PureButton } from "../../../pureDynamic/PixiWrapper/pureButton";
+import { AdsManager, AdsType } from "../../../../sdk/adsManager";
 
 export class UndoButton extends Container {
     constructor() {
@@ -124,7 +125,9 @@ export class UndoButton extends Container {
     }
 
     _onClickAdsBtn() {
-        DataManager.updateUndoTimes(+GameConstant.UNDO_NUMBER_GET_BY_ADS);
-        this._setStateBtn();
+        AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
+            DataManager.updateUndoTimes(+GameConstant.UNDO_NUMBER_GET_BY_ADS);
+            this._setStateBtn();
+        })
     }
 }
