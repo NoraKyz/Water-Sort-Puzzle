@@ -8,14 +8,37 @@ export class UsersManager {
     }
 
     static getUser() {
+        const callback = (user, error) => {
+            if (error) {
+                Debug.error("UsersManager", error);
+            } else {
+                Debug.log("UsersManager", user);
+            }
+        };
 
+        this.abiGameSDK.user.getUser(callback);
     }
 
     static getSystemInfor() {
-
+        const callback = (data, error) => {
+            if (error) {
+                Debug.error("UsersManager", error);
+            } else {
+                Debug.log("UsersManager", data);
+            }
+        };
+        
+        this.abiGameSDK.user.getSystemInfo(callback);
     }
 
-    static pushGameRank() {
-        
+    static pushGameRank(score) {
+        const callback = (data, error) => {
+            if (error) {
+                Debug.error("UsersManager", error);
+            } else {
+                Debug.log("UsersManager", data);
+            }
+        };
+        this.abiGameSDK.user.pushGameRank(score, callback);
     }
 }

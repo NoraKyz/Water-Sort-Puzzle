@@ -4,6 +4,7 @@ import LevelData from "../../../assets/jsons/levelData.json"
 import { GameConstant } from "../../gameConstant";
 import { DataObserver, EventData } from "./dataObserver";
 import { ItemType } from "../ui/shop/itemShop";
+import { UsersManager } from "../../../sdk/usersManager";
 
 export class DataManager {
     static init() {
@@ -41,11 +42,11 @@ export class DataManager {
 
     static nextLevel() {
         UserData.currentLevel += 1;
-        if(UserData.currentLevel > GameConstant.MAX_LEVEL) {
+        if (UserData.currentLevel > GameConstant.MAX_LEVEL) {
             UserData.currentLevel = GameConstant.MAX_LEVEL;
         }
         DataLocal.updateDataByKey(GameConstant.INDEXEDDB_CURRENT_LEVEL_KEY, UserData.currentLevel);
-        
+
         if (UserData.listUnlockedLevels.find((level) => level === UserData.currentLevel) === undefined) {
             UserData.listUnlockedLevels.push(UserData.currentLevel)
             DataLocal.updateDataByKey(
@@ -53,6 +54,9 @@ export class DataManager {
                 UserData.listUnlockedLevels
             )
         }
+
+        // let maxLevel = UserData.listUnlockedLevels.reduce((a, b) => Math.max(a, b));
+        // UsersManager.pushGameRank(maxLevel);
 
         DataObserver.notify(EventData.CurrentLevelChanged);
     }
