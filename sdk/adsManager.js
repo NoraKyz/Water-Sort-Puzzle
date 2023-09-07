@@ -25,6 +25,7 @@ export class AdsManager {
     static init() {
         this.emitter = new EventEmitter();
         this.abiGameSDK = window.AbigamesSdk;
+        this.isAdBlocked = false;
     }
 
     static showBanner(elementId, bannerSize = AdBannerSize.SIZE4) {
@@ -35,6 +36,7 @@ export class AdsManager {
         let hasAdblock = false;
         this.abiGameSDK.ads.hasAdblock().then((prm) => {
             hasAdblock = prm;
+            this.isAdBlocked = prm;
         }).catch((err) => {
             Debug.error("AdsManager", err);
         }).finally(() => {
@@ -44,6 +46,11 @@ export class AdsManager {
     }
 
     static showVideo(adsType, onStart, onFinished, onError) {
+        if (this.isAdBlocked) {
+            onError && onError();
+            this.onAdError();
+            return;
+        }
         this.abiGameSDK.ads.displayVideoAds(
             adsType,
             {
