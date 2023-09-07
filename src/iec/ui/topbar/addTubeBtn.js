@@ -75,17 +75,6 @@ export class AddTubeButton extends Container {
             this.lTransform
         );
         this.addChild(this.adsBtn.displayObject);
-
-        this.textAdsBtn = new Text(
-            GameConstant.TUBE_NUMBER_GET_BY_ADS.toString(),
-            {
-                fill: "#ffebef",
-                fontFamily: "Comic Sans MS",
-                fontSize: 45,
-                fontWeight: "bolder"
-            });
-        this.textAdsBtn.position.set(this.adsBtn.displayObject.width * 0.25, 8);
-        this.adsBtn.displayObject.addChild(this.textAdsBtn);
     }
 
     _initEvents() {
