@@ -131,6 +131,7 @@ export class Game {
       }
 
       let bannerSize = null;
+      // bannerSize in screen portrait like landscape
       if (GameResizer.orientation === Orientation.Portrait) {
         this.bannerAdsStyle.width = "100%";
         this.bannerAdsStyle.height = "50px";
@@ -140,11 +141,11 @@ export class Game {
         bannerSize = AdBannerSize.SIZE2;
       } else {
         this.bannerAdsStyle.width = "100%";
-        this.bannerAdsStyle.height = "70px";
+        this.bannerAdsStyle.height = "50px";
         this.bannerAdsStyle.position = "absolute";
         this.bannerAdsStyle.bottom = "0px";
         this.bannerAdsStyle.left = "0px";
-        bannerSize = AdBannerSize.SIZE3;
+        bannerSize = AdBannerSize.SIZE2;
       }
 
       AdsManager.showBanner(this.bannerAdsElement.id, bannerSize);
