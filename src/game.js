@@ -119,11 +119,6 @@ export class Game {
     this.bannerAdsElement = document.createElement("div");
     this.bannerAdsElement.id = id;
     this.bannerAdsStyle = this.bannerAdsElement.style;
-    this.bannerAdsStyle.width = "100%";
-    this.bannerAdsStyle.height = "250px";
-    this.bannerAdsStyle.position = "absolute";
-    this.bannerAdsStyle.bottom = "0px";
-    this.bannerAdsStyle.left = "0px";
     document.body.appendChild(this.bannerAdsElement);
 
     this.showBannerAds();
@@ -134,7 +129,20 @@ export class Game {
       if (rs || GameStateManager.prevState === GameState.Playing) {
         return;
       }
-      AdsManager.showBanner(this.bannerAdsElement.id, AdBannerSize.SIZE1);
+
+      let bannerSize = null;
+      if (window.innerWidth < window.innerHeight) {
+        bannerSize = AdBannerSize.SIZE2;
+        this.bannerAdsStyle.width = "100%";
+        this.bannerAdsStyle.height = "400px";
+        this.bannerAdsStyle.position = "absolute";
+        this.bannerAdsStyle.bottom = "0px";
+        this.bannerAdsStyle.left = "0px";
+      } else {
+        bannerSize = AdBannerSize.SIZE3;
+      }
+      console.log("bannerSize", bannerSize);
+      AdsManager.showBanner(this.bannerAdsElement.id, bannerSize);
       this.onResizeBannerAds();
     });
   }
