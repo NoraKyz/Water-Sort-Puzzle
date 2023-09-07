@@ -6,11 +6,16 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <style>
+    html {
+      height: 100%;
+    }
+
     body {
       margin: 0;
       padding: 0;
       background: black;
       overflow: hidden;
+      min-height: 100%;
     }
 
     #game {
@@ -25,6 +30,10 @@
       justify-content: center;
       position: absolute;
       z-index: 1;
+    }
+
+    #ad-container{
+      z-index: 100;
     }
   </style>
   <title><%= adsName %> - <%= adsType %></title>
