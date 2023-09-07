@@ -61,10 +61,14 @@ export class WinScreen extends UIScreen {
 
     _onClickNextBtn() {
         this.countLevel++;
-        
-        AdsManager.showVideo(AdsType.INTERSTITIAL, () => { }, () => {
+
+        if (this.countLevel % 2 == 0) {
+            AdsManager.showVideo(AdsType.INTERSTITIAL, () => { }, () => {
+                this.emit(LevelEvent.NextLevel);
+            });
+        } else {
             this.emit(LevelEvent.NextLevel);
-        });
+        }
     }
 
     show() {
