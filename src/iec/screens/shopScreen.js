@@ -14,6 +14,7 @@ import { ThemeList } from "../ui/shop/themeList";
 import { DataManager } from "../data/dataManager";
 import { UserData } from "../data/userData";
 import { Tween } from "../../systems/tween/tween";
+import { AdsManager, AdsType } from "../../../sdk/adsManager";
 
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
@@ -206,7 +207,9 @@ export class ShopScreen extends UIScreen {
     }
 
     _onClickAdsBtn() {
-        DataManager.updateCoins(+ GameConstant.COINS_PER_ADS)
+        AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
+            DataManager.updateCoins(+ GameConstant.COINS_PER_ADS)
+        })
     }
 
     show() {

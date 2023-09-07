@@ -10,10 +10,13 @@ import { LevelEvent } from "../level/levelEvent";
 import { FakeBackground } from "../ui/utils/fakeBackground";
 import { CoinAdded } from "../ui/win/coinAdded";
 import { Tween } from "../../systems/tween/tween"
+import { AdsManager, AdsType } from "../../../sdk/adsManager";
 
 export class WinScreen extends UIScreen {
     constructor() {
         super(GameConstant.WIN_SCREEN);
+
+        this.countLevel = 0;
     }
 
     create() {
@@ -57,7 +60,11 @@ export class WinScreen extends UIScreen {
     }
 
     _onClickNextBtn() {
-        this.emit(LevelEvent.NextLevel);
+        this.countLevel++;
+        
+        AdsManager.showVideo(AdsType.INTERSTITIAL, () => { }, () => {
+            this.emit(LevelEvent.NextLevel);
+        });
     }
 
     show() {
