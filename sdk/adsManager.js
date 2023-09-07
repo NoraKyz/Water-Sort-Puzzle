@@ -23,7 +23,7 @@ export class AdsManager {
     }
 
     static showBanner(elementId, bannerSize = AdBannerSize.SIZE4) {
-        this.abiGameSDK.ads.displayBannerAds('300x250', elementId);
+        this.abiGameSDK.ads.displayBannerAds(bannerSize, elementId);
     }
 
     static hasAdblock(callback) {

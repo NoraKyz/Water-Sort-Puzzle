@@ -2,7 +2,7 @@ import { GameConstant } from "./gameConstant";
 import { AssetManager } from "./assetManager";
 import { Debug } from "./helpers/debug";
 import { Tween } from "./systems/tween/tween";
-import { GameResizer } from "./pureDynamic/systems/gameResizer";
+import { GameResizer, Orientation } from "./pureDynamic/systems/gameResizer";
 import { SceneManager } from "./pureDynamic/PixiWrapper/scene/sceneManager";
 import "./systems/extensions/index";
 import { ScriptSystem } from "./systems/script/scriptSystem";
@@ -131,17 +131,22 @@ export class Game {
       }
 
       let bannerSize = null;
-      if (window.innerWidth < window.innerHeight) {
-        bannerSize = AdBannerSize.SIZE2;
+      if (GameResizer.orientation === Orientation.Portrait) {
         this.bannerAdsStyle.width = "100%";
-        this.bannerAdsStyle.height = "400px";
+        this.bannerAdsStyle.height = "50px";
         this.bannerAdsStyle.position = "absolute";
         this.bannerAdsStyle.bottom = "0px";
         this.bannerAdsStyle.left = "0px";
+        bannerSize = AdBannerSize.SIZE2;
       } else {
-        bannerSize = AdBannerSize.SIZE3;
+        this.bannerAdsStyle.width = "100%";
+        this.bannerAdsStyle.height = "70px";
+        this.bannerAdsStyle.position = "absolute";
+        this.bannerAdsStyle.bottom = "0px";
+        this.bannerAdsStyle.left = "0px";
+        bannerSize = AdBannerSize.SIZE5;
       }
-      console.log("bannerSize", bannerSize);
+
       AdsManager.showBanner(this.bannerAdsElement.id, bannerSize);
       this.onResizeBannerAds();
     });
