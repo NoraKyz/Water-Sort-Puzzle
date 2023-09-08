@@ -6,6 +6,7 @@ export const AdEvent = Object.freeze({
     AD_STARTED: "adStarted",
     AD_COMPLETED: "adCompleted",
     AD_ERROR: "adError",
+    AD_INVALID: "adInvalid",
 });
 
 export const AdBannerSize = Object.freeze({
@@ -82,5 +83,9 @@ export class AdsManager {
     static onAdError(err) {
         console.error("AdsManager", err);
         this.emitter.emit(AdEvent.AD_ERROR, err);
+    }
+
+    static onAdsInvalid() {
+        this.emitter.emit(AdEvent.AD_INVALID);
     }
 }

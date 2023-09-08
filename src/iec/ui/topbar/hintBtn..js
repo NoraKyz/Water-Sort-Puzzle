@@ -57,6 +57,7 @@ export class HintButton extends Container {
     }
 
     _onClickHintBtn() {
+        AdsManager.onAdsInvalid();
         ButtonManager.enableAllAfterDelay(1);
         AdsManager.showVideo(
             AdsType.REWARDED,

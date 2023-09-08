@@ -15,6 +15,7 @@ import { ShopScreen, ShopScreenEvent } from "../screens/shopScreen";
 import { UserData } from "../data/userData";
 import { LevelScreen, LevelScreenEvent } from "../screens/levelScreen";
 import { AdsInvalidScreen } from "../screens/adsInvalidScreen";
+import { AdEvent, AdsManager } from "../../../sdk/adsManager";
 
 
 export class PlayScene extends Scene {
@@ -84,10 +85,13 @@ export class PlayScene extends Scene {
     this.adsInvalidScreen = this.ui.getScreen(GameConstant.ADS_INVALID_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
-    this.ui.setScreenActive(GameConstant.ADS_INVALID_SCREEN);
   }
 
   _initEvents() {
+    AdsManager.emitter.on(AdEvent.AD_INVALID, () => {
+      this.ui.setScreenActive(GameConstant.ADS_INVALID_SCREEN);
+    });
+
     this.level.on(LevelEvent.Complete, () => {
       this.ui.setScreenActive(GameConstant.WIN_SCREEN);
     });
