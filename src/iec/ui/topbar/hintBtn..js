@@ -5,6 +5,7 @@ import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { LevelEvent } from "../../level/levelEvent";
 import { AdsManager, AdsType } from "../../../../sdk/adsManager";
 import { ButtonManager } from "../buttonManager";
+import { Tween } from "../../../systems/tween/tween";
 
 export class HintButton extends Container {
     constructor() {
@@ -57,11 +58,12 @@ export class HintButton extends Container {
     }
 
     _onClickHintBtn() {
-        AdsManager.onAdsInvalid();
+        let adsInvalid = true;
         ButtonManager.enableAllAfterDelay(1);
         AdsManager.showVideo(
             AdsType.REWARDED,
             () => { 
+                adsInvalid = false;
                 ButtonManager.enableAll();
             },
             () => {
@@ -71,5 +73,15 @@ export class HintButton extends Container {
                 ButtonManager.enableAll();
             }
         ); 
+
+        this.delay = Tween.createCountTween({
+            duration: 1,
+            onComplete: () => {
+                if (adsInvalid) {
+                    AdsManager.onAdsInvalid();
+                }
+            }
+        });
+        this.delay.start();
     }
 }
