@@ -14,6 +14,7 @@ import { MenuScreen, MenuScreenEvent } from "../screens/menuScreen";
 import { ShopScreen, ShopScreenEvent } from "../screens/shopScreen";
 import { UserData } from "../data/userData";
 import { LevelScreen, LevelScreenEvent } from "../screens/levelScreen";
+import { AdsInvalidScreen } from "../screens/adsInvalidScreen";
 
 
 export class PlayScene extends Scene {
@@ -72,6 +73,7 @@ export class PlayScene extends Scene {
       new MenuScreen(),
       new ShopScreen(),
       new LevelScreen(),
+      new AdsInvalidScreen(),
     );
 
     this.topbarScreen = this.ui.getScreen(GameConstant.TOPBAR_SCREEN);
@@ -79,8 +81,10 @@ export class PlayScene extends Scene {
     this.menuScreen = this.ui.getScreen(GameConstant.MENU_SCREEN);
     this.shopScreen = this.ui.getScreen(GameConstant.SHOP_SCREEN);
     this.levelScreen = this.ui.getScreen(GameConstant.LEVEL_SCREEN);
+    this.adsInvalidScreen = this.ui.getScreen(GameConstant.ADS_INVALID_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
+    this.ui.setScreenActive(GameConstant.ADS_INVALID_SCREEN);
   }
 
   _initEvents() {

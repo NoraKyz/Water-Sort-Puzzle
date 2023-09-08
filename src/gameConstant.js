@@ -19,6 +19,7 @@ export const GameConstant = Object.freeze({
   SHOP_SCREEN  : "ShopScreen",
   LOADING_SCREEN: "LoadingScreen",
   LEVEL_SCREEN: "LevelScreen",
+  ADS_INVALID_SCREEN: "AdsInvalidScreen",
 
   DEBUG_ON            : true,
   DEBUG_DRAW_COLLIDER : false,
