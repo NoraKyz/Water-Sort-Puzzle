@@ -209,7 +209,7 @@ export class ShopScreen extends UIScreen {
     }
 
     _onClickAdsBtn() {
-        ButtonManager.disableAll();
+        ButtonManager.enableAllAfterDelay(1);
         AdsManager.showVideo(
             AdsType.REWARDED,
             () => {
@@ -221,7 +221,7 @@ export class ShopScreen extends UIScreen {
             () => {
                 ButtonManager.enableAll();
             }
-        )
+        );  
     }
 
     show() {

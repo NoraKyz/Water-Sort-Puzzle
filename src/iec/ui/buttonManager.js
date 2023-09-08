@@ -1,3 +1,4 @@
+import { Tween } from "../../systems/tween/tween"
 
 export class ButtonManager {
     static init() {
@@ -27,4 +28,19 @@ export class ButtonManager {
             this.enable(buttonName);
         }
     }
+
+    static enableAllAfterDelay(timeSecond) {
+        this.delay = Tween.createCountTween({
+            duration: timeSecond,
+            onStart: () => {
+                this.disableAll();
+            },
+            onComplete: () => {
+                this.enableAll();
+            }
+        });
+
+        this.delay.start();
+    }
+
 }

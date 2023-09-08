@@ -126,7 +126,7 @@ export class UndoButton extends Container {
     }
 
     _onClickAdsBtn() {
-        ButtonManager.disableAll();
+        ButtonManager.enableAllAfterDelay(1);
         AdsManager.showVideo(
             AdsType.REWARDED,
             () => {
@@ -139,6 +139,6 @@ export class UndoButton extends Container {
             () => {
                 ButtonManager.enableAll();
             }
-        )
+        );
     }
 }

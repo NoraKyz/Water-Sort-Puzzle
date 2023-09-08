@@ -114,7 +114,7 @@ export class AddTubeButton extends Container {
     }
 
     _onClickAdsBtn() {
-        ButtonManager.disableAll();
+        ButtonManager.enableAllAfterDelay(1);
         AdsManager.showVideo(
             AdsType.REWARDED,
             () => {
@@ -127,6 +127,7 @@ export class AddTubeButton extends Container {
             () => {
                 ButtonManager.enableAll();
             }
-        )
+        );
+
     }
 }

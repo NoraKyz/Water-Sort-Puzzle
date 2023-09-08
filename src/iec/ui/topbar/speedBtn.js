@@ -73,7 +73,7 @@ export class SpeedButton extends Container {
             this.btn1.visible = !this.btn1.visible;
             this.btn2.visible = !this.btn2.visible;
         } else {
-            ButtonManager.disableAll();
+            ButtonManager.enableAllAfterDelay(1);
             AdsManager.showVideo(
                 AdsType.REWARDED,
                 () => {
@@ -87,7 +87,7 @@ export class SpeedButton extends Container {
                 () => {
                     ButtonManager.enableAll();
                 }
-            )
+            );
         }
     }
 }
