@@ -4,6 +4,7 @@ import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pu
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { LevelEvent } from "../../level/levelEvent";
 import { AdsManager, AdsType } from "../../../../sdk/adsManager";
+import { ButtonManager } from "../buttonManager";
 
 export class SpeedButton extends Container {
     constructor() {
@@ -67,15 +68,26 @@ export class SpeedButton extends Container {
     }
 
     _onClickSpeedBtn() {
-        this.btn1.visible = !this.btn1.visible;
-        this.btn2.visible = !this.btn2.visible;
-
-        if (this.btn1.visible) {
+        if (this.btn2.visible) {
             this.parent.emit(LevelEvent.SpeedDown);
+            this.btn1.visible = !this.btn1.visible;
+            this.btn2.visible = !this.btn2.visible;
         } else {
-            AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
-                this.parent.emit(LevelEvent.SpeedUp);
-            })
+            ButtonManager.disableAll();
+            AdsManager.showVideo(
+                AdsType.REWARDED,
+                () => {
+                    ButtonManager.enableAll();
+                },
+                () => {
+                    this.parent.emit(LevelEvent.SpeedUp);
+                    this.btn1.visible = !this.btn1.visible;
+                    this.btn2.visible = !this.btn2.visible;
+                },
+                () => {
+                    ButtonManager.enableAll();
+                }
+            )
         }
     }
 }

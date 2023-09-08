@@ -4,6 +4,7 @@ import { Alignment, MaintainAspectRatioType } from "../../../pureDynamic/core/pu
 import { PureSprite } from "../../../pureDynamic/PixiWrapper/pureSprite";
 import { LevelEvent } from "../../level/levelEvent";
 import { AdsManager, AdsType } from "../../../../sdk/adsManager";
+import { ButtonManager } from "../buttonManager";
 
 export class HintButton extends Container {
     constructor() {
@@ -56,8 +57,18 @@ export class HintButton extends Container {
     }
 
     _onClickHintBtn() {
-        AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
-            this.emit(LevelEvent.Hint);
-        })
+        ButtonManager.disableAll();
+        AdsManager.showVideo(
+            AdsType.REWARDED,
+            () => { 
+                ButtonManager.enableAll();
+            },
+            () => {
+                this.emit(LevelEvent.Hint);              
+            },
+            () => {
+                ButtonManager.enableAll();
+            }
+        );
     }
 }

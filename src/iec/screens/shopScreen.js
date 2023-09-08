@@ -15,6 +15,7 @@ import { DataManager } from "../data/dataManager";
 import { UserData } from "../data/userData";
 import { Tween } from "../../systems/tween/tween";
 import { AdsManager, AdsType } from "../../../sdk/adsManager";
+import { ButtonManager } from "../ui/buttonManager";
 
 export const ShopScreenEvent = Object.freeze({
     BackToScene: "backToScene",
@@ -150,6 +151,7 @@ export class ShopScreen extends UIScreen {
             anchorY: 0.8,
             pivotY: 0,
         }));
+        ButtonManager.addButton(GameConstant.FREE_COIN_BUTTON, this.adsBtn.displayObject);
         this.addChild(this.adsBtn.displayObject);
     }
 
@@ -207,9 +209,19 @@ export class ShopScreen extends UIScreen {
     }
 
     _onClickAdsBtn() {
-        AdsManager.showVideo(AdsType.REWARDED, () => { }, () => {
-            DataManager.updateCoins(+ GameConstant.COINS_PER_ADS)
-        })
+        ButtonManager.disableAll();
+        AdsManager.showVideo(
+            AdsType.REWARDED,
+            () => {
+                ButtonManager.enableAll();
+            },
+            () => {
+                DataManager.updateCoins(+ GameConstant.COINS_PER_ADS)
+            },
+            () => {
+                ButtonManager.enableAll();
+            }
+        )
     }
 
     show() {
@@ -224,12 +236,12 @@ export class ShopScreen extends UIScreen {
     _initEffects() {
         this.y = GameResizer.height;
 
-        this.tweenFadeIn = Tween.createTween(this, { y : 0 }, {
+        this.tweenFadeIn = Tween.createTween(this, { y: 0 }, {
             duration: 0.7,
             easing: Tween.Easing.Back.Out
         });
 
-        this.tweenFadeOut = Tween.createTween(this, { y : GameResizer.height }, {
+        this.tweenFadeOut = Tween.createTween(this, { y: GameResizer.height }, {
             duration: 0.7,
             easing: Tween.Easing.Back.In,
             onComplete: () => {

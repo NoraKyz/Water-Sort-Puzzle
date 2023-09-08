@@ -46,6 +46,7 @@ export const GameConstant = Object.freeze({
   NEXT_LEVEL_BUTTON : "NextLevelButton",
   HINT_BUTTON       : "HintButton",
   SPEED_BUTTON      : "SpeedButton",
+  FREE_COIN_BUTTON  : "FreeCoinButton",
 
   TUBE_SHOP_NAME    : "Tube",
   THEME_SHOP_NAME   : "Theme",
