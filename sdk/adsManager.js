@@ -30,28 +30,30 @@ export class AdsManager {
     }
 
     static showBanner(elementId, bannerSize = AdBannerSize.SIZE4) {
-        this.abiGameSDK.ads.displayBannerAds(bannerSize, elementId);
+        this.abiGameSDK.ads.displayBannerAds({ size: bannerSize, containerId: elementId }, (err) => {
+            if (err) {
+                Debug.log("AdsManager", "Error on request banner ads: " + err);
+                return;
+            }
+            Debug.log("AdsManagerz", "Banner ads is shown");
+        });
     }
 
     static hasAdblock(callback) {
-        let hasAdblock = false;
-        this.abiGameSDK.ads.hasAdblock().then((prm) => {
-            hasAdblock = prm;
-            this.isAdBlocked = prm;
-        }).catch((err) => {
-            Debug.error("AdsManager", err);
-        }).finally(() => {
-            Debug.log("AdsManager", "hasAdblock: ", hasAdblock);
-            callback && callback(hasAdblock);
+        this.abiGameSDK.ads.hasAdblock((isBlock) => {
+            this.adBlocked = isBlock;
+            callback && callback(isBlock);
+            Debug.log("AdsManager", "Adblock is " + (isBlock ? "enabled" : "disabled"));
         });
     }
 
     static showVideo(adsType, onStart, onFinished, onError) {
-        if (this.isAdBlocked) {
+        if (this.adBlocked) {
             onError && onError();
             this.onAdError();
             return;
         }
+
         this.abiGameSDK.ads.displayVideoAds(
             adsType,
             {
@@ -67,7 +69,8 @@ export class AdsManager {
                     onError && onError();
                     this.onAdError();
                 },
-            });
+            }
+        );
     }
 
     static onAdStarted() {
@@ -81,11 +84,7 @@ export class AdsManager {
     }
 
     static onAdError(err) {
-        console.error("AdsManager", err);
         this.emitter.emit(AdEvent.AD_ERROR, err);
-    }
-
-    static onAdsInvalid() {
         this.emitter.emit(AdEvent.AD_INVALID);
     }
 }

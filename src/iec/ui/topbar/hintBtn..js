@@ -58,12 +58,10 @@ export class HintButton extends Container {
     }
 
     _onClickHintBtn() {
-        let adsInvalid = true;
         ButtonManager.enableAllAfterDelay(1);
         AdsManager.showVideo(
             AdsType.REWARDED,
             () => { 
-                adsInvalid = false;
                 ButtonManager.enableAll();
             },
             () => {
@@ -71,17 +69,8 @@ export class HintButton extends Container {
             },
             () => {
                 ButtonManager.enableAll();
+                AdsManager.onAdsInvalid();
             }
         ); 
-
-        this.delay = Tween.createCountTween({
-            duration: 1,
-            onComplete: () => {
-                if (adsInvalid) {
-                    AdsManager.onAdsInvalid();
-                }
-            }
-        });
-        this.delay.start();
     }
 }

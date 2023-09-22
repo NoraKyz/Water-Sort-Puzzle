@@ -138,6 +138,7 @@ export class UndoButton extends Container {
             },
             () => {
                 ButtonManager.enableAll();
+                AdsManager.onAdsInvalid();
             }
         );
     }

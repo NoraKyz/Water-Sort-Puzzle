@@ -15,7 +15,6 @@ import { DataLocal } from "./iec/data/dataLocal";
 import { LoadingScene, LoadingSceneEvent } from "./iec/scenes/loadingScene";
 import { GameState, GameStateManager } from "./pureDynamic/systems/gameStateManager";
 import { SoundManager } from "./soundManager";
-import "./../sdk/sdk"
 import { SdkEvent, SdkManager } from "../sdk/sdkManager"
 import { AdBannerSize, AdsManager } from "../sdk/adsManager"
 

@@ -86,6 +86,7 @@ export class SpeedButton extends Container {
                 },
                 () => {
                     ButtonManager.enableAll();
+                    AdsManager.onAdsInvalid();
                 }
             );
         }
