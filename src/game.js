@@ -16,7 +16,7 @@ import { LoadingScene, LoadingSceneEvent } from "./iec/scenes/loadingScene";
 import { GameState, GameStateManager } from "./pureDynamic/systems/gameStateManager";
 import { SoundManager } from "./soundManager";
 import { SdkEvent, SdkManager } from "../sdk/sdkManager"
-import { AdBannerSize, AdsManager } from "../sdk/adsManager"
+import { AdBannerSize, AdsManager, AdsType } from "../sdk/adsManager"
 
 export class Game {
   static init() {
@@ -75,6 +75,7 @@ export class Game {
     SceneManager.load(loadingScene);
     loadingScene.on(LoadingSceneEvent.LoadCompleted, () => {
       SceneManager.load(playScene);
+      AdsManager.showVideo(AdsType.INTERSTITIAL);
     });
 
     // lock 60FPS;

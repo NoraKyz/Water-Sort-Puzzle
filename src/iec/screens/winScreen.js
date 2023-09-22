@@ -62,7 +62,7 @@ export class WinScreen extends UIScreen {
     _onClickNextBtn() {
         this.countLevel++;
 
-        if (this.countLevel <= 16) {
+        if (this.countLevel <= 10) {
             if (this.countLevel % 2 == 0) {
                 AdsManager.showVideo(AdsType.INTERSTITIAL, () => { }, () => {
                     this.emit(LevelEvent.NextLevel);

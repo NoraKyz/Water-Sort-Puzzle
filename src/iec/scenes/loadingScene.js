@@ -12,12 +12,12 @@ export const LoadingSceneEvent = Object.freeze({
 export class LoadingScene extends Scene {
   constructor() {
     super(GameConstant.LOADING_SCENE);
-    GameResizer.registerOnResizeCallback(this.resize.bind(this));  
+    GameResizer.registerOnResizeCallback(this.resize.bind(this));
   }
 
   create() {
     super.create();
-    
+
     this._initScreens();
     this._initEvents();
 
@@ -32,7 +32,7 @@ export class LoadingScene extends Scene {
     this.ui.setScreenActive(GameConstant.LOADING_SCREEN);
   }
 
-  _initEvents() {   
+  _initEvents() {
     this.loadingScreen.on(LoadingScreenEvent.LoadingbarCompleted, () => this._startGame());
   }
 
