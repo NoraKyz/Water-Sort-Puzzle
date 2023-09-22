@@ -40,7 +40,7 @@ export class CoinInfor extends Container {
         this.ic = new Sprite(Texture.from("spr_coin"));
         this.ic.anchor.set(1, 0);
         this.ic.scale.set(0.75);
-        this.ic.x = -this.text.displayObject.width;
+        this.ic.x = -this.text.displayObject.width * 1.2;
         this.ic.y = 7.5;
         this.text.displayObject.addChild(this.ic);
     }
