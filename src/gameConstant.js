@@ -21,11 +21,11 @@ export const GameConstant = Object.freeze({
   LEVEL_SCREEN: "LevelScreen",
   ADS_INVALID_SCREEN: "AdsInvalidScreen",
 
-  DEBUG_ON            : true,
+  DEBUG_ON            : false,
   DEBUG_DRAW_COLLIDER : false,
   SOUND_ENABLED       : true,
   SHOW_GAME_TAG       : false,
-  SHOW_LIST_LEVEl    : true,
+  SHOW_LIST_LEVEl    : false,
   SAVE_DATA_ENABLED   : true,
 
   LEVEL_OFFSET  : 1,
@@ -64,7 +64,7 @@ export const GameConstant = Object.freeze({
   INDEXEDDB_LIST_THEME_SKIN_KEY           : "listThemeSkin", 
   INDEXEDDB_LIST_TUBE_SKIN_KEY            : "listTubeSkin", 
   
-  PLAYER_DEFAULT_COIN                     : 10000,
+  PLAYER_DEFAULT_COIN                     : 0,
   PLAYER_DEFAULT_SCORE                    : 0,
   PLAYER_DEFAULT_ADD_TUBE_TIMES           : 2,
   PLAYER_DEFAULT_UNDO_TIMES               : 5,
