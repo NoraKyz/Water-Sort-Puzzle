@@ -126,7 +126,6 @@ export class AddTubeButton extends Container {
             },
             () => {
                 ButtonManager.enableAll();
-                AdsManager.onAdsInvalid();
             }
         );
 

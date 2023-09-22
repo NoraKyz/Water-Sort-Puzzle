@@ -69,7 +69,6 @@ export class HintButton extends Container {
             },
             () => {
                 ButtonManager.enableAll();
-                AdsManager.onAdsInvalid();
             }
         ); 
     }

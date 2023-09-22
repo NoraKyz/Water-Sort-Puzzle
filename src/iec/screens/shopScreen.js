@@ -220,7 +220,7 @@ export class ShopScreen extends UIScreen {
             },
             () => {
                 ButtonManager.enableAll();
-                AdsManager.onAdsInvalid();
+
             }
         );  
     }
