@@ -111,6 +111,10 @@ export class Game {
       this.initBannerAds();
       this.initAbiUsers();
     });
+    SdkManager.emitter.on(SdkEvent.SDK_INIT_ERROR, () => {
+      this.initBannerAds();
+      this.initAbiUsers();
+    });
   }
 
   static initBannerAds() {
