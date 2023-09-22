@@ -37,6 +37,11 @@ export class SoundManager {
 
   static unMuteAll() {
     sound.unmuteAll();
+    this.isResumeContext(true);
+  }
+
+  static isResumeContext(isResumeContext) {
+    sound.context.paused = !isResumeContext;
   }
 
   static on(event, callback, id) {
