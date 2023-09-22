@@ -23,7 +23,7 @@ export class SdkManager {
         }
         this.abiGameSDK = window.AbigamesSdk;
         this.abiGameSDK.init({
-            gameId: 'gameId',
+            gameId: '650d5e84bb2ae988433c1e2a',
             onStart: () => {
                 Debug.log("SdkManager", "Sdk is started");
                 this.state = SdkState.LOADING;
@@ -35,7 +35,7 @@ export class SdkManager {
             this.emitter.emit(SdkEvent.SDK_INIT_COMPLETED);
         }).catch((err) => {
             Debug.error("SdkManager", err);
-            this.emitter.emit(SdkEvent.SDK_INIT_ERROR);  
+            this.emitter.emit(SdkEvent.SDK_INIT_ERROR);
         });
     }
 }
