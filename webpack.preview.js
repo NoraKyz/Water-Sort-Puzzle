@@ -48,7 +48,7 @@ module.exports = {
       ADEVENT_LOAD: JSON.stringify("load"),
     }),
     new HtmlWebpackPlugin({
-      filename: `${metadata.buildName}.html`,
+      filename: `index.html`,
       template: "./src/index.ejs",
       minify: true,
       templateParameters: {
