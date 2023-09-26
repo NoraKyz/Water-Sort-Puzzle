@@ -67,7 +67,9 @@ export class AdsManager {
                 },
                 adError: () => {
                     onError && onError();
-                    this.onAdError();
+                    if(adsType == AdsType.REWARDED) {
+                        this.onAdError();
+                    }
                 },
             }
         );

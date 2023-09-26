@@ -40,7 +40,6 @@ export class ShopScreen extends UIScreen {
         this._initTubeShopList();
         this._initThemeShopList();
 
-        this._initEffects();
         this.resize();
     }
 
@@ -62,7 +61,6 @@ export class ShopScreen extends UIScreen {
         this.tubeShopList.resize();
         this.tubeShopList.position.set(scrollX, scrollY);
         this.themeShopList.position.set(scrollX, scrollY);
-        this._initEffects();
     }
 
     _initBackground() {
@@ -226,27 +224,21 @@ export class ShopScreen extends UIScreen {
 
     show() {
         super.show();
-        this.tweenFadeIn.start();
+
+        this.y = GameResizer.height;
+        Tween.createTween(this, { y: 0 }, {
+            duration: 0.7,
+            easing: Tween.Easing.Back.Out
+        }).start();
     }
 
     hide() {
-        this.tweenFadeOut.start();
-    }
-
-    _initEffects() {
-        this.y = GameResizer.height;
-
-        this.tweenFadeIn = Tween.createTween(this, { y: 0 }, {
-            duration: 0.7,
-            easing: Tween.Easing.Back.Out
-        });
-
-        this.tweenFadeOut = Tween.createTween(this, { y: GameResizer.height }, {
+        Tween.createTween(this, { y: GameResizer.height }, {
             duration: 0.7,
             easing: Tween.Easing.Back.In,
             onComplete: () => {
                 super.hide();
             }
-        });
+        }).start();
     }
 }
