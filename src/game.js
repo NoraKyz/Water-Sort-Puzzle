@@ -107,12 +107,12 @@ export class Game {
   static initAbigamesSdk() {
     SdkManager.init();
     SdkManager.emitter.on(SdkEvent.SDK_INIT_COMPLETED, () => {
-      this.initBannerAds();
       this.initAbiUsers();
+      this.initBannerAds();    
     });
     SdkManager.emitter.on(SdkEvent.SDK_INIT_ERROR, () => {
-      this.initBannerAds();
       this.initAbiUsers();
+      this.initBannerAds();      
     });
   }
 
@@ -192,7 +192,7 @@ export class Game {
   }
 
   static initAbiUsers() {
-
+    UsersManager.init();
   }
 
   static onVisible() {
