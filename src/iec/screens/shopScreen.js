@@ -130,7 +130,7 @@ export class ShopScreen extends UIScreen {
         this.buyBtn = new PureButton(Texture.from("btn_random_buy"), () => this._onClickBuyBtn(), new PureTransform({
             alignment: Alignment.CUSTOM,
             useOriginalSize: true,
-            x: -180,
+            x: -162,
             anchorX: 0.5,
             pivotX: 0.5,
             anchorY: 0.8,
@@ -143,7 +143,7 @@ export class ShopScreen extends UIScreen {
         this.adsBtn = new PureButton(Texture.from("btn_ads_get_coins"), () => this._onClickAdsBtn(), new PureTransform({
             alignment: Alignment.CUSTOM,
             useOriginalSize: true,
-            x: 180,
+            x: 162,
             anchorX: 0.5,
             pivotX: 0.5,
             anchorY: 0.8,
