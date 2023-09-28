@@ -22,7 +22,7 @@ export class CoinInfor extends Container {
             alignment: Alignment.TOP_RIGHT,
             useOriginalSize: true,
             x: -30,
-            y: 18
+            y: 27
         });
         this.text = new PureText(
             UserData.coins,
@@ -40,8 +40,8 @@ export class CoinInfor extends Container {
         this.ic = new Sprite(Texture.from("spr_coin"));
         this.ic.anchor.set(1, 0);
         this.ic.scale.set(0.75);
-        this.ic.x = - this.text.displayObject.width - 20;
-        this.ic.y = 7.5;
+        this.ic.x = - 150;
+        this.ic.y = this.text.displayObject.height / 2 - this.ic.height / 2;
         this.text.displayObject.addChild(this.ic);
     }
 
@@ -52,6 +52,5 @@ export class CoinInfor extends Container {
 
     onDataChanged() {
         this.text.text = UserData.coins;  
-        this.ic.x = - this.text.displayObject.width - 20;
     }
 }
