@@ -178,7 +178,7 @@ export class Game {
         let platform = data.platform;
         if (platform.type === "mobile") {
           if (GameResizer.isLandScape()) {
-            this.bannerAdsStyle.transform = "scale(0.5)";
+            this.bannerAdsStyle.transform = "scale(0.35)";
           }
           else {
             this.bannerAdsStyle.transform = "scale(1)";

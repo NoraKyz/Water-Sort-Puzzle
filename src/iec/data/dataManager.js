@@ -55,8 +55,8 @@ export class DataManager {
             )
         }
 
-        // let maxLevel = UserData.listUnlockedLevels.reduce((a, b) => Math.max(a, b));
-        // UsersManager.pushGameRank(maxLevel);
+        let maxLevel = UserData.listUnlockedLevels.reduce((a, b) => Math.max(a, b));
+        UsersManager.pushGameRank(maxLevel);
 
         DataObserver.notify(EventData.CurrentLevelChanged);
     }
