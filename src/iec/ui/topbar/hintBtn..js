@@ -61,15 +61,15 @@ export class HintButton extends Container {
         ButtonManager.enableAllAfterDelay(1);
         AdsManager.showVideo(
             AdsType.REWARDED,
-            () => { 
+            () => {
                 ButtonManager.enableAll();
             },
             () => {
-                this.emit(LevelEvent.Hint);              
+                this.emit(LevelEvent.Hint);
             },
             () => {
                 ButtonManager.enableAll();
             }
-        ); 
+        );
     }
 }

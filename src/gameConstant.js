@@ -29,7 +29,7 @@ export const GameConstant = Object.freeze({
   SAVE_DATA_ENABLED   : true,
 
   LEVEL_OFFSET  : 1,
-  HINT_TIME     : 3,
+  HINT_TIME     : 2,
   UNDO_NUMBER_PER_LEVEL   : 5,
   UNDO_NUMBER_GET_BY_ADS  : 5,
   TUBE_NUMBER_GET_BY_ADS  : 1,

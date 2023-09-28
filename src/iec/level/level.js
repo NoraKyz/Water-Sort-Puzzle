@@ -57,7 +57,7 @@ export class Level extends Container {
     this.timeOut.initTimeout();
   }
 
-  showHint() {
+  showHint() {  
     if(!this.data.enableHint) {
       return;
     }
@@ -79,6 +79,7 @@ export class Level extends Container {
       this.timeOut.initTimeout();
       return;
     }
+
     if (!this.hand) {
       this.hand = new Sprite(Texture.from("spr_hand"));
       this.addChild(this.hand);
@@ -86,6 +87,8 @@ export class Level extends Container {
       this.hand.pivot.set(85, 15);
       this.hand.scale.set(0.7);
     }
+
+
     let tube1 = this.tubeManager.getTubePosition(move[0]);
     let tube2 = this.tubeManager.getTubePosition(move[1]);
     this.hand.visible = true;
@@ -324,6 +327,7 @@ export class Level extends Container {
 
   _onEnableHint() {
     this.data.enableHint = true;
+    this.timeOut.initTimeout();
   }
 
   _onDataChanged() {

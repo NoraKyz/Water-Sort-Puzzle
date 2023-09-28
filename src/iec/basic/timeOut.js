@@ -23,6 +23,7 @@ export class TimeOut extends Container {
   }
 
   update() {
+    
     if (this.isExecution) {
       this.curTime += Time.dt;
       if (this.curTime > this.time) {

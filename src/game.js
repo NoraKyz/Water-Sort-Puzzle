@@ -75,7 +75,6 @@ export class Game {
     SceneManager.load(loadingScene);
     loadingScene.on(LoadingSceneEvent.LoadCompleted, () => {
       SceneManager.load(playScene);
-      AdsManager.showVideo(AdsType.INTERSTITIAL);
     });
 
     // lock 60FPS;
