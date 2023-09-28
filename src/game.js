@@ -17,6 +17,7 @@ import { GameState, GameStateManager } from "./pureDynamic/systems/gameStateMana
 import { SoundManager } from "./soundManager";
 import { SdkEvent, SdkManager } from "../sdk/sdkManager"
 import { AdBannerSize, AdsManager, AdsType } from "../sdk/adsManager"
+import { UsersManager } from "../sdk/usersManager";
 
 export class Game {
   static init() {
@@ -97,11 +98,10 @@ export class Game {
   }
 
   static _onAssetLoaded() {
+    this.initAbigamesSdk();
     if (!this.gameCreated) {
       this._create();
     }
-
-    this.initAbigamesSdk();
   }
 
   static initAbigamesSdk() {
@@ -165,7 +165,30 @@ export class Game {
   }
 
   static onResizeBannerAds() {
+    if (!this.bannerAdsElement) {
+      return;
+    }
 
+    UsersManager.getSystemInformation((data, err) => {
+      if (err) {
+        this.bannerAdsStyle.transform = "scale(1)";
+        return;
+      }
+      else {
+        let platform = data.platform;
+        if (platform.type === "mobile") {
+          if (GameResizer.isLandScape()) {
+            this.bannerAdsStyle.transform = "scale(0.5)";
+          }
+          else {
+            this.bannerAdsStyle.transform = "scale(1)";
+          }
+        }
+        else {
+          this.bannerAdsStyle.transform = "scale(1)";
+        }
+      }
+    });
   }
 
   static initAbiUsers() {
