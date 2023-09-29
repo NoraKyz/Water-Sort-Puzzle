@@ -86,6 +86,7 @@ export class AdsManager {
     }
 
     static onAdError(err) {
+        Game.resume();
         this.emitter.emit(AdEvent.AD_ERROR, err);
         this.emitter.emit(AdEvent.AD_INVALID);
     }
