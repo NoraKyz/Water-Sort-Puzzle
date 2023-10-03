@@ -83,13 +83,18 @@ export class PlayScene extends Scene {
     this.shopScreen = this.ui.getScreen(GameConstant.SHOP_SCREEN);
     this.levelScreen = this.ui.getScreen(GameConstant.LEVEL_SCREEN);
     this.adsInvalidScreen = this.ui.getScreen(GameConstant.ADS_INVALID_SCREEN);
+    this.adsSkippedScreen = this.ui.getScreen(GameConstant.ADS_SKIPPED_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
   }
 
   _initEvents() {
-    AdsManager.emitter.on(AdEvent.AD_INVALID, () => {
+    AdsManager.emitter.on(AdEvent.AD_TIMEOUT, () => {
       this.ui.setScreenActive(GameConstant.ADS_INVALID_SCREEN);
+    });
+
+    AdsManager.emitter.on(AdEvent.AD_SKIPPED, () => {
+      this.ui.setScreenActive(GameConstant.ADS_SKIPPED_SCREEN);
     });
 
     this.level.on(LevelEvent.Complete, () => {

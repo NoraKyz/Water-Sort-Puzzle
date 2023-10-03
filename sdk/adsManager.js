@@ -6,7 +6,8 @@ export const AdEvent = Object.freeze({
     AD_STARTED: "adStarted",
     AD_COMPLETED: "adCompleted",
     AD_ERROR: "adError",
-    AD_INVALID: "adInvalid",
+    AD_TIMEOUT: "adTimeout",
+    AD_SKIPPED: "adSkipped",
 });
 
 export const AdBannerSize = Object.freeze({
@@ -65,10 +66,10 @@ export class AdsManager {
                     onFinished && onFinished();
                     this.onAdFinished();
                 },
-                adError: () => {
+                adError: (idError) => {
                     onError && onError();
-                    if(adsType == AdsType.REWARDED) {
-                        this.onAdError();
+                    if (adsType == AdsType.REWARDED) {
+                        this.onAdError(idError);
                     }
                 },
             }
@@ -88,6 +89,11 @@ export class AdsManager {
     static onAdError(err) {
         Game.resume();
         this.emitter.emit(AdEvent.AD_ERROR, err);
-        this.emitter.emit(AdEvent.AD_INVALID);
+
+        if (err === "timeout" || err === "invalid" || err === "notReady") {
+            this.emitter.emit(AdEvent.AD_TIMEOUT);
+        } else {
+            this.emitter.emit(AdEvent.AD_SKIPPED);
+        }
     }
 }
