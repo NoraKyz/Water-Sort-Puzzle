@@ -16,6 +16,7 @@ import { UserData } from "../data/userData";
 import { LevelScreen, LevelScreenEvent } from "../screens/levelScreen";
 import { AdsInvalidScreen } from "../screens/adsInvalidScreen";
 import { AdEvent, AdsManager } from "../../../sdk/adsManager";
+import { AdsSkippedScreen } from "../screens/adsSkippedScreens";
 
 
 export class PlayScene extends Scene {
@@ -75,6 +76,7 @@ export class PlayScene extends Scene {
       new ShopScreen(),
       new LevelScreen(),
       new AdsInvalidScreen(),
+      new AdsSkippedScreen(),
     );
 
     this.topbarScreen = this.ui.getScreen(GameConstant.TOPBAR_SCREEN);

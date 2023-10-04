@@ -89,7 +89,6 @@ export class AdsManager {
     static onAdError(err) {
         Game.resume();
         this.emitter.emit(AdEvent.AD_ERROR, err);
-
         if (err === "timeout" || err === "invalid" || err === "notReady") {
             this.emitter.emit(AdEvent.AD_TIMEOUT);
         } else {
