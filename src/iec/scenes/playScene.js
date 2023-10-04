@@ -17,6 +17,7 @@ import { LevelScreen, LevelScreenEvent } from "../screens/levelScreen";
 import { AdsInvalidScreen } from "../screens/adsInvalidScreen";
 import { AdEvent, AdsManager } from "../../../sdk/adsManager";
 import { AdsSkippedScreen } from "../screens/adsSkippedScreens";
+import { AdsBlockedScreen } from "../screens/adsBlockedScreen";
 
 
 export class PlayScene extends Scene {
@@ -77,6 +78,7 @@ export class PlayScene extends Scene {
       new LevelScreen(),
       new AdsInvalidScreen(),
       new AdsSkippedScreen(),
+      new AdsBlockedScreen(),
     );
 
     this.topbarScreen = this.ui.getScreen(GameConstant.TOPBAR_SCREEN);
@@ -86,11 +88,16 @@ export class PlayScene extends Scene {
     this.levelScreen = this.ui.getScreen(GameConstant.LEVEL_SCREEN);
     this.adsInvalidScreen = this.ui.getScreen(GameConstant.ADS_INVALID_SCREEN);
     this.adsSkippedScreen = this.ui.getScreen(GameConstant.ADS_SKIPPED_SCREEN);
+    this.adsBlockedScreen = this.ui.getScreen(GameConstant.ADS_BLOCKED_SCREEN);
 
     this.ui.setScreenActive(GameConstant.TOPBAR_SCREEN);
   }
 
   _initEvents() {
+    AdsManager.emitter.on(AdEvent.AD_BLOCKED, () => {
+      this.ui.setScreenActive(GameConstant.ADS_BLOCKED_SCREEN);
+    });
+
     AdsManager.emitter.on(AdEvent.AD_TIMEOUT, () => {
       this.ui.setScreenActive(GameConstant.ADS_INVALID_SCREEN);
     });

@@ -21,6 +21,7 @@ export const GameConstant = Object.freeze({
   LEVEL_SCREEN: "LevelScreen",
   ADS_INVALID_SCREEN: "AdsInvalidScreen",
   ADS_SKIPPED_SCREEN: "AdsSkippedScreen",
+  ADS_BLOCKED_SCREEN: "AdsBlockedScreen",
 
   DEBUG_ON            : false,
   DEBUG_DRAW_COLLIDER : false,

@@ -8,6 +8,7 @@ export const AdEvent = Object.freeze({
     AD_ERROR: "adError",
     AD_TIMEOUT: "adTimeout",
     AD_SKIPPED: "adSkipped",
+    AD_BLOCKED: "adBlocked",
 });
 
 export const AdBannerSize = Object.freeze({
@@ -51,7 +52,7 @@ export class AdsManager {
     static showVideo(adsType, onStart, onFinished, onError) {
         if (this.adBlocked) {
             onError && onError();
-            this.onAdError();
+            this.onAdError("error");
             return;
         }
 
@@ -88,11 +89,15 @@ export class AdsManager {
 
     static onAdError(err) {
         Game.resume();
-        this.emitter.emit(AdEvent.AD_ERROR, err);
-        if (err === "timeout" || err === "invalid" || err === "notReady") {
-            this.emitter.emit(AdEvent.AD_TIMEOUT);
-        } else {
+
+        err = err.breakType;
+
+        if (err === "dismissed") {
             this.emitter.emit(AdEvent.AD_SKIPPED);
+        } else if (err === "error") {
+            this.emitter.emit(AdEvent.AD_BLOCKED);
+        } else {
+            this.emitter.emit(AdEvent.AD_TIMEOUT);
         }
     }
 }
