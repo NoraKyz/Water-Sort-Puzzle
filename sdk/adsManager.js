@@ -1,6 +1,7 @@
 import { Debug } from "../src/helpers/debug.js";
 import { EventEmitter } from "events";
 import { Game } from "../src/game.js";
+import { SdkManager } from "./sdkManager.js";
 
 export const AdEvent = Object.freeze({
     AD_STARTED: "adStarted",
@@ -79,12 +80,12 @@ export class AdsManager {
 
     static onAdStarted() {
         Game.pause();
-        this.emitter.emit(AdEvent.AD_STARTED);
+        SdkManager.emitter.emit(AdEvent.AD_STARTED);
     }
 
     static onAdFinished() {
         Game.resume();
-        this.emitter.emit(AdEvent.AD_COMPLETED);
+        SdkManager.emitter.emit(AdEvent.AD_COMPLETED);
     }
 
     static onAdError(err) {
@@ -93,11 +94,11 @@ export class AdsManager {
         err = err.breakType;
 
         if (err === "dismissed") {
-            this.emitter.emit(AdEvent.AD_SKIPPED);
+            SdkManager.emitter.emit(AdEvent.AD_SKIPPED);
         } else if (err === "error") {
-            this.emitter.emit(AdEvent.AD_BLOCKED);
+            SdkManager.emitter.emit(AdEvent.AD_BLOCKED);
         } else {
-            this.emitter.emit(AdEvent.AD_TIMEOUT);
+            SdkManager.emitter.emit(AdEvent.AD_TIMEOUT);
         }
     }
 }
